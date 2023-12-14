@@ -1,0 +1,181 @@
+.preferences {
+  width: 100%;
+  width: #{640 / $base-font-size}rem;
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 9999;
+  padding: 0 #{20 / $base-font-size}rem #{2 / $base-font-size}rem #{20 /
+    $base-font-size}rem;
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  height: calc(80vh - #{65 / $base-font-size}rem);
+  max-height: #{460 / $base-font-size}rem;
+  & .react-tabs {
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  & .react-tabs__tab-panel {
+    overflow-y: auto;
+  }
+}
+
+.preference__minus-button,
+.preference__plus-button {
+  @include themify() {
+    @extend %preferences-button;
+    width: #{32 / $base-font-size}rem;
+    height: #{32 / $base-font-size}rem;
+    margin-left: #{6 / $base-font-size}rem;
+    margin-right: #{10 / $base-font-size}rem;
+    line-height: #{40 / $base-font-size}rem;
+    & svg {
+      width: #{10 / $base-font-size}rem;
+    }
+  }
+}
+
+.preference {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: #{12 / $base-font-size}rem;
+  & + & {
+    @include themify() {
+      border-top: 1px dashed getThemifyVariable("button-border-color");
+    }
+  }
+}
+
+.preference__title {
+  width: 100%;
+  font-size: #{16 / $base-font-size}rem;
+  margin-top: #{13 / $base-font-size}rem;
+  margin-bottom: #{7 / $base-font-size}rem;
+}
+
+.preference__subtitle {
+  @include themify() {
+    color: getThemifyVariable("inactive-text-color");
+  }
+  width: 100%;
+  margin-bottom: #{10 / $base-font-size}rem;
+  margin-top: 0;
+}
+
+.preference__value {
+  @include themify() {
+    border: #{1 / $base-font-size}rem solid
+      getThemifyVariable("button-border-color");
+    // background-color: getThemifyVariable("button-background-color");
+    color: getThemifyVariable("input-text-color");
+    background-color: getThemifyVariable('input-background-color');
+  }
+  text-align: center;
+  border-radius: 0%;
+  outline: none;
+  width: #{44 / $base-font-size}rem;
+  height: #{40 / $base-font-size}rem;
+  margin: 0 #{20 / $base-font-size}rem;
+  padding: 0;
+  font-size: #{16 / $base-font-size}rem;
+  font-family: Inconsolata;
+}
+
+.preference__label {
+  @include themify() {
+    color: getThemifyVariable("secondary-text-color");
+    &:hover {
+      color: getThemifyVariable("heavy-text-color");
+    }
+  }
+  margin: #{-15 / $base-font-size}rem 0 0 #{-5 / $base-font-size}rem;
+  font-size: #{9 / $base-font-size}rem;
+  width: #{44 / $base-font-size}rem;
+}
+
+.react-tabs__tab--selected {
+  @include themify() {
+    border-bottom: #{4 / $base-font-size}rem solid
+      getThemifyVariable("button-background-hover-color");
+  }
+}
+
+.react-tabs__tab--selected .preference__subheading {
+  @include themify() {
+    color: getThemifyVariable("primary-text-color");
+  }
+}
+
+.react-tabs__tab {
+  text-align: center;
+  color: black;
+  display: flex;
+  align-items: center;
+  border-bottom: #{4 / $base-font-size}rem solid transparent;
+  & + & {
+    margin-left: #{45 / $base-font-size}rem;
+  }
+  &:hover {
+    @include themify() {
+      border-bottom: #{4 / $base-font-size}rem solid
+        getThemifyVariable("button-background-hover-color");
+    }
+  }
+}
+
+.preference__radio-button {
+  @extend %hidden-element;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.preference__option {
+  @include themify() {
+    @extend %preference-option;
+    margin-right: #{25 / $base-font-size}rem;
+  }
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.preference__option:last-child {
+  margin-right: 0;
+}
+
+.preference__preview-button {
+  @include themify() {
+    @extend %preference-option;
+    &:hover {
+      color: getThemifyVariable("button-background-hover-color");
+    }
+  }
+  margin-left: #{30 / $base-font-size}rem;
+}
+
+.preference__options {
+  display: flex;
+  justify-content: center;
+}
+
+.preference__radio-button:checked + .preference__option {
+  @include themify() {
+    //for some reason this won't work for getThemifyVariable
+    color: map-get($theme-map, "heavy-text-color");
+    font-weight: bold;
+  }
+}
+
+.preference--hidden {
+  @extend %hidden-element;
+}
+
+.preference__option.preference__canvas:not(:last-child) {
+  padding-right: #{14 / $base-font-size}rem;
+}
+

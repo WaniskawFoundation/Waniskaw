@@ -1,0 +1,64 @@
+.toolbar__logo {
+	margin-right: #{30 / $base-font-size}rem;
+	@include themify() {
+		& g, & path {
+			fill: getThemifyVariable('logo-color');
+		}
+	}
+}
+
+.toolbar {
+	padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
+	display: flex;
+	align-items: center;
+	@include themify() {
+		border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+	}
+}
+
+.toolbar__project-name-container {
+	margin-left: #{10 / $base-font-size}rem;
+	padding-left: #{10 / $base-font-size}rem;
+  display: flex;
+  align-items: center;
+}
+
+.toolbar .editable-input__label {
+	@include themify() {
+		color: getThemifyVariable('secondary-text-color');
+		& path {
+			fill: getThemifyVariable('secondary-text-color');
+		}
+	}
+}
+
+.toolbar .editable-input__input {
+	border: 0;
+}
+
+.toolbar__project-owner {
+	margin-left: #{5 / $base-font-size}rem;
+	@include themify() {
+		color: getThemifyVariable('secondary-text-color');
+	}
+}
+
+.toolbar__autorefresh-label {
+	@include themify() {
+		color: getThemifyVariable('secondary-text-color');
+	}
+	margin-left: #{5 / $base-font-size}rem;
+	font-size: #{12 / $base-font-size}rem;
+}
+
+.toolbar__autorefresh {
+	display: flex;
+	align-items: center;
+}
+
+.checkbox__autorefresh{
+	cursor: pointer;
+	@include themify(){
+		color:getThemifyVariable('logo-color');
+	}
+}

@@ -1,0 +1,6 @@
+.dropzone {
+  @include themify() {
+    background-color: getThemifyVariable('input-secondary-background-color');
+    color: getThemifyVariable('input-text-color');
+  }
+}
