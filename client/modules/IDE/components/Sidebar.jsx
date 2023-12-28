@@ -2,18 +2,13 @@ import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   closeProjectOptions,
   collapseSidebar,
   newFile,
   newFolder,
   openProjectOptions,
-  openUploadFileModal,
-  openPreferences,
-  startAccessibleSketch,
-  startSketch,
-  stopSketch
+  openUploadFileModal
 } from '../actions/ide';
 import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
@@ -21,36 +16,10 @@ import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 import ConnectedFileNode from './FileNode';
 import { PlusIcon } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
-import {
-  setAutorefresh,
-  setGridOutput,
-  setTextOutput
-} from '../actions/preferences';
-import PlayIcon from '../../../images/play.svg';
-import StopIcon from '../../../images/stop.svg';
 
-import PreferencesIcon from '../../../images/preferences.svg';
+// TODO: use a generic Dropdown UI component
 
-export default function SideBar(props) {
-  const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
-    (state) => state.ide
-  );
-  const project = useSelector((state) => state.project);
-  const autorefresh = useSelector((state) => state.preferences.autorefresh);
-
-  const playButtonClass = classNames({
-    'toolbar__play-button': true,
-    'toolbar__play-button--selected': isPlaying
-  });
-  const stopButtonClass = classNames({
-    'toolbar__stop-button': true,
-    'toolbar__stop-button--selected': !isPlaying
-  });
-  const preferencesButtonClass = classNames({
-    'toolbar__preferences-button': true,
-    'toolbar__preferences-button--selected': preferencesIsVisible
-  });
-
+export default function SideBar() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -99,61 +68,18 @@ export default function SideBar(props) {
   });
 
   return (
-    // <FileDrawer>
-    //   {ide.sidebarIsExpanded && (
-    //     <button
-    //       data-backdrop="filedrawer"
-    //       onClick={() => {
-    //         dispatch(collapseSidebar());
-    //         dispatch(closeProjectOptions());
-    //       }}
-    //     >
-    //       {' '}
-    //     </button>
-    //   )}
-    <div>
-      <div className="toolbar-buttons-container">
+    <FileDrawer>
+      {ide.sidebarIsExpanded && (
         <button
-          className="toolbar__play-sketch-button"
+          data-backdrop="filedrawer"
           onClick={() => {
-            dispatch(startAccessibleSketch());
-            dispatch(setTextOutput(true));
-            dispatch(setGridOutput(true));
+            dispatch(collapseSidebar());
+            dispatch(closeProjectOptions());
           }}
-          aria-label={t('Toolbar.PlaySketchARIA')}
-          disabled={infiniteLoop}
         >
-          <PlayIcon focusable="false" aria-hidden="true" />
+          {' '}
         </button>
-        <button
-          className={playButtonClass}
-          onClick={() => {
-            dispatch(startSketch());
-          }}
-          aria-label={t('Toolbar.PlayOnlyVisualSketchARIA')}
-          title={t('Toolbar.PlaySketchARIA')}
-          disabled={infiniteLoop}
-        >
-          <PlayIcon focusable="false" aria-hidden="true" />
-        </button>
-        <button
-          className={stopButtonClass}
-          onClick={() => dispatch(stopSketch())}
-          aria-label={t('Toolbar.StopSketchARIA')}
-          title={t('Toolbar.StopSketchARIA')}
-        >
-          <StopIcon focusable="false" aria-hidden="true" />
-        </button>
-        <button
-          className={preferencesButtonClass}
-          onClick={() => dispatch(openPreferences())}
-          aria-label={t('Toolbar.OpenPreferencesARIA')}
-          title={t('Toolbar.OpenPreferencesARIA')}
-        >
-          <PreferencesIcon focusable="false" aria-hidden="true" />
-        </button>
-      </div>
-
+      )}
       <section className={sidebarClass}>
         <header
           className="sidebar__header"
@@ -221,10 +147,6 @@ export default function SideBar(props) {
         </header>
         <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
       </section>
-    </div>
-    // </FileDrawer>
+    </FileDrawer>
   );
-  // Sidebar.propTypes = {
-  // syncFileContent: PropTypes.func.isRequired
-  // };
 }

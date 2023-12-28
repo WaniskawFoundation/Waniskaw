@@ -1,12 +1,11 @@
 .nav {
-  height: #{96 / $base-font-size}rem;
+  height: #{42 / $base-font-size}rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   @include themify() {
-    border-bottom: 1px solid map-get($theme-map, 'nav-border-color');
-    border-top: 1px solid map-get($theme-map, 'nav-border-color');
+    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
   }
 
   & button {
@@ -23,6 +22,15 @@
   height: 100%;
   align-items: center;
 }
+
+.nav__fundraiser-btn {
+  font-weight: bold;
+  font-size: #{14 / $base-font-size}rem;
+  @include themify() {
+    color: getThemifyVariable('fundraiser-button-nav-color');
+  }
+}
+
 
 .preview-nav__editor-svg {
   @include icon();
@@ -45,13 +53,7 @@
   height: 100%;
 
   & button {
-    padding: #{4 / $base-font-size}rem #{6 / $base-font-size}rem;
-    margin-left: #{10 / $base-font-size}rem;
-    margin-right: #{10 / $base-font-size}rem;
-    @include themify(){
-      background-color: getThemifyVariable('navbar-button-bgcolor');
-      color: getThemifyVariable('navbar-button-color');
-    }
+    padding: #{12 / $base-font-size}rem #{10 / $base-font-size}rem;
   }
 }
 
@@ -62,7 +64,7 @@
 .nav__item-header-triangle polygon,
 .nav__item-header-triangle path {
   @include themify() {
-    fill: getThemifyVariable('navbar-button-color');
+    fill: getThemifyVariable('icon-color');
   }
 }
 
@@ -100,8 +102,6 @@
 
 .nav__item-header-triangle {
 	margin-left: #{5 / $base-font-size}rem;
-  // width: #{18 / $base-font-size}rem;
-  // height: #{12 / $base-font-size}rem;
 }
 
 .nav__dropdown {
@@ -164,35 +164,32 @@
 
 .nav__item-logo {
   position: relative;
-  height: #{64.59 / $base-font-size}rem;
-  width: #{38.29 / $base-font-size}rem;
-  margin-left: #{18 / $base-font-size}rem;
-  margin-right: #{23.7 / $base-font-size}rem;
+  height: #{42 / $base-font-size}rem;
+  width: #{56 / $base-font-size}rem;
 
   & span {
     position: absolute;
   }
 }
 
-.nav__item-logo svg {
-  height: #{64.59 / $base-font-size}rem;
-  width: #{38.29 / $base-font-size}rem;
-}
+.svg__logo {
 
-.svg__logo g > path {
   @include themify() {
-    fill: getThemifyVariable('logo-color');
+    // Set background color of the logo
+    background-color: getThemifyVariable('logo-color');
   }
-}
-.svg__logo g g:first-of-type path {
-  fill: none;
+
 }
 
-.svg__logo g g:first-of-type use {
+.svg__logo g path{
+  
   @include themify() {
+    // Set internal color of the logo;
     fill: getThemifyVariable('logo-background-color');
   }
+
 }
+
 
 .nav__keyboard-shortcut {
   font-size: #{12 / $base-font-size}rem;

@@ -13,7 +13,7 @@ import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import NavBar from '../../../../components/Nav/NavBar';
 import CaretLeftIcon from '../../../../images/left-arrow.svg';
-import LogoIcon from '../../../../images/waniskaw-logo.svg';
+import LogoIcon from '../../../../images/p5js-logo-small.svg';
 import { selectRootFile } from '../../selectors/files';
 import { selectSketchPath } from '../../selectors/project';
 import { metaKey, metaKeyName } from '../../../../utils/metaKey';
@@ -24,6 +24,7 @@ import {
   newFile,
   newFolder,
   showKeyboardShortcutModal,
+  showFundraiserModal,
   startSketch,
   stopSketch
 } from '../../actions/ide';
@@ -37,6 +38,7 @@ const Nav = ({ layout }) => (
       matches ? (
         <NavBar>
           <LeftLayout layout={layout} />
+          <FundraiserSection />
           <UserMenu />
         </NavBar>
       ) : (
@@ -83,6 +85,24 @@ const UserMenu = () => {
   }
 
   return null;
+};
+
+const FundraiserSection = () => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  return (
+    <>
+      <button
+        className="nav__fundraiser-btn"
+        onClick={() => dispatch(showFundraiserModal())}
+        aria-label="2023-fundraiser-button"
+        title="2023 Fundraiser Button"
+      >
+        {t('Nav.Fundraiser')}
+      </button>
+    </>
+  );
 };
 
 const DashboardMenu = () => {
@@ -239,32 +259,32 @@ const ProjectMenu = () => {
   );
 };
 
-// const LanguageMenu = () => {
-//   const language = useSelector((state) => state.preferences.language);
-//   const dispatch = useDispatch();
+const LanguageMenu = () => {
+  const language = useSelector((state) => state.preferences.language);
+  const dispatch = useDispatch();
 
-//   function handleLangSelection(event) {
-//     dispatch(setLanguage(event.target.value));
-//     dispatch(showToast('Toast.LangChange'));
-//   }
+  function handleLangSelection(event) {
+    dispatch(setLanguage(event.target.value));
+    dispatch(showToast('Toast.LangChange'));
+  }
 
-//   return (
-//     <NavDropdownMenu id="lang" title={languageKeyToLabel(language)}>
-//       {sortBy(availableLanguages).map((key) => (
-//         // eslint-disable-next-line react/jsx-no-bind
-//         <NavMenuItem key={key} value={key} onClick={handleLangSelection}>
-//           {languageKeyToLabel(key)}
-//         </NavMenuItem>
-//       ))}
-//     </NavDropdownMenu>
-//   );
-// };
+  return (
+    <NavDropdownMenu id="lang" title={languageKeyToLabel(language)}>
+      {sortBy(availableLanguages).map((key) => (
+        // eslint-disable-next-line react/jsx-no-bind
+        <NavMenuItem key={key} value={key} onClick={handleLangSelection}>
+          {languageKeyToLabel(key)}
+        </NavMenuItem>
+      ))}
+    </NavDropdownMenu>
+  );
+};
 
 const UnauthenticatedUserMenu = () => {
   const { t } = useTranslation();
   return (
     <ul className="nav__items-right" title="user-menu">
-      {/* {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />} */}
+      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
       <li className="nav__item">
         <Link to="/login" className="nav__auth-button">
           <span className="nav__item-header" title="Login">
@@ -292,7 +312,7 @@ const AuthenticatedUserMenu = () => {
 
   return (
     <ul className="nav__items-right" title="user-menu">
-      {/* {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />} */}
+      {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
       <NavDropdownMenu
         id="account"
         title={

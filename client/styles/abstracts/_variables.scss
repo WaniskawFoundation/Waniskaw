@@ -1,9 +1,9 @@
 $base-font-size: 12;
 
 //colors
-$p5js-pink: #545454;
-$p5js-pink-opacity: #54545480;
-$p5js-active-pink: rgb(58, 58, 58);
+$p5js-pink: #ed225d;
+$p5js-pink-opacity: #ed225d80;
+$p5js-active-pink: #f10046;
 $white: #fff;
 $black: #000;
 $yellow: #F5DC23;
@@ -31,16 +31,7 @@ $darkest: #000;
 
 $themes: (
   light: (
-
-  // WANISKAW CUSTOM THEMES
     logo-color: $p5js-pink,
-    navbar-button-bgcolor: $p5js-pink,
-    navbar-button-color: white,
-    nav-border-color: #535353,
-
-
-
-
     logo-background-color: $lightest,
     heavy-text-color: $darker,
     primary-text-color: $dark,
@@ -59,6 +50,10 @@ $themes: (
     button-nav-inactive-color: $middle-gray,
     button-hover-color: $lightest,
     button-active-color: $lightest,
+    fundraiser-button-nav-color: $p5js-pink,
+    fundraiser-button-background-color: $p5js-pink,
+    fundraiser-button-color: $white,
+    fundraiser-button-hover-active-color: $medium-dark,
     modal-background-color: $light,
     preferences-button-background-color: $medium-light,
     modal-border-color: $middle-light,
@@ -89,6 +84,7 @@ $themes: (
     search-hover-background-color: $medium-dark,
     keyboard-shortcut-color: $middle-gray,
     nav-hover-color: $p5js-pink,
+    nav-border-color: $middle-light,
     error-color: $p5js-pink,
     table-row-stripe-color: $medium-light,
     table-row-stripe-color-alternate: $medium-light,
@@ -135,13 +131,7 @@ $themes: (
     hint-inline-text-color: $middle-gray,
   ),
   dark: (
-    // WANISKAW CUSTOM THEMES
     logo-color: $p5js-pink,
-    navbar-button-bgcolor: $p5js-pink,
-    navbar-button-color: white,
-    nav-border-color: #535353,
-
-
     logo-background-color: $lightest,
     heavy-text-color: $lightest,
     primary-text-color: $lightest,
@@ -178,18 +168,22 @@ $themes: (
     editor-gutter-color: $darker,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
+    fundraiser-button-background-color: $p5js-pink,
+    fundraiser-button-color: $white,
+    fundraiser-button-hover-active-color: $medium-dark,
     input-text-color: $lightest,
     input-background-color: $dark,
     input-secondary-background-color: $medium-dark,
     input-selection-text-color: $darkest,
     input-selection-background-color: $lightest,
     input-border-color: $middle-dark,
-    search-background-color: $lightest,
+    search-background-color: $darker,
     search-clear-background-color: $medium-dark,
     search-hover-text-color: $lightest,
     search-hover-background-color: $p5js-pink,
     keyboard-shortcut-color: $middle-light,
     nav-hover-color: $p5js-pink,
+    nav-border-color: $middle-dark,
     error-color: $p5js-pink,
     table-row-stripe-color: $dark,
     table-row-stripe-color-alternate: $darker,
@@ -234,13 +228,7 @@ $themes: (
     hint-inline-text-color: #cfcfcf,
   ),
   contrast: (
-    // WANISKAW CUSTOM THEMES
-    logo-color: $p5js-pink,
-    navbar-button-bgcolor: $p5js-pink,
-    navbar-button-color: white,
-    nav-border-color: #535353,
-
-
+    logo-color: $yellow,
     logo-background-color: $darker,
     heavy-text-color: $yellow,
     primary-text-color: $lightest,
@@ -277,18 +265,22 @@ $themes: (
     editor-gutter-color: $darker,
     file-hover-color: $dark,
     file-selected-color: $medium-dark,
+    fundraiser-button-background-color: $yellow,
+    fundraiser-button-color: $dark,
+    fundraiser-button-hover-active-color: $medium-light,
     input-text-color: $lightest,
     input-background-color: $dark,
     input-secondary-background-color: $medium-dark,
     input-selection-text-color: $darkest,
     input-selection-background-color: $lightest,
     input-border-color: $middle-dark,
-    search-background-color: $white,
+    search-background-color: $darker,
     search-clear-background-color: $medium-dark,
     search-hover-text-color: $dark,
     search-hover-background-color: $yellow,
     keyboard-shortcut-color: $middle-light,
     nav-hover-color: $yellow,
+    nav-border-color: $middle-dark,
     error-color: $p5-contrast-pink,
     table-row-stripe-color: $dark,
     table-row-stripe-color-alternate: $darker,

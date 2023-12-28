@@ -1,3 +1,84 @@
+.toolbar__play-button {
+	@include themify() {
+		@extend %toolbar-button;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0 0 0 #{3 / $base-font-size}rem;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
+		&:disabled {
+			cursor: auto;
+			& g, & path {
+				fill: getThemifyVariable('button-border-color');
+			}
+			&:hover {
+				background-color: getThemifyVariable('toolbar-button-background-color');
+				& g, & path {
+					fill: getThemifyVariable('button-border-color');
+				}
+			}
+	    }
+	}
+	margin-right: #{15 / $base-font-size}rem;
+	span {
+		padding-left: #{4 / $base-font-size}rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
+	}
+}
+
+.toolbar__play-sketch-button {
+	@extend %hidden-element;
+}
+
+.toolbar__stop-button {
+	@include themify() {
+		@extend %toolbar-button;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: #{15 / $base-font-size}rem;
+		padding: 0;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
+	}
+	span {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
+	}
+}
+
+.toolbar__preferences-button {
+	@include themify() {
+		@extend %toolbar-button;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
+		&--selected {
+			@extend %toolbar-button--selected;
+		}
+	}
+	margin-left: auto;
+	& span {
+		padding-left: #{1 / $base-font-size}rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: #{20 / $base-font-size}rem;
+		height: #{20 / $base-font-size}rem;
+	}
+}
+
 .toolbar__logo {
 	margin-right: #{30 / $base-font-size}rem;
 	@include themify() {
@@ -44,8 +125,12 @@
 }
 
 .toolbar__autorefresh-label {
+	cursor: pointer;
 	@include themify() {
 		color: getThemifyVariable('secondary-text-color');
+		&:hover {
+			color: getThemifyVariable('logo-color');
+		}
 	}
 	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
