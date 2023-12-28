@@ -7,7 +7,7 @@ Follow these instructions to set up your development environment, which you need
 _Note_: The installation steps assume you are using a Unix-like shell. If you are using Windows, you will need to use `copy` instead of `cp`.
 
 1. Install Node.js. The recommended way is to Node through [nvm](https://github.com/nvm-sh/nvm). You can also install [node.js](https://nodejs.org/download/release/v16.14.2/) version 16.14.2 directly from the Node.js website.
-2. [Clone](https://help.github.com/articles/cloning-a-repository/) your new fork of the repository from GitHub onto your local computer.
+2. [Clone](https://help.github.com/articles/cloning-a-repository/) the Waniskaw repository from GitHub onto your local computer.
 
    ```
    $ git clone https://github.com/WaniskawFoundation/Waniskaw.git
