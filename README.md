@@ -8,7 +8,7 @@ https://p5js.org/reference/). You can also look at [examples](https://editor.p5j
 
 ## Setting Up the Development Environment
 
-- Refer to [this documentation for setting up your environment](https://github.com/processing/p5.js-web-editor/blob/develop/contributor_docs/installation.md)
+- Refer to [this documentation for setting up your environment](https://github.com/WaniskawFoundation/Waniskaw/blob/main/contributor_docs/installation.md)
 
 
 
