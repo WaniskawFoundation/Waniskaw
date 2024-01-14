@@ -124,5 +124,8 @@ module.exports = {
         ]
       }
     ]
+  },
+  cache: {
+    type: 'memory',
   }
 };
