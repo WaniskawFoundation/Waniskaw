@@ -1,15 +1,24 @@
+@font-face {
+  font-family: 'DM Mono';
+  src: url('/client/styles/fonts/DMMono-Regular.ttf') format('truetype');
+}
+
 .nav {
   height: #{42 / $base-font-size}rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
-  @include themify() {
-    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
-  }
+    @include themify() {
+     border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+   }
 
-  & button {
-    padding: 0;
+    & button {
+      padding: 0;
+
+      @include themify() {
+        color: getThemifyVariable('logo-background-color');
+    }
   }
 }
 
@@ -52,8 +61,14 @@
   justify-content: center;
   height: 100%;
 
+  @include themify() {
+    background-color: getThemifyVariable('modal-button-color');
+  }
+
   & button {
     padding: #{12 / $base-font-size}rem #{10 / $base-font-size}rem;
+
+    font-family: 'DM Mono', monospace;
   }
 }
 
@@ -145,6 +160,11 @@
 
 .nav__auth-button {
   padding: #{10 / $base-font-size}rem;
+  font-family: 'DM Mono', monospace;
+
+  @include themify() {
+    color: getThemifyVariable('logo-background-color');
+  }
 }
 
 // .nav__dropdown button {
