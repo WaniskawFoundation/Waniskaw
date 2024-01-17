@@ -13,7 +13,7 @@ import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import NavBar from '../../../../components/Nav/NavBar';
 import CaretLeftIcon from '../../../../images/left-arrow.svg';
-import LogoIcon from '../../../../images/p5js-logo-small.svg';
+import LogoIcon from '../../../../images/waniskaw-logo.svg';
 import { selectRootFile } from '../../selectors/files';
 import { selectSketchPath } from '../../selectors/project';
 import { metaKey, metaKeyName } from '../../../../utils/metaKey';
@@ -24,7 +24,6 @@ import {
   newFile,
   newFolder,
   showKeyboardShortcutModal,
-  showFundraiserModal,
   startSketch,
   stopSketch
 } from '../../actions/ide';
@@ -38,7 +37,6 @@ const Nav = ({ layout }) => (
       matches ? (
         <NavBar>
           <LeftLayout layout={layout} />
-          <FundraiserSection />
           <UserMenu />
         </NavBar>
       ) : (
@@ -85,24 +83,6 @@ const UserMenu = () => {
   }
 
   return null;
-};
-
-const FundraiserSection = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <button
-        className="nav__fundraiser-btn"
-        onClick={() => dispatch(showFundraiserModal())}
-        aria-label="2023-fundraiser-button"
-        title="2023 Fundraiser Button"
-      >
-        {t('Nav.Fundraiser')}
-      </button>
-    </>
-  );
 };
 
 const DashboardMenu = () => {
@@ -166,7 +146,7 @@ const ProjectMenu = () => {
           className="svg__logo"
         />
       </li>
-      <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
+      <NavDropdownMenu id="project" title={t('Nav.Project.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
         <NavMenuItem
           hideIf={
@@ -211,24 +191,6 @@ const ProjectMenu = () => {
         >
           {t('Nav.File.Examples')}
         </NavMenuItem>
-      </NavDropdownMenu>
-      <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
-        <NavMenuItem onClick={cmRef.current?.tidyCode}>
-          {t('Nav.Edit.TidyCode')}
-          <span className="nav__keyboard-shortcut">
-            {metaKeyName}+{'\u21E7'}+F
-          </span>
-        </NavMenuItem>
-        <NavMenuItem onClick={cmRef.current?.showFind}>
-          {t('Nav.Edit.Find')}
-          <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
-        </NavMenuItem>
-        <NavMenuItem onClick={cmRef.current?.showReplace}>
-          {t('Nav.Edit.Replace')}
-          <span className="nav__keyboard-shortcut">{replaceCommand}</span>
-        </NavMenuItem>
-      </NavDropdownMenu>
-      <NavDropdownMenu id="sketch" title={t('Nav.Sketch.Title')}>
         <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
           {t('Nav.Sketch.AddFile')}
         </NavMenuItem>
@@ -246,6 +208,23 @@ const ProjectMenu = () => {
           </span>
         </NavMenuItem>
       </NavDropdownMenu>
+      <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
+        <NavMenuItem onClick={cmRef.current?.tidyCode}>
+          {t('Nav.Edit.TidyCode')}
+          <span className="nav__keyboard-shortcut">
+            {metaKeyName}+{'\u21E7'}+F
+          </span>
+        </NavMenuItem>
+        <NavMenuItem onClick={cmRef.current?.showFind}>
+          {t('Nav.Edit.Find')}
+          <span className="nav__keyboard-shortcut">{metaKeyName}+F</span>
+        </NavMenuItem>
+        <NavMenuItem onClick={cmRef.current?.showReplace}>
+          {t('Nav.Edit.Replace')}
+          <span className="nav__keyboard-shortcut">{replaceCommand}</span>
+        </NavMenuItem>
+      </NavDropdownMenu>
+
       <NavDropdownMenu id="help" title={t('Nav.Help.Title')}>
         <NavMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
           {t('Nav.Help.KeyboardShortcuts')}

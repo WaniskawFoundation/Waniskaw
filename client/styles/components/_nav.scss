@@ -173,19 +173,15 @@
 }
 
 .svg__logo {
-
-  @include themify() {
-    // Set background color of the logo
-    background-color: getThemifyVariable('logo-color');
-  }
-
+  height: #{42 / $base-font-size}rem;
+  width: #{56 / $base-font-size}rem;
 }
 
 .svg__logo g path{
   
   @include themify() {
     // Set internal color of the logo;
-    fill: getThemifyVariable('logo-background-color');
+    fill: getThemifyVariable('primary-text-color');
   }
 
 }

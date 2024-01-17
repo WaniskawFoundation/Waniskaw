@@ -1,5 +1,15 @@
 {
   "Nav": {
+    "Project": {
+      "Title": "Project",
+      "New": "New",
+      "Share": "Share",
+      "Duplicate": "Duplicate",
+      "Open": "Open",
+      "Download": "Download",
+      "AddToCollection": "Add to Collection",
+      "Examples": "Examples"
+    },
     "File": {
       "Title": "File",
       "New": "New",
