@@ -104,7 +104,7 @@
 	height: calc(100% - #{30 / $base-font-size}rem);
 }
 
-// ----------- 18/Jan/24 14:16:48 "Update Console style" ----------- //
+// ----------- 19/Jan/24 15:30:10 "Update Console style" ----------- //
 
 .light {
 	.preview-console__header {
@@ -113,7 +113,7 @@
 		padding: 0 12px;
 	}
 	.preview-console__clear {
-		font-family: "Helvetica", sans-serif;
+		font-family: "DM Mono", sans-serif;
 	}
 	.preview-console__header,
 	.preview-console__clear {
