@@ -27,9 +27,12 @@ import {
   startSketch,
   stopSketch
 } from '../../actions/ide';
+import { openPreferences } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import { setAutorefresh } from '../../actions/preferences';
+import ProjectName from './ProjectName';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -116,6 +119,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
+  const autorefresh = useSelector((state) => state.preferences.autorefresh);
 
   const isUnsaved = !project?.id;
 
@@ -207,6 +211,28 @@ const ProjectMenu = () => {
             {'\u21E7'}+{metaKeyName}+Enter
           </span>
         </NavMenuItem>
+        <NavMenuItem>
+          <div className="toolbar__autorefresh">
+            <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
+              {t('Toolbar.Auto-refresh')}
+            </label>
+            <input
+              id="autorefresh"
+              className="checkbox__autorefresh"
+              type="checkbox"
+              checked={autorefresh}
+              onChange={(event) => {
+                dispatch(setAutorefresh(event.target.checked));
+                if (event.target.checked) {
+                  dispatch(startSketch());
+                }
+              }}
+            />
+          </div>
+        </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(openPreferences())}>
+          Settings
+        </NavMenuItem>
       </NavDropdownMenu>
       <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
         <NavMenuItem onClick={cmRef.current?.tidyCode}>
@@ -271,8 +297,7 @@ const UnauthenticatedUserMenu = () => {
           </span>
         </Link>
       </li>
-      <span className="nav__item-or">{t('Nav.LoginOr')}</span>
-      <li className="nav__item">
+      <li className="nav__item signup">
         <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">
             {t('Nav.SignUp')}

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useContext, useMemo } from 'react';
-import TriangleIcon from '../../images/down-filled-triangle.svg';
+import TriangleIcon from '../../images/down-arrow.svg';
 import { MenuOpenContext, NavBarContext, ParentMenuContext } from './contexts';
 
 export function useMenuProps(id) {
