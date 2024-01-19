@@ -1,7 +1,7 @@
 .preview-console {
 	@include themify() {
-		background: getThemifyVariable('console-background-color');
-		border-color: getThemifyVariable('ide-border-color');
+		background: getThemifyVariable("console-background-color");
+		border-color: getThemifyVariable("ide-border-color");
 	}
 	border-left: #{1 / $base-font-size}rem solid;
 	border-right: #{1 / $base-font-size}rem solid;
@@ -12,15 +12,15 @@
 	flex-direction: column;
 
 	& > {
-		position:relative;
-		text-align:left;
+		position: relative;
+		text-align: left;
 	}
 }
 
 .preview-console__header {
 	@include themify() {
-		background-color: getThemifyVariable('console-header-background-color');
-		color: getThemifyVariable('console-header-color');
+		background-color: getThemifyVariable("console-header-background-color");
+		color: getThemifyVariable("console-header-color");
 	}
 	min-height: #{30 / $base-font-size}rem;
 	padding: #{5 / $base-font-size}rem;
@@ -41,7 +41,7 @@
 	overflow-y: auto;
 	& div div div:first-child {
 		height: unset;
-    line-height: unset;
+		line-height: unset;
 		font-size: unset;
 	}
 }
@@ -53,7 +53,7 @@
 		& g,
 		& polygon,
 		& path {
-			fill: getThemifyVariable('secondary-text-color');
+			fill: getThemifyVariable("secondary-text-color");
 		}
 	}
 	.preview-console--collapsed & {
@@ -68,7 +68,7 @@
 		& g,
 		& polygon,
 		& path {
-			fill: getThemifyVariable('secondary-text-color');
+			fill: getThemifyVariable("secondary-text-color");
 		}
 	}
 	display: none;
@@ -85,9 +85,9 @@
 .preview-console__clear {
 	@include themify() {
 		@extend %link;
-		color: getThemifyVariable('secondary-text-color');
+		color: getThemifyVariable("secondary-text-color");
 		&:hover {
-			color: getThemifyVariable('heavy-text-color');
+			color: getThemifyVariable("heavy-text-color");
 		}
 	}
 	background: transparent;
@@ -102,4 +102,36 @@
 	display: flex;
 	flex-direction: column;
 	height: calc(100% - #{30 / $base-font-size}rem);
+}
+
+// ----------- 18/Jan/24 14:16:48 "Update Console style" ----------- //
+
+.light {
+	.preview-console__header {
+		font-family: "DM Mono", sans-serif;
+		font-size: 1.1rem;
+		padding: 0 12px;
+	}
+	.preview-console__clear {
+		font-family: "Helvetica", sans-serif;
+	}
+	.preview-console__header,
+	.preview-console__clear {
+		color: #ffffff;
+	}
+	.preview-console__collapse g,
+	.preview-console__collapse polygon,
+	.preview-console__collapse path,
+	.preview-console__expand g,
+	.preview-console__expand polygon,
+	.preview-console__expand path {
+		fill: #ffffff;
+	}
+	.preview-console__header {
+		background-color: #757575;
+	}
+	.preview-console__collapse svg,
+	.preview-console__expand svg {
+		width: 8px;
+	}
 }

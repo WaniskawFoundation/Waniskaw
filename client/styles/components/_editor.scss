@@ -439,3 +439,25 @@ pre.CodeMirror-line {
 .emmet-close-tag {
   text-decoration: underline;
 }
+
+// 18/Jan/24 14:24:33 "Update style for line numbers in editor"
+
+.light {
+  .CodeMirror-gutters {
+    border: none;
+  }
+  .CodeMirror-linenumber {
+    font-family: "Fira Code", sans-serif;
+    color: #bdbdbd;
+    font-size: 16px;
+  }
+}
+
+.cm-s-p5-light .CodeMirror-activeline-gutter {
+  border: none;
+}
+
+.CodeMirror-foldgutter-folded:after,
+.CodeMirror-foldgutter-open:after {
+  background-size: 8px 8px;
+}

@@ -107,7 +107,15 @@ class Editor extends React.Component {
     // this.widgets = [];
     this._cm = CodeMirror(this.codemirrorContainer, {
       theme: `p5-${this.props.theme}`,
-      lineNumbers: this.props.lineNumbers,
+
+      // ----------- 18/Jan/24 13:41:32 added code for zero-padding formatting / Koshiro ----------- //
+
+      // lineNumbers: this.props.lineNumbers,
+      lineNumbers: true,
+      lineNumberFormatter: (line) => line.toString().padStart(2, '0'),
+
+      // ----------- END ----------- //
+
       styleActiveLine: true,
       inputStyle: 'contenteditable',
       lineWrapping: this.props.linewrap,
