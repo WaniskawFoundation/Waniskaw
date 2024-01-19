@@ -11,7 +11,7 @@ const Header = (props) => {
   return (
     <header>
       <Nav />
-      <MediaQuery minWidth={770}>
+      {/* <MediaQuery minWidth={770}>
         {(matches) => {
           if (matches)
             return (
@@ -22,13 +22,13 @@ const Header = (props) => {
             );
           return null;
         }}
-      </MediaQuery>
+      </MediaQuery> */}
     </header>
   );
 };
 
-Header.propTypes = {
-  syncFileContent: PropTypes.func.isRequired
-};
+// Header.propTypes = {
+//   syncFileContent: PropTypes.func.isRequired
+// };
 
 export default Header;
