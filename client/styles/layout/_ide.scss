@@ -8,6 +8,10 @@
   z-index: 0;
 }
 
+.editor-preview-subpanel{
+  border: 2px solid $waniskaw-console-grey;
+}
+
 .editor-accessibility {
   @extend %hidden-element;
 }

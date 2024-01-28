@@ -7,11 +7,11 @@ export const Theme = {
 };
 
 export const colors = {
-  p5jsPink: '#ed225d',
+  p5jsPink: 'rgb(205,9,0)',
   processingBlueDark: '#28347D',
   processingBlue: '#2D67F6',
   processingBlueLight: '#8DADF9',
-  p5jsActivePink: '#f10046',
+  p5jsActivePink: '#rgb(205,9,0)',
   white: '#fff',
   black: '#000',
   yellow: '#f5dc23',
@@ -30,7 +30,7 @@ export const grays = {
   lighter: '#FBFBFB',
 
   light: '#F0F0F0', // primary
-  mediumLight: '#D9D9D9',
+  mediumLight: 'rgb(64,64,64)', // Waniskaw Dark
   middleLight: '#A6A6A6',
 
   middleGray: '#747474', // primary
@@ -134,7 +134,7 @@ const baseThemes = {
       },
       secondary: {
         foreground: colors.black,
-        background: grays.mediumLight
+        background: grays.waniskawDark
       }
     },
     Modal: {
@@ -277,7 +277,7 @@ export default {
       }
     },
     Icon: {
-      default: grays.mediumLight,
+      default: grays.waniskawDark,
       hover: colors.yellow
     },
     Modal: {

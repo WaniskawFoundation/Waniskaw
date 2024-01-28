@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withTranslation } from 'react-i18next';
+import { selectProjectName } from '../selectors/project';
 
 import * as IDEActions from '../actions/ide';
 import * as FileActions from '../actions/files';
-import DownArrowIcon from '../../../images/down-filled-triangle.svg';
-import FolderRightIcon from '../../../images/triangle-arrow-right.svg';
-import FolderDownIcon from '../../../images/triangle-arrow-down.svg';
-import FileIcon from '../../../images/file.svg';
+import DotsIcon from '../../../images/dots.svg';
+import FolderClosedIcon from '../../../images/folder-closed.svg';
+import FolderOpenIcon from '../../../images/folder-open.svg';
 
 function parseFileName(name) {
   const nameArray = name.split('.');
@@ -39,7 +39,7 @@ function parseFileName(name) {
   };
 }
 
-function FileName({ name }) {
+function FileName({ isFolder, name }) {
   const {
     baseName,
     firstLetter,
@@ -48,7 +48,10 @@ function FileName({ name }) {
     extension
   } = parseFileName(name);
   return (
-    <span className="sidebar__file-item-name-text">
+    <span
+      className={`sidebar__file-item-name-text${isFolder ? ' folder' : ''}`}
+      style={{ fontWeight: isFolder ? 'bold' : null }}
+    >
       <span>{firstLetter}</span>
       {baseName.length > 2 && (
         <span className="sidebar__file-item-name--ellipsis">{middleText}</span>
@@ -59,8 +62,20 @@ function FileName({ name }) {
   );
 }
 
+function FileT(p) {
+  return (
+    <div
+      className={`sidebar__file-${p.l ? 'l' : 't'}-container`}
+      style={{ marginRight: p.folder ? '0' : null }}
+    >
+      <div className={`sidebar__file-${p.l ? 'l' : 't'}-inner`} />
+    </div>
+  );
+}
+
 FileName.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  isFolder: PropTypes.bool.isRequired
 };
 
 class FileNode extends React.Component {
@@ -230,13 +245,25 @@ class FileNode extends React.Component {
     this.props.hideFolderChildren(this.props.id);
   };
 
+  createIsLastHistory = () => {
+    const history = this.props.isLastHistory || '';
+
+    if (this.props.fileType === 'folder') {
+      return history.concat(this.props.isLast ? '0' : '1');
+    }
+    return history;
+  };
+
   renderChild = (childId) => (
     <li key={childId}>
       <ConnectedFileNode
         id={childId}
         parentId={this.props.id}
+        isLast={childId === this.props.children[this.props.children.length - 1]}
         canEdit={this.props.canEdit}
         onClickFile={this.props.onClickFile}
+        level={this.props.level >= 0 ? this.props.level + 1 : 0}
+        isLastHistory={this.createIsLastHistory()}
       />
     </li>
   );
@@ -256,146 +283,174 @@ class FileNode extends React.Component {
     const isRoot = this.props.name === 'root';
 
     const { t } = this.props;
+    const getSpacerClass = (l) =>
+      `file-item__spacer${
+        this.props.isLastHistory &&
+        this.props.isLastHistory.split('')[l] === '1'
+          ? '-line'
+          : ''
+      }`;
+    const level = Array.from(
+      { length: this.props.level },
+      (_, index) => index + 1
+    );
 
     return (
       <div className={itemClass}>
-        {!isRoot && (
-          <div
-            className="file-item__content"
-            onContextMenu={this.toggleFileOptions}
-          >
-            <span className="file-item__spacer"></span>
-            {isFile && (
-              <span className="sidebar__file-item-icon">
-                <FileIcon focusable="false" aria-hidden="true" />
-              </span>
-            )}
-            {isFolder && (
-              <div className="sidebar__file-item--folder">
-                <button
-                  className="sidebar__file-item-closed"
-                  onClick={this.showFolderChildren}
-                  aria-label={t('FileNode.OpenFolderARIA')}
-                  title={t('FileNode.OpenFolderARIA')}
-                >
-                  <FolderRightIcon
+        <div
+          className="file-item__content"
+          onContextMenu={this.toggleFileOptions}
+        >
+          {!isRoot && <div className="root-file-item__spacer" />}
+          {!isRoot && level.map((l) => <span className={getSpacerClass(l)} />)}
+          {isFile && <FileT l={this.props.isLast ? 'l' : false} />}
+          {(isFolder || isRoot) && (
+            <div className="sidebar__file-item--folder">
+              <button
+                className="sidebar__file-item-closed"
+                onClick={this.showFolderChildren}
+                aria-label={t('FileNode.OpenFolderARIA')}
+                title={t('FileNode.OpenFolderARIA')}
+              >
+                <div className="sidebar__folder-item-container">
+                  {isRoot ? (
+                    <div className="sidebar__root-spacer" />
+                  ) : (
+                    <FileT l={this.props.isLast ? 'l' : false} folder />
+                  )}
+                  <FolderClosedIcon
                     className="folder-right"
                     focusable="false"
                     aria-hidden="true"
                   />
-                </button>
-                <button
-                  className="sidebar__file-item-open"
-                  onClick={this.hideFolderChildren}
-                  aria-label={t('FileNode.CloseFolderARIA')}
-                  title={t('FileNode.CloseFolderARIA')}
-                >
-                  <FolderDownIcon
-                    className="folder-down"
+                </div>
+              </button>
+              <button
+                className="sidebar__file-item-open"
+                onClick={this.hideFolderChildren}
+                aria-label={t('FileNode.CloseFolderARIA')}
+                title={t('FileNode.CloseFolderARIA')}
+              >
+                <div className="sidebar__folder-item-container">
+                  {isRoot ? (
+                    <div className="sidebar__root-spacer" />
+                  ) : (
+                    <FileT l={this.props.isLast ? 'l' : false} folder />
+                  )}
+                  <FolderOpenIcon
+                    className="folder-right"
                     focusable="false"
                     aria-hidden="true"
                   />
-                </button>
-              </div>
-            )}
-            <button
-              aria-label={this.state.updatedName}
-              className="sidebar__file-item-name"
-              onClick={this.handleFileClick}
-              data-testid="file-name"
-            >
-              <FileName name={this.state.updatedName} />
-            </button>
-            <input
-              data-testid="input"
-              type="text"
-              className="sidebar__file-item-input"
-              value={this.state.updatedName}
-              maxLength="128"
-              onChange={this.handleFileNameChange}
-              ref={(element) => {
-                this.fileNameInput = element;
-              }}
-              onBlur={this.handleFileNameBlur}
-              onKeyPress={this.handleKeyPress}
-            />
-            <button
-              className="sidebar__file-item-show-options"
-              aria-label={t('FileNode.ToggleFileOptionsARIA')}
-              ref={(element) => {
-                this[`fileOptions-${this.props.id}`] = element;
-              }}
-              tabIndex="0"
-              onClick={this.toggleFileOptions}
-              onBlur={this.onBlurComponent}
-              onFocus={this.onFocusComponent}
-            >
-              <DownArrowIcon focusable="false" aria-hidden="true" />
-            </button>
-            <div className="sidebar__file-item-options">
-              <ul title="file options">
-                {isFolder && (
-                  <React.Fragment>
-                    <li>
-                      <button
-                        aria-label={t('FileNode.AddFolderARIA')}
-                        onClick={this.handleClickAddFolder}
-                        onBlur={this.onBlurComponent}
-                        onFocus={this.onFocusComponent}
-                        className="sidebar__file-item-option"
-                      >
-                        {t('FileNode.AddFolder')}
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        aria-label={t('FileNode.AddFileARIA')}
-                        onClick={this.handleClickAddFile}
-                        onBlur={this.onBlurComponent}
-                        onFocus={this.onFocusComponent}
-                        className="sidebar__file-item-option"
-                      >
-                        {t('FileNode.AddFile')}
-                      </button>
-                    </li>
-                    {this.props.authenticated && (
-                      <li>
-                        <button
-                          aria-label={t('FileNode.UploadFileARIA')}
-                          onClick={this.handleClickUploadFile}
-                          onBlur={this.onBlurComponent}
-                          onFocus={this.onFocusComponent}
-                        >
-                          {t('FileNode.UploadFile')}
-                        </button>
-                      </li>
-                    )}
-                  </React.Fragment>
-                )}
-                <li>
-                  <button
-                    onClick={this.handleClickRename}
-                    onBlur={this.onBlurComponent}
-                    onFocus={this.onFocusComponent}
-                    className="sidebar__file-item-option"
-                  >
-                    {t('FileNode.Rename')}
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={this.handleClickDelete}
-                    onBlur={this.onBlurComponent}
-                    onFocus={this.onFocusComponent}
-                    className="sidebar__file-item-option"
-                  >
-                    {t('FileNode.Delete')}
-                  </button>
-                </li>
-              </ul>
+                </div>
+              </button>
             </div>
+          )}
+          <button
+            aria-label={this.state.updatedName}
+            className="sidebar__file-item-name"
+            onClick={this.handleFileClick}
+            data-testid="file-name"
+          >
+            <FileName
+              isFolder={isFolder}
+              name={isRoot ? this.props.projectName : this.state.updatedName}
+            />
+          </button>
+          <input
+            data-testid="input"
+            type="text"
+            className="sidebar__file-item-input"
+            value={this.state.updatedName}
+            maxLength="128"
+            onChange={this.handleFileNameChange}
+            ref={(element) => {
+              this.fileNameInput = element;
+            }}
+            onBlur={this.handleFileNameBlur}
+            onKeyPress={this.handleKeyPress}
+          />
+          <button
+            className="sidebar__file-item-show-options"
+            aria-label={t('FileNode.ToggleFileOptionsARIA')}
+            ref={(element) => {
+              this[`fileOptions-${this.props.id}`] = element;
+            }}
+            tabIndex="0"
+            onClick={this.toggleFileOptions}
+            onBlur={this.onBlurComponent}
+            onFocus={this.onFocusComponent}
+          >
+            <DotsIcon
+              focusable="false"
+              aria-hidden="true"
+              viewBox="100 -650 500 500"
+            />
+          </button>
+          <div className="sidebar__file-item-options">
+            <ul title="file options">
+              {isFolder && (
+                <React.Fragment>
+                  <li>
+                    <button
+                      aria-label={t('FileNode.AddFolderARIA')}
+                      onClick={this.handleClickAddFolder}
+                      onBlur={this.onBlurComponent}
+                      onFocus={this.onFocusComponent}
+                      className="sidebar__file-item-option"
+                    >
+                      {t('FileNode.AddFolder')}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      aria-label={t('FileNode.AddFileARIA')}
+                      onClick={this.handleClickAddFile}
+                      onBlur={this.onBlurComponent}
+                      onFocus={this.onFocusComponent}
+                      className="sidebar__file-item-option"
+                    >
+                      {t('FileNode.AddFile')}
+                    </button>
+                  </li>
+                  {this.props.authenticated && (
+                    <li>
+                      <button
+                        aria-label={t('FileNode.UploadFileARIA')}
+                        onClick={this.handleClickUploadFile}
+                        onBlur={this.onBlurComponent}
+                        onFocus={this.onFocusComponent}
+                      >
+                        {t('FileNode.UploadFile')}
+                      </button>
+                    </li>
+                  )}
+                </React.Fragment>
+              )}
+              <li>
+                <button
+                  onClick={this.handleClickRename}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                  className="sidebar__file-item-option"
+                >
+                  {t('FileNode.Rename')}
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={this.handleClickDelete}
+                  onBlur={this.onBlurComponent}
+                  onFocus={this.onFocusComponent}
+                  className="sidebar__file-item-option"
+                >
+                  {t('FileNode.Delete')}
+                </button>
+              </li>
+            </ul>
           </div>
-        )}
+        </div>
+
         {this.props.children && (
           <ul className="file-item__children">
             {this.props.children.map(this.renderChild)}
@@ -426,7 +481,11 @@ FileNode.propTypes = {
   openUploadFileModal: PropTypes.func.isRequired,
   authenticated: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
-  onClickFile: PropTypes.func
+  onClickFile: PropTypes.func,
+  isLast: PropTypes.bool.isRequired,
+  level: PropTypes.number.isRequired,
+  isLastHistory: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired
 };
 
 FileNode.defaultProps = {
@@ -443,7 +502,8 @@ function mapStateToProps(state, ownProps) {
     fileType: 'file'
   };
   return Object.assign({}, fileNode, {
-    authenticated: state.user.authenticated
+    authenticated: state.user.authenticated,
+    projectName: selectProjectName(state)
   });
 }
 

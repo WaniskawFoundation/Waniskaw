@@ -3,8 +3,6 @@
 		background: getThemifyVariable("console-background-color");
 		border-color: getThemifyVariable("ide-border-color");
 	}
-	border-left: #{1 / $base-font-size}rem solid;
-	border-right: #{1 / $base-font-size}rem solid;
 	width: 100%;
 	height: 100%;
 	z-index: 1000;
@@ -128,7 +126,7 @@
 		fill: #ffffff;
 	}
 	.preview-console__header {
-		background-color: #757575;
+		background-color: $waniskaw-console-grey;
 	}
 	.preview-console__collapse svg,
 	.preview-console__expand svg {
