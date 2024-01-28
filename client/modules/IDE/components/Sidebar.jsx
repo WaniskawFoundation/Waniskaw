@@ -7,14 +7,11 @@ import {
   collapseSidebar,
   newFile,
   newFolder,
-  openProjectOptions
-  // openUploadFileModal
+  openProjectOptions,
+  openUploadFileModal
 } from '../actions/ide';
 import { selectRootFile } from '../selectors/files';
-import {
-  // getAuthenticated,
-  selectCanEditSketch
-} from '../selectors/users';
+import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 
 import ConnectedFileNode from './FileNode';
 // import { PlusIcon } from '../../../common/icons';
@@ -41,7 +38,7 @@ export default function SideBar() {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  // const isAuthenticated = useSelector(getAuthenticated);
+  const isAuthenticated = useSelector(getAuthenticated);
 
   const onBlurComponent = () => {
     setIsFocused(false);
@@ -99,8 +96,24 @@ export default function SideBar() {
       <div className="sidebar__footer" style={footerStyle}>
         <div className="sidebar__footer-project-size">17.3 MB</div>
         <div className="sidebar__footer-buttons">
-          <UploadIcon className="sidebar__footer-button" fill="white" />
-          <div className="sidebar__footer-buttons-spacer" />
+          {isAuthenticated && (
+            <UploadIcon
+              className="sidebar__footer-button"
+              fill="white"
+              aria-label={t('Sidebar.UploadFileARIA')}
+              onClick={() => {
+                dispatch(openUploadFileModal(rootFile.id));
+                setTimeout(() => dispatch(closeProjectOptions()), 0);
+              }}
+              onBlur={onBlurComponent}
+              onFocus={onFocusComponent}
+            >
+              {t('Sidebar.UploadFile')}
+            </UploadIcon>
+          )}
+          {isAuthenticated && (
+            <div className="sidebar__footer-buttons-spacer" />
+          )}
           <AddFileIcon
             className="sidebar__footer-button"
             onClick={() => {
@@ -129,3 +142,64 @@ export default function SideBar() {
     </FileDrawer>
   );
 }
+
+/* 
+<h3 className="sidebar__title">
+<span>{t('Sidebar.Title')}</span>
+</h3>
+<div className="sidebar__icons">
+<button
+  aria-label={t('Sidebar.ToggleARIA')}
+  className="sidebar__add"
+  tabIndex="0"
+  ref={sidebarOptionsRef}
+  onClick={toggleProjectOptions}
+  onBlur={onBlurComponent}
+  onFocus={onFocusComponent}
+>
+  <PlusIcon focusable="false" aria-hidden="true" />
+</button>
+<ul className="sidebar__project-options">
+  <li>
+    <button
+      aria-label={t('Sidebar.AddFolderARIA')}
+      onClick={() => {
+        dispatch(newFolder(rootFile.id));
+        setTimeout(() => dispatch(closeProjectOptions()), 0);
+      }}
+      onBlur={onBlurComponent}
+      onFocus={onFocusComponent}
+    >
+      {t('Sidebar.AddFolder')}
+    </button>
+  </li>
+  <li>
+    <button
+      aria-label={t('Sidebar.AddFileARIA')}
+      onClick={() => {
+        dispatch(newFile(rootFile.id));
+        setTimeout(() => dispatch(closeProjectOptions()), 0);
+      }}
+      onBlur={onBlurComponent}
+      onFocus={onFocusComponent}
+    >
+      {t('Sidebar.AddFile')}
+    </button>
+  </li>
+  {isAuthenticated && (
+    <li>
+      <button
+        aria-label={t('Sidebar.UploadFileARIA')}
+        onClick={() => {
+          dispatch(openUploadFileModal(rootFile.id));
+          setTimeout(() => dispatch(closeProjectOptions()), 0);
+        }}
+        onBlur={onBlurComponent}
+        onFocus={onFocusComponent}
+      >
+        {t('Sidebar.UploadFile')}
+      </button>
+    </li>
+  )}
+</ul>
+</div> */
