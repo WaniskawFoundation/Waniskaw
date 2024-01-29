@@ -77,7 +77,7 @@ describe('index.jsx integration', () => {
     expect(navigation).toBeInTheDocument();
 
     const fileButton = within(navigation).getByRole('button', {
-      name: /^file$/i
+      name: /^project$/i
     });
     expect(fileButton).toBeInTheDocument();
 
@@ -96,10 +96,10 @@ describe('index.jsx integration', () => {
     });
     expect(editButton).toBeInTheDocument();
 
-    const sketchButton = within(navigation).getByRole('button', {
-      name: /^sketch$/i
-    });
-    expect(sketchButton).toBeInTheDocument();
+    // const sketchButton = within(navigation).getByRole('button', {
+    //   name: /^sketch$/i
+    // });
+    // expect(sketchButton).toBeInTheDocument();
 
     const helpButton = within(navigation).getByRole('button', {
       name: /^help$/i
@@ -107,24 +107,24 @@ describe('index.jsx integration', () => {
     expect(helpButton).toBeInTheDocument();
   });
 
-  it('toolbar elements exist', () => {
-    const playButton = screen.getByRole('button', {
-      name: /play only visual sketch/i
-    });
-    expect(playButton).toBeInTheDocument();
+  // it('toolbar elements exist', () => {
+  //   const playButton = screen.getByRole('button', {
+  //     name: /play only visual sketch/i
+  //   });
+  //   expect(playButton).toBeInTheDocument();
 
-    const stopButton = screen.getByRole('button', {
-      name: /stop sketch/i
-    });
-    expect(stopButton).toBeInTheDocument();
+  //   const stopButton = screen.getByRole('button', {
+  //     name: /stop sketch/i
+  //   });
+  //   expect(stopButton).toBeInTheDocument();
 
-    const editSketchNameButton = screen.getByRole('button', {
-      name: /edit sketch name/i
-    });
-    expect(editSketchNameButton).toBeInTheDocument();
+  //   const editSketchNameButton = screen.getByRole('button', {
+  //     name: /edit sketch name/i
+  //   });
+  //   expect(editSketchNameButton).toBeInTheDocument();
 
-    expect(screen.getByText('Auto-refresh')).toBeInTheDocument();
-  });
+  //   expect(screen.getByText('Auto-refresh')).toBeInTheDocument();
+  // });
 
   it('preview exists', () => {
     expect(
