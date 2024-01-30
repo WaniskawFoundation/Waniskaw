@@ -9,7 +9,7 @@ import {
   screen,
   waitFor
 } from '../../../../test-utils';
-import { selectProjectName } from '../../selectors/project';
+// import { selectProjectName } from '../../selectors/project';
 import ToolbarComponent from './Toolbar';
 
 const server = setupServer(
