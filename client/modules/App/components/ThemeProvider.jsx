@@ -11,7 +11,11 @@ const Provider = ({ children, currentTheme }) => (
 
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
-  currentTheme: PropTypes.oneOf(Object.keys(Theme)).isRequired
+  currentTheme: PropTypes.oneOf(Object.keys(Theme))
+};
+
+Provider.defaultProps = {
+  currentTheme: 'light'
 };
 
 function mapStateToProps(state) {

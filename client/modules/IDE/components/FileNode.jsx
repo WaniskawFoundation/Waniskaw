@@ -482,9 +482,9 @@ FileNode.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   onClickFile: PropTypes.func,
-  isLast: PropTypes.bool.isRequired,
-  level: PropTypes.number.isRequired,
-  isLastHistory: PropTypes.string.isRequired,
+  isLast: PropTypes.bool,
+  level: PropTypes.number,
+  isLastHistory: PropTypes.string,
   projectName: PropTypes.string.isRequired
 };
 
@@ -492,7 +492,10 @@ FileNode.defaultProps = {
   onClickFile: null,
   parentId: '0',
   isSelectedFile: false,
-  isFolderClosed: false
+  isFolderClosed: false,
+  isLastHistory: '',
+  level: undefined,
+  isLast: undefined
 };
 
 function mapStateToProps(state, ownProps) {
