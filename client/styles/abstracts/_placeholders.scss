@@ -1,10 +1,9 @@
 %toolbar-button {
 	@include themify() {
 		display: inline-block;
-		height: #{44 / $base-font-size}rem;
-		width: #{44 / $base-font-size}rem;
+		height: #{28 / $base-font-size}rem;
+		width: #{28 / $base-font-size}rem;
 		text-align: center;
-		border-radius: 100%;
 		cursor: pointer;
 		border: none;
 		outline: none;

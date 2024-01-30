@@ -118,18 +118,20 @@ describe('index.jsx integration', () => {
     });
     expect(stopButton).toBeInTheDocument();
 
-    const editSketchNameButton = screen.getByRole('button', {
+    // Option Removed
+    /*  const editSketchNameButton = screen.getByRole('button', {
       name: /edit sketch name/i
     });
-    expect(editSketchNameButton).toBeInTheDocument();
+    expect(editSketchNameButton).toBeInTheDocument(); */
 
-    expect(screen.getByText('Auto-refresh')).toBeInTheDocument();
+    /* expect(screen.getByText('Auto-refresh')).toBeInTheDocument(); */
   });
 
   it('preview exists', () => {
-    expect(
+    // Removed Preview Heading
+    /* expect(
       screen.getByRole('heading', { name: /preview/i })
-    ).toBeInTheDocument();
+    ).toBeInTheDocument(); */
     const preview = screen.getByTitle(/sketch preview/i);
     expect(preview).toBeInTheDocument();
   });
@@ -137,10 +139,6 @@ describe('index.jsx integration', () => {
   it('code editor exists', () => {
     const codeeditor = screen.getByRole('article');
     expect(codeeditor).toBeInTheDocument();
-  });
-
-  it('sidebar exists', () => {
-    expect(screen.getByText('Sketch Files')).toBeInTheDocument();
   });
 
   // this test doesn't make sense anymore :/

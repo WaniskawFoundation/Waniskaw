@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import {
   openPreferences,
   startAccessibleSketch,
@@ -11,7 +11,7 @@ import {
   stopSketch
 } from '../../actions/ide';
 import {
-  setAutorefresh,
+  // setAutorefresh,
   setGridOutput,
   setTextOutput
 } from '../../actions/preferences';
@@ -19,14 +19,14 @@ import {
 import PlayIcon from '../../../../images/play.svg';
 import StopIcon from '../../../../images/stop.svg';
 import PreferencesIcon from '../../../../images/preferences.svg';
-import ProjectName from './ProjectName';
+// import ProjectName from './ProjectName';
 
 const Toolbar = (props) => {
   const { isPlaying, infiniteLoop, preferencesIsVisible } = useSelector(
     (state) => state.ide
   );
-  const project = useSelector((state) => state.project);
-  const autorefresh = useSelector((state) => state.preferences.autorefresh);
+  // const project = useSelector((state) => state.project);
+  // const autorefresh = useSelector((state) => state.preferences.autorefresh);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -44,8 +44,12 @@ const Toolbar = (props) => {
     'toolbar__preferences-button--selected': preferencesIsVisible
   });
 
+  // Used when hiding and showing the sidebar is allowed
+  // const sidebarIsExpanded = useSelector((state) => state.ide.sidebarIsExpanded);
+  const toolbarStyle = { display: 'flex' }; // { display: sidebarIsExpanded ? null : 'none' };
+
   return (
-    <div className="toolbar">
+    <div className="toolbar" style={toolbarStyle}>
       <button
         className="toolbar__play-sketch-button"
         onClick={() => {
@@ -69,7 +73,12 @@ const Toolbar = (props) => {
         title={t('Toolbar.PlaySketchARIA')}
         disabled={infiniteLoop}
       >
-        <PlayIcon focusable="false" aria-hidden="true" />
+        <PlayIcon
+          width="1rem"
+          height="1rem"
+          focusable="false"
+          aria-hidden="true"
+        />
       </button>
       <button
         className={stopButtonClass}
@@ -77,9 +86,14 @@ const Toolbar = (props) => {
         aria-label={t('Toolbar.StopSketchARIA')}
         title={t('Toolbar.StopSketchARIA')}
       >
-        <StopIcon focusable="false" aria-hidden="true" />
+        <StopIcon
+          width="1rem"
+          height="1rem"
+          focusable="false"
+          aria-hidden="true"
+        />
       </button>
-      <div className="toolbar__autorefresh">
+      {/*  <div className="toolbar__autorefresh">
         <input
           id="autorefresh"
           className="checkbox__autorefresh"
@@ -95,7 +109,7 @@ const Toolbar = (props) => {
         <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
           {t('Toolbar.Auto-refresh')}
         </label>
-      </div>
+        </div>
       <div className="toolbar__project-name-container">
         <ProjectName />
         {(() => {
@@ -111,14 +125,19 @@ const Toolbar = (props) => {
           }
           return null;
         })()}
-      </div>
+      </div> */}
       <button
         className={preferencesButtonClass}
         onClick={() => dispatch(openPreferences())}
         aria-label={t('Toolbar.OpenPreferencesARIA')}
         title={t('Toolbar.OpenPreferencesARIA')}
       >
-        <PreferencesIcon focusable="false" aria-hidden="true" />
+        <PreferencesIcon
+          width="1.5rem"
+          height="1.5rem"
+          focusable="false"
+          aria-hidden="true"
+        />
       </button>
     </div>
   );

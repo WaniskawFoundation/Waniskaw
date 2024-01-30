@@ -4,7 +4,7 @@ const initialState = {
   isPlaying: false,
   isAccessibleOutputPlaying: false,
   modalIsVisible: false,
-  sidebarIsExpanded: false,
+  sidebarIsExpanded: true,
   consoleIsExpanded: true,
   preferencesIsVisible: false,
   projectOptionsVisible: false,
