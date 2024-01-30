@@ -15,7 +15,8 @@ import { updateFileContent } from '../actions/files';
 import {
   autosaveProject,
   clearPersistedState,
-  getProject
+  getProject,
+  captureStartProjectTimestamp
 } from '../actions/project';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
@@ -74,6 +75,7 @@ const IDEView = () => {
   const preferences = useSelector((state) => state.preferences);
   const project = useSelector((state) => state.project);
   const isUserOwner = useSelector(getIsUserOwner);
+  const startTime = useSelector((state) => state.project.startTimestamp);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -96,11 +98,31 @@ const IDEView = () => {
     dispatch(clearPersistedState());
   }, [dispatch]);
 
+  // global state gets logged
+  console.log('global state startTime', startTime);
+
   useEffect(() => {
+    console.log('get project useEffect in IDEView');
+    console.log('project in IDE view', project);
     const { project_id: id, username } = params;
+    // if you just open IDE and demo project opens which doesn't have id assigned so id here is undefined
+    // upon saving the project it gets assigned id
+    console.log('current project id: ', id);
     if (id && project.id !== id) {
       dispatch(getProject(id, username));
     }
+    // time gets tracked only when user is in IDE view
+    // check if project id matches with url param
+    if (id && project.id === id) {
+      // if true -> capture start timestamp
+      const startTimestamp = new Date();
+      // save start timestamp to global state
+      dispatch(captureStartProjectTimestamp(startTimestamp));
+    }
+
+    // TODO capture when user exits IDE view -> when url changes
+    // log timestamp when exits IDE view
+    // save timestamp to global state
   }, [dispatch, params, project.id]);
 
   const autosaveAllowed = isUserOwner && project.id && preferences.autosave;

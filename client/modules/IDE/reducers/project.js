@@ -43,6 +43,10 @@ const project = (state, action) => {
       return Object.assign({}, state, { isSaving: true });
     case ActionTypes.END_SAVING_PROJECT:
       return Object.assign({}, state, { isSaving: false });
+    case ActionTypes.STOP_PROJECT_TIMESTAMP:
+      return { ...state, stopTimestamp: action.payload };
+    case ActionTypes.START_PROJECT_TIMESTAMP:
+      return { ...state, startTimestamp: action.payload };
     default:
       return state;
   }

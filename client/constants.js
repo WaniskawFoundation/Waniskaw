@@ -1,5 +1,8 @@
 // TODO Organize this file by reducer type, to break this apart into
 // multiple files
+export const START_PROJECT_TIMESTAMP = 'START_PROJECT_TIMESTAMP';
+export const STOP_PROJECT_TIMESTAMP = 'STOP_PROJECT_TIMESTAMP';
+
 export const UPDATE_FILE_CONTENT = 'UPDATE_FILE_CONTENT';
 export const TOGGLE_SKETCH = 'TOGGLE_SKETCH';
 
