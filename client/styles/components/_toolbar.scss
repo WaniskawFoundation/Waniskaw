@@ -1,4 +1,6 @@
 .toolbar__play-button {
+	width: 1.5rem;
+	height: 1.5rem;
 	@include themify() {
 		@extend %toolbar-button;
 		display: flex;
@@ -89,12 +91,8 @@
 }
 
 .toolbar {
-	padding: #{10 / $base-font-size}rem #{20 / $base-font-size}rem;
 	display: flex;
 	align-items: center;
-	@include themify() {
-		border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
-	}
 }
 
 .toolbar__project-name-container {
@@ -145,4 +143,10 @@
 	@include themify(){
 		color:getThemifyVariable('logo-color');
 	}
+}
+
+.toolbar__button-icon{
+	width: 3rem;
+	height: 3rem;
+	border-radius: 0;
 }

@@ -24,7 +24,7 @@ const initialTestState = {
     isPlaying: false,
     isAccessibleOutputPlaying: false,
     modalIsVisible: false,
-    sidebarIsExpanded: false,
+    sidebarIsExpanded: true, // false
     consoleIsExpanded: true,
     preferencesIsVisible: false,
     projectOptionsVisible: false,

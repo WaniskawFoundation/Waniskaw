@@ -130,8 +130,8 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 }
 
 .c1 > svg > path {
-  fill: #ed225d;
-  stroke: #ed225d;
+  fill: rgb(205,9,0);
+  stroke: rgb(205,9,0);
 }
 
 .c2 {
@@ -261,7 +261,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
 
 .c3 > div ul > li a:hover,
 .c3 > div ul > li button:hover {
-  background-color: #ed225d;
+  background-color: rgb(205,9,0);
   color: #FFF;
 }
 
@@ -323,7 +323,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
             >
               <test-file-stub
                 aria-hidden="true"
-                classname="sc-fujyAs cSTVlM"
+                classname="sc-fFSPTT fFhSuZ"
                 focusable="false"
               />
             </button>
@@ -339,7 +339,7 @@ exports[`Nav renders dashboard version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-iqAclL iOZiVo"
+              classname="sc-hHEiqL bceCuH"
               focusable="false"
             />
           </button>
@@ -775,8 +775,8 @@ exports[`Nav renders editor version for mobile 1`] = `
 }
 
 .c1 > svg > path {
-  fill: #ed225d;
-  stroke: #ed225d;
+  fill: rgb(205,9,0);
+  stroke: rgb(205,9,0);
 }
 
 .c2 {
@@ -906,7 +906,7 @@ exports[`Nav renders editor version for mobile 1`] = `
 
 .c3 > div ul > li a:hover,
 .c3 > div ul > li button:hover {
-  background-color: #ed225d;
+  background-color: rgb(205,9,0);
   color: #FFF;
 }
 
@@ -968,7 +968,7 @@ exports[`Nav renders editor version for mobile 1`] = `
             >
               <test-file-stub
                 aria-hidden="true"
-                classname="sc-fujyAs cSTVlM"
+                classname="sc-fFSPTT fFhSuZ"
                 focusable="false"
               />
             </button>
@@ -984,7 +984,7 @@ exports[`Nav renders editor version for mobile 1`] = `
           >
             <test-file-stub
               aria-hidden="true"
-              classname="sc-iqAclL iOZiVo"
+              classname="sc-hHEiqL bceCuH"
               focusable="false"
             />
           </button>

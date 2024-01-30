@@ -14,8 +14,11 @@ import { selectRootFile } from '../selectors/files';
 import { getAuthenticated, selectCanEditSketch } from '../selectors/users';
 
 import ConnectedFileNode from './FileNode';
-import { PlusIcon } from '../../../common/icons';
+// import { PlusIcon } from '../../../common/icons';
 import { FileDrawer } from './Editor/MobileEditor';
+import AddFileIcon from '../../../images/add-file.svg';
+import AddFolderIcon from '../../../images/add-folder.svg';
+import UploadIcon from '../../../images/upload.svg';
 
 // TODO: use a generic Dropdown UI component
 
@@ -67,6 +70,8 @@ export default function SideBar() {
     'sidebar--cant-edit': !canEditProject
   });
 
+  const footerStyle = { display: ide.sidebarIsExpanded ? null : 'none' };
+
   return (
     <FileDrawer>
       {ide.sidebarIsExpanded && (
@@ -82,71 +87,58 @@ export default function SideBar() {
       )}
       <section className={sidebarClass}>
         <header
+          id="sidebar__toolbar-portal"
           className="sidebar__header"
           onContextMenu={toggleProjectOptions}
-        >
-          <h3 className="sidebar__title">
-            <span>{t('Sidebar.Title')}</span>
-          </h3>
-          <div className="sidebar__icons">
-            <button
-              aria-label={t('Sidebar.ToggleARIA')}
-              className="sidebar__add"
-              tabIndex="0"
-              ref={sidebarOptionsRef}
-              onClick={toggleProjectOptions}
+        />
+        <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
+      </section>
+      <div className="sidebar__footer" style={footerStyle}>
+        <div className="sidebar__footer-project-size">17.3 MB</div>
+        <div className="sidebar__footer-buttons">
+          {isAuthenticated && (
+            <UploadIcon
+              className="sidebar__footer-button"
+              fill="white"
+              aria-label={t('Sidebar.UploadFileARIA')}
+              onClick={() => {
+                dispatch(openUploadFileModal(rootFile.id));
+                setTimeout(() => dispatch(closeProjectOptions()), 0);
+              }}
               onBlur={onBlurComponent}
               onFocus={onFocusComponent}
             >
-              <PlusIcon focusable="false" aria-hidden="true" />
-            </button>
-            <ul className="sidebar__project-options">
-              <li>
-                <button
-                  aria-label={t('Sidebar.AddFolderARIA')}
-                  onClick={() => {
-                    dispatch(newFolder(rootFile.id));
-                    setTimeout(() => dispatch(closeProjectOptions()), 0);
-                  }}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
-                >
-                  {t('Sidebar.AddFolder')}
-                </button>
-              </li>
-              <li>
-                <button
-                  aria-label={t('Sidebar.AddFileARIA')}
-                  onClick={() => {
-                    dispatch(newFile(rootFile.id));
-                    setTimeout(() => dispatch(closeProjectOptions()), 0);
-                  }}
-                  onBlur={onBlurComponent}
-                  onFocus={onFocusComponent}
-                >
-                  {t('Sidebar.AddFile')}
-                </button>
-              </li>
-              {isAuthenticated && (
-                <li>
-                  <button
-                    aria-label={t('Sidebar.UploadFileARIA')}
-                    onClick={() => {
-                      dispatch(openUploadFileModal(rootFile.id));
-                      setTimeout(() => dispatch(closeProjectOptions()), 0);
-                    }}
-                    onBlur={onBlurComponent}
-                    onFocus={onFocusComponent}
-                  >
-                    {t('Sidebar.UploadFile')}
-                  </button>
-                </li>
-              )}
-            </ul>
-          </div>
-        </header>
-        <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
-      </section>
+              {t('Sidebar.UploadFile')}
+            </UploadIcon>
+          )}
+          {isAuthenticated && (
+            <div className="sidebar__footer-buttons-spacer" />
+          )}
+          <AddFileIcon
+            className="sidebar__footer-button"
+            onClick={() => {
+              dispatch(newFile(rootFile.id));
+              setTimeout(() => dispatch(closeProjectOptions()), 0);
+            }}
+            onBlur={onBlurComponent}
+            onFocus={onFocusComponent}
+            fill="white"
+            viewBox="0 -1060 1200 1200"
+          />
+          <AddFolderIcon
+            className="sidebar__footer-button"
+            aria-label={t('Sidebar.AddFolderARIA')}
+            onClick={() => {
+              dispatch(newFolder(rootFile.id));
+              setTimeout(() => dispatch(closeProjectOptions()), 0);
+            }}
+            onBlur={onBlurComponent}
+            onFocus={onFocusComponent}
+            fill="white"
+            viewBox="0 -1100 1200 1200"
+          />
+        </div>
+      </div>
     </FileDrawer>
   );
 }

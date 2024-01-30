@@ -52,8 +52,8 @@ import * as hinter from '../../../../utils/p5-hinter';
 import '../../../../utils/codemirror-search';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
-import RightArrowIcon from '../../../../images/right-arrow.svg';
-import LeftArrowIcon from '../../../../images/left-arrow.svg';
+// import RightArrowIcon from '../../../../images/right-arrow.svg';
+// import LeftArrowIcon from '../../../../images/left-arrow.svg';
 import { getHTMLFile } from '../../reducers/files';
 import { selectActiveFile } from '../../selectors/files';
 
@@ -66,7 +66,7 @@ import * as UserActions from '../../../User/actions';
 import * as ConsoleActions from '../../actions/console';
 
 import AssetPreview from '../AssetPreview';
-import Timer from '../Timer';
+// import Timer from '../Timer';
 import EditorAccessibility from '../EditorAccessibility';
 import UnsavedChangesIndicator from '../UnsavedChangesIndicator';
 import { EditorContainer, EditorHolder } from './MobileEditor';
@@ -521,7 +521,7 @@ class Editor extends React.Component {
         {(matches) =>
           matches ? (
             <section className={editorSectionClass}>
-              <header className="editor__header">
+              {/*    <header className="editor__header">
                 <button
                   aria-label={this.props.t('Editor.OpenSketchARIA')}
                   className="sidebar__contract"
@@ -546,7 +546,7 @@ class Editor extends React.Component {
                   </span>
                   <Timer />
                 </div>
-              </header>
+              </header> */}
               <article
                 ref={(element) => {
                   this.codemirrorContainer = element;
@@ -641,8 +641,8 @@ Editor.propTypes = {
     })
   ).isRequired,
   isExpanded: PropTypes.bool.isRequired,
-  collapseSidebar: PropTypes.func.isRequired,
-  closeProjectOptions: PropTypes.func.isRequired,
+  // collapseSidebar: PropTypes.func.isRequired,
+  // closeProjectOptions: PropTypes.func.isRequired,
   expandSidebar: PropTypes.func.isRequired,
   clearConsole: PropTypes.func.isRequired,
   hideRuntimeErrorWarning: PropTypes.func.isRequired,
