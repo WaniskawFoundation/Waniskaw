@@ -32,7 +32,6 @@ import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
 import { setAutorefresh } from '../../actions/preferences';
-import ProjectName from './ProjectName';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
