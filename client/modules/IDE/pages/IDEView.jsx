@@ -77,12 +77,13 @@ const IDEView = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const startTime = useSelector((state) => state.project.startTimestamp);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  useTranslation();
 
   const params = useParams();
 
   const [consoleSize, setConsoleSize] = useState(150);
-  const [sidebarSize, setSidebarSize] = useState(160);
+  const [sidebarSize, setSidebarSize] = useState(250);
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   const cmRef = useRef({});
@@ -207,11 +208,11 @@ const IDEView = () => {
                     <Console />
                   </SplitPane>
                   <section className="preview-frame-holder">
-                    <header className="preview-frame__header">
+                    {/* <header className="preview-frame__header">
                       <h2 className="preview-frame__title">
                         {t('Toolbar.Preview')}
                       </h2>
-                    </header>
+                    </header> */}
                     <div className="preview-frame__content">
                       <div
                         className="preview-frame-overlay"

@@ -10,6 +10,9 @@
   align-items: center;
   min-height: #{29 / $base-font-size}rem;
   position: relative;
+  height: 5rem;
+  width: 100%;
+  border-top: 3px solid $waniskaw-light-border;
 }
 
 .sidebar__title {
@@ -56,11 +59,7 @@
   overflow-y: auto;
   padding-top: #{6 / $base-font-size}rem;
   flex: 1 1 auto;
-  @media (min-width: 770px) {
-    @include themify() {
-      border-top: 1px solid map-get($theme-map, 'ide-border-color');
-    }
-  }
+  
   .sidebar--contracted & {
     border: none;
   }
@@ -69,20 +68,12 @@
 .file-item__children {
   display: flex;
   flex-direction: column;
-  gap: #{4 / $base-font-size}rem;
 }
 
 .sidebar__file-item {
   font-size: #{12 / $base-font-size}rem;
   cursor: pointer;
   position: relative;
-  @include themify() {
-    color: map-get($theme-map, 'primary-text-color');
-    // TODO get this to not affect parent, need to move it into JS
-    &:hover:not(.sidebar__file-item--selected) > .file-item__content {
-      background-color: map-get($theme-map, 'file-hover-color');
-    }
-  }
 }
 
 .sidebar__file-item--folder {
@@ -90,40 +81,32 @@
   display: flex;
   align-items: center;
   > button {
-    padding-left: #{1 / $base-font-size}rem;
+    padding: 0
   }
 }
 
 // to indent each row in the file tree
 // not sure how to do this in a better way
 // it won't work if the file tree is too nested
+// FIXED by adding appropriate number of spacers to FileNode
 .file-item__spacer {
   flex-shrink: 0;
-  .sidebar__file-item & {
-    width: #{19 / $base-font-size}rem;
-    .sidebar__file-item & {
-      width: #{39 / $base-font-size}rem;
-      .sidebar__file-item & {
-        width: #{59 / $base-font-size}rem;
-        .sidebar__file-item & {
-          width: #{79 / $base-font-size}rem;
-          .sidebar__file-item & {
-            width: #{99 / $base-font-size}rem;
-          }
-        }
-      }
-    }
-  }
+  box-sizing: border-box;
+  width: 2rem;
+  margin-right: 0.3rem;
+}
+
+.file-item__spacer-line {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 2rem;
+  border-left: 0.2rem solid $medium-dark;
+  margin-right: 0.3rem;
 }
 
 .file-item__content {
   display: flex;
   position: relative;
-  .sidebar__file-item--selected > & {
-    @include themify() {
-      background-color: map-get($theme-map, 'file-selected-color');
-    }
-  }
   .sidebar--contracted & {
     display: none;
   }
@@ -144,6 +127,10 @@
   min-width: #{50 / $base-font-size}rem;
   white-space: nowrap;
   text-align: left;
+}
+
+.sidebar__file-item-name-text.folder {
+  font-weight: bold;
 }
 
 .sidebar__file-item-name {
@@ -174,7 +161,7 @@
   height: #{20 / $base-font-size}rem;
   @include icon();
   @include themify() {
-    margin-right: #{5 / $base-font-size}rem;
+    margin-right: #{8 / $base-font-size}rem;
   }
   display: none;
   position: absolute;
@@ -208,6 +195,13 @@
     display: flex;
   }
 }
+
+.sidebar__file-item--selected > .file-item__content > .sidebar__file-item-name {
+  text-decoration: underline;
+  text-decoration-color: $waniskaw-red;
+  text-decoration-thickness: 2px;
+}
+
 
 .sidebar__file-item-input {
   display: none;
@@ -290,6 +284,7 @@
 
 .sidebar__file-item-icon {
   margin-right: #{5 / $base-font-size}rem;
+  height: 100%;
   display: flex;
   align-items: center;
   & path {
@@ -329,4 +324,112 @@
   .sidebar--project-options & {
     display: flex;
   }
+}
+
+.sidebar__file-t-container {
+  flex-shrink: 0;
+  width: 1.2rem;
+  margin-right: 0.3rem !important;
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  border-left: 0.2rem solid $medium-dark;
+  box-sizing: border-box;
+}
+
+.sidebar__file-t-inner{
+  flex-shrink: 0;
+  width: 100%;
+  height: 0.2rem;
+  background-color: $medium-dark;
+}
+
+.sidebar__file-l-container {
+  flex-shrink: 0;
+  width: 1.2rem;
+  margin-right: 0.3rem !important;
+  background-color: inherit;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.sidebar__file-l-inner{
+  flex-shrink: 0;
+  width: 100%;
+  height: 50%;
+  border-bottom: 0.2rem solid $medium-dark;
+  border-left: 0.2rem solid $medium-dark;
+  box-sizing: border-box;
+}
+
+.sidebar__folder-item-container{
+  flex-shrink: 0;
+  display: flex;
+  height: 100%;
+}
+
+.sidebar__root-spacer {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 0.2rem;
+  box-sizing: border-box;
+}
+
+.root-file-item__spacer{
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 0.2rem;
+  box-sizing: border-box;
+}
+
+.sidebar__footer{
+  width: 100%;
+  box-sizing: border-box;
+  color: white;
+  background-color: rgb(73, 73, 73);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+}
+
+.sidebar__footer-buttons{
+  display: flex;
+  margin-right: 0.2rem;
+  align-items: center;
+}
+
+.sidebar__footer-button{
+  margin-right: 0.3rem;
+}
+
+.sidebar__footer-button:hover{
+  cursor: pointer;
+}
+
+.sidebar__footer-project-size{
+  font-size: 0.8rem;
+  margin-left: 1rem;
+}
+
+.sidebar__folder-icon-container{
+  display: flex;
+  position: relative;
+}
+
+.sidebar__folder-cross{
+  position: absolute;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.sidebar__footer-buttons-spacer{
+  border-left: 1px solid $waniskaw-light-border;
+  width: 0.6rem;
+  height: 1.5rem;
+  margin-left: 0.1rem;
+  box-sizing: border-box;
 }

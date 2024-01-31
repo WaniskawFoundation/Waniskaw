@@ -13,7 +13,7 @@ import { showToast } from '../../actions/toast';
 import { setLanguage } from '../../actions/preferences';
 import NavBar from '../../../../components/Nav/NavBar';
 import CaretLeftIcon from '../../../../images/left-arrow.svg';
-import LogoIcon from '../../../../images/p5js-logo-small.svg';
+import LogoIcon from '../../../../images/waniskaw-logo.svg';
 import { selectRootFile } from '../../selectors/files';
 import { selectSketchPath } from '../../selectors/project';
 import { metaKey, metaKeyName } from '../../../../utils/metaKey';
@@ -24,13 +24,15 @@ import {
   newFile,
   newFolder,
   showKeyboardShortcutModal,
-  showFundraiserModal,
   startSketch,
   stopSketch
 } from '../../actions/ide';
+import { openPreferences } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
+import { setAutorefresh } from '../../actions/preferences';
+import ProjectName from './ProjectName';
 
 const Nav = ({ layout }) => (
   <MediaQuery minWidth={770}>
@@ -38,7 +40,6 @@ const Nav = ({ layout }) => (
       matches ? (
         <NavBar>
           <LeftLayout layout={layout} />
-          <FundraiserSection />
           <UserMenu />
         </NavBar>
       ) : (
@@ -87,24 +88,6 @@ const UserMenu = () => {
   return null;
 };
 
-const FundraiserSection = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  return (
-    <>
-      <button
-        className="nav__fundraiser-btn"
-        onClick={() => dispatch(showFundraiserModal())}
-        aria-label="2023-fundraiser-button"
-        title="2023 Fundraiser Button"
-      >
-        {t('Nav.Fundraiser')}
-      </button>
-    </>
-  );
-};
-
 const DashboardMenu = () => {
   const { t } = useTranslation();
   const editorLink = useSelector(selectSketchPath);
@@ -136,6 +119,7 @@ const ProjectMenu = () => {
   const isUserOwner = useSelector(getIsUserOwner);
   const project = useSelector((state) => state.project);
   const user = useSelector((state) => state.user);
+  const autorefresh = useSelector((state) => state.preferences.autorefresh);
 
   const isUnsaved = !project?.id;
 
@@ -166,7 +150,7 @@ const ProjectMenu = () => {
           className="svg__logo"
         />
       </li>
-      <NavDropdownMenu id="file" title={t('Nav.File.Title')}>
+      <NavDropdownMenu id="project" title={t('Nav.Project.Title')}>
         <NavMenuItem onClick={newSketch}>{t('Nav.File.New')}</NavMenuItem>
         <NavMenuItem
           hideIf={
@@ -211,6 +195,44 @@ const ProjectMenu = () => {
         >
           {t('Nav.File.Examples')}
         </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
+          {t('Nav.Sketch.AddFile')}
+        </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
+          {t('Nav.Sketch.AddFolder')}
+        </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(startSketch())}>
+          {t('Nav.Sketch.Run')}
+          <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
+        </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(stopSketch())}>
+          {t('Nav.Sketch.Stop')}
+          <span className="nav__keyboard-shortcut">
+            {'\u21E7'}+{metaKeyName}+Enter
+          </span>
+        </NavMenuItem>
+        <NavMenuItem>
+          <div className="toolbar__autorefresh">
+            <label htmlFor="autorefresh" className="toolbar__autorefresh-label">
+              {t('Toolbar.Auto-refresh')}
+            </label>
+            <input
+              id="autorefresh"
+              className="checkbox__autorefresh"
+              type="checkbox"
+              checked={autorefresh}
+              onChange={(event) => {
+                dispatch(setAutorefresh(event.target.checked));
+                if (event.target.checked) {
+                  dispatch(startSketch());
+                }
+              }}
+            />
+          </div>
+        </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(openPreferences())}>
+          Settings
+        </NavMenuItem>
       </NavDropdownMenu>
       <NavDropdownMenu id="edit" title={t('Nav.Edit.Title')}>
         <NavMenuItem onClick={cmRef.current?.tidyCode}>
@@ -228,24 +250,7 @@ const ProjectMenu = () => {
           <span className="nav__keyboard-shortcut">{replaceCommand}</span>
         </NavMenuItem>
       </NavDropdownMenu>
-      <NavDropdownMenu id="sketch" title={t('Nav.Sketch.Title')}>
-        <NavMenuItem onClick={() => dispatch(newFile(rootFile.id))}>
-          {t('Nav.Sketch.AddFile')}
-        </NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(newFolder(rootFile.id))}>
-          {t('Nav.Sketch.AddFolder')}
-        </NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(startSketch())}>
-          {t('Nav.Sketch.Run')}
-          <span className="nav__keyboard-shortcut">{metaKeyName}+Enter</span>
-        </NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(stopSketch())}>
-          {t('Nav.Sketch.Stop')}
-          <span className="nav__keyboard-shortcut">
-            {'\u21E7'}+{metaKeyName}+Enter
-          </span>
-        </NavMenuItem>
-      </NavDropdownMenu>
+
       <NavDropdownMenu id="help" title={t('Nav.Help.Title')}>
         <NavMenuItem onClick={() => dispatch(showKeyboardShortcutModal())}>
           {t('Nav.Help.KeyboardShortcuts')}
@@ -292,8 +297,7 @@ const UnauthenticatedUserMenu = () => {
           </span>
         </Link>
       </li>
-      <span className="nav__item-or">{t('Nav.LoginOr')}</span>
-      <li className="nav__item">
+      <li className="nav__item signup">
         <Link to="/signup" className="nav__auth-button">
           <span className="nav__item-header" title="SignUp">
             {t('Nav.SignUp')}

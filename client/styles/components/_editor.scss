@@ -373,7 +373,7 @@ pre.CodeMirror-line {
   width: 100%;
   position: absolute;
   @include themify() {
-    border: 1px solid getThemifyVariable("ide-border-color");
+    border-top: 3px solid $waniskaw-light-border;
   }
   &.editor-holder--hidden .CodeMirror {
     display: none;

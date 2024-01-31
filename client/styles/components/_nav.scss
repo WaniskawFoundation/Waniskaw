@@ -1,15 +1,25 @@
+@font-face {
+  font-family: 'DM Mono';
+  src: url('/client/styles/fonts/DMMono-Regular.ttf') format('truetype');
+}
+
 .nav {
-  height: #{42 / $base-font-size}rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  padding: 16px;
 
-  @include themify() {
-    border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
-  }
+    @include themify() {
+     border-bottom: 1px dashed map-get($theme-map, 'nav-border-color');
+   }
 
-  & button {
-    padding: 0;
+    & button {
+      padding: 0;
+
+      @include themify() {
+        color: getThemifyVariable('logo-background-color');
+    }
   }
 }
 
@@ -21,6 +31,14 @@
   justify-content: flex-end;
   height: 100%;
   align-items: center;
+  gap: 8px;
+}
+
+.nav__item-header {
+  font-size: 16px;
+  font-family: 'DM Mono', monospace;
+  color: white;
+  fill: white;
 }
 
 .nav__fundraiser-btn {
@@ -36,14 +54,15 @@
   @include icon();
 }
 
-// .nav__items-left,
-// .nav__items-right {
-//   & button, & a {
-//     @include themify() {
-//       color: getThemifyVariable('primary-text-color');
-//     }
-//   }
-// }
+.nav__items-left,
+ .nav__items-right {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 100%;
+  align-items: center;
+}
 
 .nav__item {
   position: relative;
@@ -51,9 +70,26 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding: 4px 8px;
+
+  @include themify() {
+    background-color: getThemifyVariable('modal-button-color');
+  }
 
   & button {
-    padding: #{12 / $base-font-size}rem #{10 / $base-font-size}rem;
+    font-family: 'DM Mono', monospace;
+  }
+}
+
+.signup {
+  @include themify() {
+    background-color: getThemifyVariable('nav-hover-color');
+  }
+}
+
+.nav__item.signup:hover {
+  @include themify() {
+    background-color: getThemifyVariable('modal-button-color');
   }
 }
 
@@ -64,39 +100,18 @@
 .nav__item-header-triangle polygon,
 .nav__item-header-triangle path {
   @include themify() {
-    fill: getThemifyVariable('icon-color');
+    fill: getThemifyVariable('logo-background-color');
   }
 }
 
 .nav__item:hover {
-  .nav__item-header {
     @include themify() {
-      color: getThemifyVariable('nav-hover-color');
+      background-color: getThemifyVariable('nav-hover-color');
     }
-  }
-  
-  & g, & path {
-    @include themify() {
-      fill: getThemifyVariable('nav-hover-color');
-    }
-  }
 
   .nav__item-header-triangle polygon,
   .nav__item-header-triangle path {
-    @include themify() {
-      fill: getThemifyVariable('nav-hover-color');
-    }
-  }
-}
-
-.nav__item-header:hover {
-  @include themify() {
-    color: getThemifyVariable('nav-hover-color');
-  }
-  & g, & path {
-    @include themify() {
-      fill: getThemifyVariable('nav-hover-color');
-    }
+    width: 8px;
   }
 }
 
@@ -108,6 +123,8 @@
   @include themify() {
       color: getThemifyVariable('nav-hover-color');
     }
+  
+  font-family: 'DM Mono', monospace;
 }
 
 .nav__item-header-triangle {
@@ -123,7 +140,6 @@
 }
 
 .nav__items-right {
-  padding-right: #{20 / $base-font-size}rem;
 
   & .nav__dropdown {
     width: #{125 / $base-font-size}rem;
@@ -144,7 +160,17 @@
 }
 
 .nav__auth-button {
-  padding: #{10 / $base-font-size}rem;
+  font-family: 'DM Mono', monospace;
+
+  @include themify() {
+    color: getThemifyVariable('logo-background-color');
+  }
+
+  :hover {
+    @include themify() {
+      color: getThemifyVariable('logo-background-color');
+    }
+  }
 }
 
 // .nav__dropdown button {
@@ -164,8 +190,8 @@
 
 .nav__item-logo {
   position: relative;
-  height: #{42 / $base-font-size}rem;
-  width: #{56 / $base-font-size}rem;
+  height: #{60 / $base-font-size}rem;
+  width: #{60 / $base-font-size}rem;
 
   & span {
     position: absolute;
@@ -173,21 +199,23 @@
 }
 
 .svg__logo {
-
-  @include themify() {
-    // Set background color of the logo
-    background-color: getThemifyVariable('logo-color');
-  }
-
+  height: #{60 / $base-font-size}rem;
+  width: #{60 / $base-font-size}rem;
 }
 
 .svg__logo g path{
-  
+
   @include themify() {
     // Set internal color of the logo;
-    fill: getThemifyVariable('logo-background-color');
+    fill: getThemifyVariable('modal-button-color');
   }
+}
 
+.svg__logo:hover path {
+  @include themify() {
+    // Set internal color of the logo;
+    fill: getThemifyVariable('nav-hover-color');
+  }
 }
 
 
@@ -210,7 +238,7 @@
   & g, & path {
     opacity: 1;
     @include themify() {
-      fill: getThemifyVariable('inactive-text-color');
+      fill: getThemifyVariable('logo-background-color');
     }
   }
   margin-right: #{5 / $base-font-size}rem;
@@ -218,4 +246,6 @@
 
 .nav__back-link {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
