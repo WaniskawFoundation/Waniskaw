@@ -1,5 +1,15 @@
 {
   "Nav": {
+    "Project": {
+      "Title": "Project",
+      "New": "New",
+      "Share": "Share",
+      "Duplicate": "Duplicate",
+      "Open": "Open",
+      "Download": "Download",
+      "AddToCollection": "Add to Collection",
+      "Examples": "Examples"
+    },
     "File": {
       "Title": "File",
       "New": "New",
@@ -32,9 +42,9 @@
     "Lang": "Language",
     "BackEditor": "Back to Editor",
     "WarningUnsavedChanges": "Are you sure you want to leave this page? You have unsaved changes.",
-    "Login": "Log in",
+    "Login": "Login",
     "LoginOr": "or",
-    "SignUp": "Sign up",
+    "SignUp": "Sign-Up",
     "Auth": {
       "Welcome": "Welcome",
       "Hello": "Hello",

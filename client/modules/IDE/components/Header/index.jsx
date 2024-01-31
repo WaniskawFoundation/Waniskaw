@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import MediaQuery from 'react-responsive';
 import Nav from './Nav';
-import Toolbar from './Toolbar';
 
 const Header = (props) => {
   const project = useSelector((state) => state.project);
@@ -17,7 +13,7 @@ const Header = (props) => {
   return (
     <header>
       <Nav />
-      <MediaQuery minWidth={770}>
+      {/* <MediaQuery minWidth={770}>
         {(matches) => {
           if (matches && portalElt)
             return ReactDOM.createPortal(
@@ -29,13 +25,13 @@ const Header = (props) => {
             );
           return null;
         }}
-      </MediaQuery>
+      </MediaQuery> */}
     </header>
   );
 };
 
-Header.propTypes = {
-  syncFileContent: PropTypes.func.isRequired
-};
+// Header.propTypes = {
+//   syncFileContent: PropTypes.func.isRequired
+// };
 
 export default Header;

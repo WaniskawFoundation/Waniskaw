@@ -39,13 +39,6 @@ exports[`Nav renders dashboard version for desktop 1`] = `
           </a>
         </li>
       </ul>
-      <button
-        aria-label="2023-fundraiser-button"
-        class="nav__fundraiser-btn"
-        title="2023 Fundraiser Button"
-      >
-        Support p5.js and the Processing Foundation!
-      </button>
     </nav>
   </header>
 </DocumentFragment>
@@ -501,7 +494,7 @@ exports[`Nav renders editor version for desktop 1`] = `
             <span
               class="nav__item-header"
             >
-              File
+              Project
             </span>
             <test-file-stub
               aria-hidden="true"
@@ -517,6 +510,72 @@ exports[`Nav renders editor version for desktop 1`] = `
             >
               <button>
                 New
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add File
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Add Folder
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Run
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⌃+Enter
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Stop
+                <span
+                  class="nav__keyboard-shortcut"
+                >
+                  ⇧+⌃+Enter
+                </span>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                <div
+                  class="toolbar__autorefresh"
+                >
+                  <label
+                    class="toolbar__autorefresh-label"
+                    for="autorefresh"
+                  >
+                    Auto-refresh
+                  </label>
+                  <input
+                    class="checkbox__autorefresh"
+                    id="autorefresh"
+                    type="checkbox"
+                  />
+                </div>
+              </button>
+            </li>
+            <li
+              class="nav__dropdown-item"
+            >
+              <button>
+                Settings
               </button>
             </li>
           </ul>
@@ -584,64 +643,6 @@ exports[`Nav renders editor version for desktop 1`] = `
             <span
               class="nav__item-header"
             >
-              Sketch
-            </span>
-            <test-file-stub
-              aria-hidden="true"
-              classname="nav__item-header-triangle"
-              focusable="false"
-            />
-          </button>
-          <ul
-            class="nav__dropdown"
-          >
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Add File
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Add Folder
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Run
-                <span
-                  class="nav__keyboard-shortcut"
-                >
-                  ⌃+Enter
-                </span>
-              </button>
-            </li>
-            <li
-              class="nav__dropdown-item"
-            >
-              <button>
-                Stop
-                <span
-                  class="nav__keyboard-shortcut"
-                >
-                  ⇧+⌃+Enter
-                </span>
-              </button>
-            </li>
-          </ul>
-        </li>
-        <li
-          class="nav__item"
-        >
-          <button>
-            <span
-              class="nav__item-header"
-            >
               Help
             </span>
             <test-file-stub
@@ -683,13 +684,6 @@ exports[`Nav renders editor version for desktop 1`] = `
           </ul>
         </li>
       </ul>
-      <button
-        aria-label="2023-fundraiser-button"
-        class="nav__fundraiser-btn"
-        title="2023 Fundraiser Button"
-      >
-        Support p5.js and the Processing Foundation!
-      </button>
     </nav>
   </header>
 </DocumentFragment>

@@ -98,8 +98,8 @@
 .toolbar__project-name-container {
 	margin-left: #{10 / $base-font-size}rem;
 	padding-left: #{10 / $base-font-size}rem;
-  display: flex;
-  align-items: center;
+  	display: flex;
+  	align-items: center;
 }
 
 .toolbar .editable-input__label {
@@ -130,7 +130,6 @@
 			color: getThemifyVariable('logo-color');
 		}
 	}
-	margin-left: #{5 / $base-font-size}rem;
 	font-size: #{12 / $base-font-size}rem;
 }
 
