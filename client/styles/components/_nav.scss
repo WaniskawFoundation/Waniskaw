@@ -36,6 +36,9 @@
 
 .nav__item-header {
   font-size: 16px;
+  font-family: 'DM Mono', monospace;
+  color: white;
+  fill: white;
 }
 
 .nav__fundraiser-btn {
@@ -235,7 +238,7 @@
   & g, & path {
     opacity: 1;
     @include themify() {
-      fill: getThemifyVariable('inactive-text-color');
+      fill: getThemifyVariable('logo-background-color');
     }
   }
   margin-right: #{5 / $base-font-size}rem;
@@ -243,4 +246,6 @@
 
 .nav__back-link {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
