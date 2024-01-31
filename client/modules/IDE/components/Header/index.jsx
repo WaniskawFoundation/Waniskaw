@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import MediaQuery from 'react-responsive';
 import Nav from './Nav';
-import Toolbar from './Toolbar';
 
 const Header = (props) => {
   const project = useSelector((state) => state.project);
