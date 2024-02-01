@@ -85,7 +85,8 @@ export function updateProject(req, res) {
 
 export function getProject(req, res) {
   const { project_id: projectId, username } = req.params;
-  User.findByUsername(username, (err, user) => { // eslint-disable-line
+  User.findByUsername(username, (err, user) => {
+    // eslint-disable-line
     if (!user) {
       return res
         .status(404)
@@ -96,7 +97,8 @@ export function getProject(req, res) {
       $or: [{ _id: projectId }, { slug: projectId }]
     })
       .populate('user', 'username')
-      .exec((err, project) => { // eslint-disable-line
+      .exec((err, project) => {
+        // eslint-disable-line
         if (err) {
           console.log(err);
           return res
@@ -126,7 +128,8 @@ export function getProjectAsset(req, res) {
   const projectId = req.params.project_id;
   Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
     .populate('user', 'username')
-    .exec(async (err, project) => { // eslint-disable-line
+    .exec(async (err, project) => {
+      // eslint-disable-line
       if (err) {
         return res
           .status(404)
@@ -291,4 +294,28 @@ export function downloadProjectAsZip(req, res) {
     // save project to some path
     buildZip(project, req, res);
   });
+}
+
+export function setProjectTimestamps(req, res) {
+  console.log('set project timestamps controller method called');
+
+  const { startTimestamp, stopTimestamp } = req.body;
+  const { projectId } = req.params;
+
+  const timeSpent = {
+    startTimestamp,
+    stopTimestamp
+  };
+
+  console.log(req.body);
+
+  // FIXME timestamps dont get logged in database
+  // also timeSpent property doesnt get logged into project schema
+  return Project.findByIdAndUpdate(
+    projectId,
+    { $push: { timeSpent } },
+    { new: true }
+  )
+    .then((project) => res.status(200).send(project))
+    .catch((err) => res.status(500).send(err));
 }

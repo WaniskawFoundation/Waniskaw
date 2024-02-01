@@ -11,12 +11,14 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-
+import apiClient from '../../../utils/apiClient';
 import {
   autosaveProject,
   clearPersistedState,
   getProject,
-  captureStartProjectTimestamp
+  captureStartProjectTimestamp,
+  captureStopProjectTimestamp,
+  saveTimestamps
 } from '../actions/project';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
@@ -99,16 +101,10 @@ const IDEView = () => {
     dispatch(clearPersistedState());
   }, [dispatch]);
 
-  // global state gets logged
-  console.log('global state startTime', startTime);
-
   useEffect(() => {
-    console.log('get project useEffect in IDEView');
-    console.log('project in IDE view', project);
     const { project_id: id, username } = params;
     // if you just open IDE and demo project opens which doesn't have id assigned so id here is undefined
     // upon saving the project it gets assigned id
-    console.log('current project id: ', id);
     if (id && project.id !== id) {
       dispatch(getProject(id, username));
     }
@@ -121,9 +117,20 @@ const IDEView = () => {
       dispatch(captureStartProjectTimestamp(startTimestamp));
     }
 
-    // TODO capture when user exits IDE view -> when url changes
-    // log timestamp when exits IDE view
-    // save timestamp to global state
+    // capture when user exits IDE view -> when url changes
+    return () => {
+      if (id && project.id === id) {
+        // log timestamp when exits IDE view
+        // save timestamp to global state
+        const stopTimestamp = new Date();
+        dispatch(captureStopProjectTimestamp(stopTimestamp));
+        // save timestamps to db
+        apiClient.patch(`/projects/${project.id}/timestamps`, {
+          startTimestamp: startTime,
+          stopTimestamp
+        });
+      }
+    };
   }, [dispatch, params, project.id]);
 
   const autosaveAllowed = isUserOwner && project.id && preferences.autosave;
