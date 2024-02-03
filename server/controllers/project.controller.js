@@ -85,7 +85,8 @@ export function updateProject(req, res) {
 
 export function getProject(req, res) {
   const { project_id: projectId, username } = req.params;
-  User.findByUsername(username, (err, user) => {
+  // eslint-disable-next-line consistent-return
+  User.findByUsername(username, (user) => {
     // eslint-disable-line
     if (!user) {
       return res
@@ -128,6 +129,7 @@ export function getProjectAsset(req, res) {
   const projectId = req.params.project_id;
   Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
     .populate('user', 'username')
+    // eslint-disable-next-line consistent-return
     .exec(async (err, project) => {
       // eslint-disable-line
       if (err) {
