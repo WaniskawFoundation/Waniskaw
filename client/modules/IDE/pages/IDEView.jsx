@@ -112,7 +112,7 @@ const IDEView = () => {
     // check if project id matches with url param
     if (id && project.id === id) {
       // if true -> capture start timestamp
-      const startTimestamp = new Date();
+      const startTimestamp = new Date().toISOString();
       // save start timestamp to global state
       dispatch(captureStartProjectTimestamp(startTimestamp));
     }
@@ -122,7 +122,7 @@ const IDEView = () => {
       if (id && project.id === id) {
         // log timestamp when exits IDE view
         // save timestamp to global state
-        const stopTimestamp = new Date();
+        const stopTimestamp = new Date().toISOString();
         dispatch(captureStopProjectTimestamp(stopTimestamp));
         // save timestamps to db
         apiClient.patch(`/projects/${project.id}/timestamps`, {

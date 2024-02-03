@@ -297,25 +297,19 @@ export function downloadProjectAsZip(req, res) {
 }
 
 export function setProjectTimestamps(req, res) {
-  console.log('set project timestamps controller method called');
-
   const { startTimestamp, stopTimestamp } = req.body;
-  const { projectId } = req.params;
+  const { project_id: projectId } = req.params;
 
   const timeSpent = {
     startTimestamp,
     stopTimestamp
   };
 
-  console.log(req.body);
-
-  // FIXME timestamps dont get logged in database
-  // also timeSpent property doesnt get logged into project schema
-  return Project.findByIdAndUpdate(
-    projectId,
+  return Project.findOneAndUpdate(
+    { _id: projectId },
     { $push: { timeSpent } },
-    { new: true }
-  )
-    .then((project) => res.status(200).send(project))
-    .catch((err) => res.status(500).send(err));
+    { new: true, useFindAndModify: false }
+  ).catch((err) => {
+    console.error(err);
+  });
 }

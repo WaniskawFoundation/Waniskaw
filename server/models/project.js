@@ -44,7 +44,7 @@ const projectSchema = new Schema(
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
     slug: { type: String },
-    timeSpent: { type: [timeSpent] }
+    timeSpent: { type: [timeSpent], default: [] }
   },
   { timestamps: true, usePushEach: true }
 );
