@@ -89,17 +89,128 @@ export default function Preferences() {
         <TabList>
           <div className="tabs__titles">
             <Tab>
+              <h4 className="tabs__title">{t('Preferences.BasicSettings')}</h4>
+              <span className="settings_tabline"></span>
+            </Tab>
+            <Tab>
               <h4 className="tabs__title">
-                {t('Preferences.GeneralSettings')}
+                {/* {t('Preferences.ProjectSEO')} */}
+                {t('Project SEO')}
               </h4>
+              <span className="settings_tabline"></span>
+            </Tab>
+            <Tab>
+              <h4 className="tabs__title">
+                {t('Preferences.InterfaceSettings')}
+              </h4>
+              <span className="settings_tabline"></span>
             </Tab>
             <Tab>
               <h4 className="tabs__title">{t('Preferences.Accessibility')}</h4>
+              <span className="settings_tabline"></span>
             </Tab>
           </div>
         </TabList>
         <TabPanel>
+          <div className="modal-settings-right-main">
+            <h3 className="modal-settings-maintitle">Basic Settings</h3>
+            <label
+              htmlFor="modal-settings-right-inputfieldwrapper"
+              className="modal-settings-right-inputfieldwrapper"
+            >
+              Project Name
+              <input name="modal-settings-right-inputfieldwrapper" />
+            </label>
+            <p className="modal-settings-right-contenttitle">
+              Project Type
+              <div className="modal-settings-right-2flexbtnwrapper">
+                <label htmlFor="game">
+                  <input
+                    type="radio"
+                    id="game"
+                    name="projectType"
+                    value="Game"
+                  />
+                  Game
+                </label>
+                <label htmlFor="generativeArt">
+                  <input
+                    type="radio"
+                    name="projectType"
+                    id="generativeArt"
+                    value="Generative Art"
+                  />
+                  Generative Art
+                </label>
+                <label htmlFor="images">
+                  <input
+                    type="radio"
+                    name="projectType"
+                    id="images"
+                    value="Images"
+                  />
+                  Images
+                </label>
+                <label htmlFor="assetPack">
+                  <input
+                    type="radio"
+                    name="projectType"
+                    id="assetPack"
+                    value="Asset Pack"
+                  />
+                  Asset Pack
+                </label>
+                <label htmlFor="tutorial">
+                  <input
+                    type="radio"
+                    name="projectType"
+                    id="tutorial"
+                    value="Tutorial"
+                  />
+                  Tutorial
+                </label>
+                <label htmlFor="exampleCode">
+                  <input
+                    type="radio"
+                    name="projectType"
+                    id="exampleCode"
+                    value="Example Code"
+                  />
+                  Example Code
+                </label>
+              </div>
+            </p>
+            <p className="modal-settings-right-contenttitle">
+              Main Code File
+              <div className="modal-settings-right-2flexbtnwrapper">
+                <label htmlFor="sketchjs">
+                  <input
+                    type="radio"
+                    name="mainCodeFile"
+                    id="sketchjs"
+                    value="sketch.js"
+                  />
+                  sketch.js
+                </label>
+                <label htmlFor="objectjs">
+                  <input
+                    type="radio"
+                    name="mainCodeFile"
+                    id="objectjs"
+                    value="object.js"
+                  />
+                  object.js
+                </label>
+              </div>
+            </p>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <h3 className="modal-settings-maintitle">Project SEO</h3>
+        </TabPanel>
+        <TabPanel>
           <div className="preference">
+            <h3 className="modal-settings-maintitle">Interface Settings</h3>
             <h4 className="preference__title">{t('Preferences.Theme')}</h4>
             <div className="preference__options">
               <input
@@ -337,6 +448,7 @@ export default function Preferences() {
         </TabPanel>
         <TabPanel>
           <div className="preference">
+            <h3 className="modal-settings-maintitle">Accessibility</h3>
             <h4 className="preference__title">
               {t('Preferences.LineNumbers')}
             </h4>
@@ -401,7 +513,8 @@ export default function Preferences() {
                 {t('Preferences.Off')}
               </label>
               <button
-                className="preference__preview-button"
+                className="preference__option custom-preview-button"
+                // className="preference__preview-button"
                 onClick={() => new Audio(beepUrl).play()}
                 aria-label={t('Preferences.PreviewSoundARIA')}
               >
@@ -413,45 +526,52 @@ export default function Preferences() {
             <h4 className="preference__title">
               {t('Preferences.AccessibleTextBasedCanvas')}
             </h4>
-            <h6 className="preference__subtitle">
-              {t('Preferences.UsedScreenReader')}
-            </h6>
+            <div className="pref-minitext-wrapper">
+              <h6 className="pref-minitext">
+                {t('Preferences.UsedScreenReader')}
+              </h6>
 
-            <div className="preference__options">
-              <input
-                type="checkbox"
-                onChange={(event) => {
-                  dispatch(setTextOutput(event.target.checked));
-                }}
-                aria-label={t('Preferences.TextOutputARIA')}
-                name="text output"
-                id="text-output-on"
-                value="On"
-                checked={textOutput}
-              />
-              <label
-                htmlFor="text-output-on"
-                className="preference__option preference__canvas"
-              >
-                {t('Preferences.PlainText')}
-              </label>
-              <input
-                type="checkbox"
-                onChange={(event) => {
-                  dispatch(setGridOutput(event.target.checked));
-                }}
-                aria-label={t('Preferences.TableOutputARIA')}
-                name="table output"
-                id="table-output-on"
-                value="On"
-                checked={gridOutput}
-              />
-              <label
-                htmlFor="table-output-on"
-                className="preference__option preference__canvas"
-              >
-                {t('Preferences.TableText')}
-              </label>
+              <div className="preference__options pref-btnswrapper">
+                <div className="pref-btnbox">
+                  <input
+                    type="checkbox"
+                    onChange={(event) => {
+                      dispatch(setTextOutput(event.target.checked));
+                    }}
+                    aria-label={t('Preferences.TextOutputARIA')}
+                    name="text output"
+                    id="text-output-on"
+                    className="custom-checkbox"
+                    value="On"
+                    checked={textOutput}
+                  />
+                  <label
+                    htmlFor="text-output-on"
+                    className="preference__canvas"
+                  >
+                    {t('Preferences.PlainText')}
+                  </label>
+                </div>
+                <div className="pref-btnbox">
+                  <input
+                    type="checkbox"
+                    onChange={(event) => {
+                      dispatch(setGridOutput(event.target.checked));
+                    }}
+                    aria-label={t('Preferences.TableOutputARIA')}
+                    name="table output"
+                    id="table-output-on"
+                    value="On"
+                    checked={gridOutput}
+                  />
+                  <label
+                    htmlFor="table-output-on"
+                    className="preference__canvas"
+                  >
+                    {t('Preferences.TableText')}
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </TabPanel>

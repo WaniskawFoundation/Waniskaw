@@ -51,7 +51,7 @@ const Overlay = ({
           ref={ref}
           className="overlay__body"
         >
-          <header className="overlay__header">
+          {/* <header className="overlay__header">
             <h2 className="overlay__title">{title}</h2>
             <div className="overlay__actions">
               {actions}
@@ -63,7 +63,7 @@ const Overlay = ({
                 <ExitIcon focusable="false" aria-hidden="true" />
               </button>
             </div>
-          </header>
+          </header> */}
           {children}
         </section>
       </div>
