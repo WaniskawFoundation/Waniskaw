@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
 import express from 'express';
 import setProjectTimestamps from '../setTimestamps';
 import Project from '../../../models/project';
 
-jest.mock('../../../models/Project');
+jest.mock('../../../models/project');
 
 const app = express();
 app.use(express.json());
