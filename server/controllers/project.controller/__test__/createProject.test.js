@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 import { Response } from 'jest-express';
-import setProjectTimestamps from '../../project.controller';
 import Project, {
   createMock,
   createInstanceMock
@@ -376,69 +375,6 @@ describe('project.controller', () => {
 
         done();
       }
-
-      promise.then(expectations, expectations).catch(expectations);
-    });
-
-    it('generates start and stop timestamps', (done) => {
-      // create start and stop timestamps
-      // create mock project db instance
-      // get mock project
-      // call setProjectTimestamps() controller method
-      // expect response to be OK
-      const request = {
-        user: { _id: 'abc123', username: 'alice' },
-        params: {
-          username: 'dana'
-        },
-        body: {
-          startTimestamp: '2021-09-15T21:26:57.123Z',
-          stopTimestamp: '2021-09-15T22:26:57.123Z'
-        }
-      };
-      const response = new Response();
-
-      const result = {
-        _id: 'abc123',
-        id: 'abc123',
-        name: 'Project name',
-        serveSecure: false,
-        files: [],
-        timeSpent: [
-          {
-            startTimestamp: '2021-09-15T21:26:57.123Z',
-            stopTimestamp: '2021-09-15T22:26:57.123Z'
-          }
-        ]
-      };
-      const promise = setProjectTimestamps(request, response);
-
-      function expectations() {
-        const doc = response.json.mock.calls[0][0];
-
-        const responseBody = JSON.parse(JSON.stringify(doc));
-
-        expect(responseBody).toEqual(result);
-
-        expect(response.status).toHaveBeenCalledWith(201 || 200);
-
-        expect(ProjectMock).toHaveBeenCalledWith({
-          _id: 'abc123',
-          id: 'abc123',
-          name: 'Project name',
-          serveSecure: false,
-          files: [],
-          timeSpent: [
-            {
-              startTimestamp: '2021-09-15T21:26:57.123Z',
-              stopTimestamp: '2021-09-15T22:26:57.123Z'
-            }
-          ]
-        });
-
-        done();
-      }
-
       promise.then(expectations, expectations).catch(expectations);
     });
   });

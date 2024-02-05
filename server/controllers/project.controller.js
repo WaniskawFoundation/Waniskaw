@@ -19,6 +19,7 @@ export {
   default as getProjectsForUser,
   apiGetProjectsForUser
 } from './project.controller/getProjectsForUser';
+export { default as setProjectTimestamps } from './project.controller/setTimestamps';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
@@ -295,23 +296,5 @@ export function downloadProjectAsZip(req, res) {
   Project.findById(req.params.project_id, (err, project) => {
     // save project to some path
     buildZip(project, req, res);
-  });
-}
-
-export function setProjectTimestamps(req, res) {
-  const { startTimestamp, stopTimestamp } = req.body;
-  const { project_id: projectId } = req.params;
-
-  const timeSpent = {
-    startTimestamp,
-    stopTimestamp
-  };
-
-  return Project.findOneAndUpdate(
-    { _id: projectId },
-    { $push: { timeSpent } },
-    { new: true, useFindAndModify: false }
-  ).catch((err) => {
-    console.error(err);
   });
 }

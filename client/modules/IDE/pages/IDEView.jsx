@@ -17,8 +17,7 @@ import {
   clearPersistedState,
   getProject,
   captureStartProjectTimestamp,
-  captureStopProjectTimestamp,
-  saveTimestamps
+  captureStopProjectTimestamp
 } from '../actions/project';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
