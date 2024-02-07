@@ -26,11 +26,19 @@ export const defaultHTML = `<!DOCTYPE html>
 export const defaultCSS = `html, body {
   margin: 0;
   padding: 0;
+  height: 100%;   
+  width: 100%;
+  display: flex;  
+  justify-content: center; 
+  align-items: center;    
+  overflow: hidden; 
 }
+
 canvas {
-  display: block;
-}
-`;
+  display: block; 
+  max-width: 100%;
+  max-height: 100%;
+}`;
 
 export default function createDefaultFiles() {
   return {
