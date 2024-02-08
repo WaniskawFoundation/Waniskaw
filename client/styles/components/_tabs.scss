@@ -61,9 +61,9 @@
   height: 60px;
   margin: 0 0 -2px 0;
   // border-bottom: #{4 / $base-font-size}rem solid transparent;
-  & + & {
-    // margin-left: #{45 / $base-font-size}rem;
-  }
+  // & + & {
+  // margin-left: #{45 / $base-font-size}rem;
+  // }
 }
 
 .tabs__title {

@@ -129,8 +129,10 @@
     },
     "Preferences": {
       "Settings": "Paramètres",
-      "GeneralSettings": "Paramètres généraux",
-      "Accessibility": "Accessibilité",
+      "BasicSettings": "Basic Settings",
+      "ProjectSEO": "Project SEO",
+      "InterfaceSettings": "Interface Settings",
+      "Accessibility": "Accessibility",
       "Theme": "Thème",
       "LightTheme": "Clair",
       "LightThemeARIA": "Thème clair activé",

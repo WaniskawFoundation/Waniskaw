@@ -127,9 +127,9 @@
   align-items: center;
   // border-bottom: #{4 / $base-font-size}rem solid transparent;
   // border-bottom: #{4 / $base-font-size}rem solid $waniskaw-dark;
-  & + & {
-    // margin-left: #{45 / $base-font-size}rem;
-  }
+  // & + & {
+  //   margin-left: #{45 / $base-font-size}rem;
+  // }
   &:hover {
     @include themify() {
       // border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable("button-background-hover-color");

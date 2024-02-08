@@ -132,8 +132,10 @@
   },
   "Preferences": {
     "Settings": "সেটিংস",
-    "GeneralSettings": "সাধারিত সেটিংস",
-    "Accessibility": "অভগ্রাহণযোগ্যতা",
+    "BasicSettings": "Basic Settings",
+    "ProjectSEO": "Project SEO",
+    "InterfaceSettings": "Interface Settings",
+    "Accessibility": "Accessibility",
     "Theme": "থিম",
     "LightTheme": "হালকা",
     "LightThemeARIA": "হালকা থিম চালু",

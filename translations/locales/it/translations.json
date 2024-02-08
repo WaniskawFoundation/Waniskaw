@@ -567,8 +567,10 @@
   },
   "MobilePreferences": {
     "Settings": "Impostazioni",
-    "GeneralSettings": "Impostazioni generali",
-    "Accessibility": "Accessibilità",
+    "BasicSettings": "Basic Settings",
+    "ProjectSEO": "Project SEO",
+    "InterfaceSettings": "Interface Settings",
+    "Accessibility": "Accessibility",
     "AccessibleOutput": "Output accessibile",
     "Theme": "Tema",
     "LightTheme": "Chiaro",

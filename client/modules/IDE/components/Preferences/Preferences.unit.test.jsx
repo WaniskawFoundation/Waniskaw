@@ -484,7 +484,7 @@ describe('<Preferences />', () => {
     });
   });
 
-  describe('can toggle between general settings and accessibility tabs successfully', () => {
+  describe('can toggle between basic settings, project seo, interface settings and accessibility tabs successfully', () => {
     it('can toggle sucessfully', () => {
       // render the component with lineNumbers prop set to false
       subject({ lineNumbers: false });
@@ -501,10 +501,32 @@ describe('<Preferences />', () => {
       });
       expect(accessibilityElement1).toBeInTheDocument();
 
+      // switch to interface settings
+      act(() => {
+        fireEvent.click(
+          screen.getByRole('heading', { name: /interface settings/i })
+        );
+      });
+
+      // const interfacesettingsElement1 = screen.getByRole('radio', {
+      //   name: /theme on/i
+      // });
+      // expect(interfacesettingsElement1).toBeInTheDocument();
+
+      // switch to project seo
+      act(() => {
+        fireEvent.click(screen.getByRole('heading', { name: /project seo/i }));
+      });
+
+      // const projectseoElement1 = screen.getByRole('radio', {
+      //   name: /project tags on/i
+      // });
+      // expect(projectseoElement1).toBeInTheDocument();
+
       // switch back
       act(() => {
         fireEvent.click(
-          screen.getByRole('heading', { name: /general settings/i })
+          screen.getByRole('heading', { name: /basic settings/i })
         );
       });
 

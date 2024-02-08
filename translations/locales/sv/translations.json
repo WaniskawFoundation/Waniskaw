@@ -131,8 +131,10 @@
   },
   "Preferences": {
     "Settings": "Inställningar",
-    "GeneralSettings": "Allmänna inställningar",
-    "Accessibility": "Tillgänglighet",
+    "BasicSettings": "Basic Settings",
+    "ProjectSEO": "Project SEO",
+    "InterfaceSettings": "Interface Settings",
+    "Accessibility": "Accessibility",
     "Theme": "Tema",
     "LightTheme": "Ljust",
     "LightThemeARIA": "ljust tema på",

@@ -131,8 +131,10 @@
   },
   "Preferences": {
     "Settings": "Ayarlar",
-    "GeneralSettings": "Genel Ayarlar",
-    "Accessibility": "Erişilebilirlik",
+    "BasicSettings": "Basic Settings",
+    "ProjectSEO": "Project SEO",
+    "InterfaceSettings": "Interface Settings",
+    "Accessibility": "Accessibility",
     "Theme": "Tema",
     "LightTheme": "Aydınlık",
     "LightThemeARIA": "Aydınlık tema açık",

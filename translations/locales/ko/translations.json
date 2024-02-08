@@ -114,8 +114,10 @@
   },
   "Preferences": {
     "Settings": "설정",
-    "GeneralSettings": "일반",
-    "Accessibility": "접근성",
+    "BasicSettings": "Basic Settings",
+    "ProjectSEO": "Project SEO",
+    "InterfaceSettings": "Interface Settings",
+    "Accessibility": "Accessibility",
     "Theme": "테마",
     "LightTheme": "밝은 테마",
     "LightThemeARIA": "밝은 테마 켜짐",
@@ -549,7 +551,9 @@
   },
   "MobilePreferences": {
     "Settings": "Settings",
-    "GeneralSettings": "General settings",
+    "BasicSettings": "Basic Settings",
+    "ProjectSEO": "Project SEO",
+    "InterfaceSettings": "Interface Settings",
     "Accessibility": "Accessibility",
     "AccessibleOutput": "Accessible Output",
     "Theme": "Theme",

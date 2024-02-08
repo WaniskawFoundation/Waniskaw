@@ -128,8 +128,10 @@
   },
   "Preferences": {
     "Settings": "Configuración",
-    "GeneralSettings": "Configuración general",
-    "Accessibility": "Accesibilidad",
+    "BasicSettings": "Basic Settings",
+    "ProjectSEO": "Project SEO",
+    "InterfaceSettings": "Interface Settings",
+    "Accessibility": "Accessibility",
     "Theme": "Modo de visualización",
     "LightTheme": "Claro",
     "LightThemeARIA": "Modo de visualización claro activado",
