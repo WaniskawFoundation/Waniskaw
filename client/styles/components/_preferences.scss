@@ -31,11 +31,24 @@
     @extend %preferences-button;
     width: #{32 / $base-font-size}rem;
     height: #{32 / $base-font-size}rem;
-    margin-left: #{6 / $base-font-size}rem;
-    margin-right: #{10 / $base-font-size}rem;
+    // margin-left: #{6 / $base-font-size}rem;
+    // margin-right: #{10 / $base-font-size}rem;
+    margin-bottom: 0;
     line-height: #{40 / $base-font-size}rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $waniskaw-dark;
+    color: #ffffff;
+    &:hover {
+      background-color: $waniskaw-red;
+    }
     & svg {
-      width: #{10 / $base-font-size}rem;
+      // width: #{10 / $base-font-size}rem;
+      width: 2rem;
+      & path {
+        fill: #ffffff;
+      }
     }
   }
 }
@@ -44,8 +57,8 @@
   display: flex;
   flex-wrap: wrap;
   // padding-bottom: #{12 / $base-font-size}rem;
-  padding: 0.75rem 1.5rem 0 1.5rem;
   width: 440px;
+  padding: 0 1.5rem 0.75rem 1.5rem;
   .modal-settings-maintitle {
     font-size: 20px;
     font-weight: bold;
@@ -80,20 +93,28 @@
 
 .preference__value {
   @include themify() {
-    border: #{1 / $base-font-size}rem solid getThemifyVariable("button-border-color");
+    // border: #{1 / $base-font-size}rem solid getThemifyVariable("button-border-color");
     // background-color: getThemifyVariable("button-background-color");
-    color: getThemifyVariable("input-text-color");
-    background-color: getThemifyVariable("input-background-color");
+    // color: getThemifyVariable("input-text-color");
+    border: 2px solid $waniskaw-dark;
+    color: $waniskaw-dark;
+    margin: 0 0.75rem;
+    font-family: "Helvetica", sans-serif;
   }
   text-align: center;
   border-radius: 0%;
   outline: none;
-  width: #{44 / $base-font-size}rem;
-  height: #{40 / $base-font-size}rem;
+  // width: #{44 / $base-font-size}rem;
+  // height: #{40 / $base-font-size}rem;
+  width: #{32 / $base-font-size}rem;
+  height: #{32 / $base-font-size}rem;
   margin: 0 #{20 / $base-font-size}rem;
   padding: 0;
   font-size: #{16 / $base-font-size}rem;
   font-family: Inconsolata;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .preference__label {
@@ -267,11 +288,20 @@ input[type="checkbox"] {
 // }
 
 input[type="checkbox"]:checked:before {
-  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z' stroke='rgb(64,64,64)' stroke-width='2'/%3E%3C/svg%3E");
   width: 16px;
   height: 16px;
   display: inline-block;
   position: absolute;
   left: 0;
   top: 0;
+}
+
+.bottom_btns_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  width: 440px;
+  padding: 0 1.5rem 0.75rem 1.5rem;
 }

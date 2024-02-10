@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useTranslation } from 'react-i18next';
-import PlusIcon from '../../../../images/plus.svg';
-import MinusIcon from '../../../../images/minus.svg';
+import PlusIcon from '../../../../images/plus_waniskaw.svg';
+import MinusIcon from '../../../../images/minus_waniskaw.svg';
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import {
   setTheme,
@@ -347,7 +347,7 @@ export default function Preferences() {
           </div>
         </TabPanel>
         <TabPanel>
-          <p>HHHHHHHHHHHHHHH</p>
+          <p>Project SEO</p>
         </TabPanel>
         <TabPanel>
           <div className="preference">
@@ -408,9 +408,6 @@ export default function Preferences() {
               disabled={fontSize <= 8}
             >
               <MinusIcon focusable="false" aria-hidden="true" />
-              <h6 className="preference__label">
-                {t('Preferences.DecreaseFont')}
-              </h6>
             </button>
             <form
               onSubmit={onFontInputSubmit}
@@ -441,9 +438,6 @@ export default function Preferences() {
               disabled={fontSize >= 36}
             >
               <PlusIcon focusable="false" aria-hidden="true" />
-              <h6 className="preference__label">
-                {t('Preferences.IncreaseFont')}
-              </h6>
             </button>
           </div>
           <div className="preference">
@@ -714,6 +708,22 @@ export default function Preferences() {
                   </label>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="bottom_btns_wrapper">
+            <div className="preference__options">
+              <button
+                type="radio"
+                // onChange={() => dispatch(setTheme('contrast'))}
+              >
+                <h6 className="preference__label">Cancel</h6>
+              </button>
+              <button
+                type="radio"
+                // onChange={() => dispatch(setTheme('contrast'))}
+              >
+                <h6 className="preference__label">Save Changes</h6>
+              </button>
             </div>
           </div>
         </TabPanel>
