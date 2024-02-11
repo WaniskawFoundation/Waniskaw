@@ -161,9 +161,9 @@ class SketchListRowBase extends React.Component {
   render() {
     const { sketch, username, mobile } = this.props;
     const { renameOpen, renameValue } = this.state;
-    let url = `/${username}/sketches/${sketch.id}`;
+    let url = `/r/${username}/${sketch.id}`;
     if (username === 'p5') {
-      url = `/${username}/sketches/${slugify(sketch.name, '_')}`;
+      url = `/r/${username}/${slugify(sketch.name, '_')}`;
     }
 
     const name = (

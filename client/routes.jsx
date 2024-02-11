@@ -74,7 +74,7 @@ const routes = (
       path="/:username/sketches/:project_id/add-to-collection"
       component={IDEView}
     />
-    <Route path="/:username/sketches/:project_id" component={IDEView} />
+    <Route path="/r/:username/:project_id" component={IDEView} />
     <Route path="/:username/sketches" component={DashboardView} />
     <Route
       path="/:username/collections/:collection_id"

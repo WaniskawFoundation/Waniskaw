@@ -214,7 +214,7 @@ export function saveProject(
         dispatch(setNewProject(synchedProject));
         dispatch(setUnsavedChanges(false));
         browserHistory.push(
-          `/${response.data.user.username}/sketches/${response.data.id}`
+          `/r/${response.data.user.username}/${response.data.id}`
         );
 
         if (hasChanges) {

@@ -92,7 +92,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             scope="row"
           >
             <a
-              href="/happydog/sketches/testid1"
+              href="/r/happydog/testid1"
             >
               testsketch1
             </a>
@@ -128,7 +128,7 @@ exports[`<Sketchlist /> snapshot testing 1`] = `
             scope="row"
           >
             <a
-              href="/happydog/sketches/testid2"
+              href="/r/happydog/testid2"
             >
               testsketch2
             </a>

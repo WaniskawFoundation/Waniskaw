@@ -47,7 +47,7 @@ const CollectionItemRowBase = ({
   const name = projectIsDeleted ? (
     <span>{t('Collection.SketchDeleted')}</span>
   ) : (
-    <Link to={`/${item.project.user.username}/sketches/${item.projectId}`}>
+    <Link to={`/r/${item.project.user.username}/${item.projectId}`}>
       {item.project.name}
     </Link>
   );

@@ -53,9 +53,7 @@ const AssetListRowBase = ({ asset, username }) => (
     <td>{prettyBytes(asset.size)}</td>
     <td>
       {asset.sketchId && (
-        <Link to={`/${username}/sketches/${asset.sketchId}`}>
-          {asset.sketchName}
-        </Link>
+        <Link to={`/r/${username}/${asset.sketchId}`}>{asset.sketchName}</Link>
       )}
     </td>
     <td className="asset-table__dropdown-column">
