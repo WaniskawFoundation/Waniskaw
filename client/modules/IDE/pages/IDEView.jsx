@@ -32,7 +32,7 @@ import IDEOverlays from '../components/IDEOverlays';
 
 function getTitle(project) {
   const { id } = project;
-  return id ? `p5.js Web Editor | ${project.name}` : 'p5.js Web Editor';
+  return id ? `${project.name}` : 'p5.js Web Editor';
 }
 
 function isAuth(pathname) {
