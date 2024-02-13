@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 import { Response } from 'jest-express';
-
 import Project, {
   createMock,
   createInstanceMock
@@ -376,7 +375,6 @@ describe('project.controller', () => {
 
         done();
       }
-
       promise.then(expectations, expectations).catch(expectations);
     });
   });

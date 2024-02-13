@@ -7,6 +7,11 @@ import './user';
 
 const { Schema } = mongoose;
 
+const timeSpent = new Schema({
+  startTimestamp: { type: String, default: new Date() },
+  stopTimestamp: { type: String }
+});
+
 const fileSchema = new Schema(
   {
     name: { type: String, default: 'sketch.js' },
@@ -38,7 +43,8 @@ const projectSchema = new Schema(
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },
     _id: { type: String, default: shortid.generate },
-    slug: { type: String }
+    slug: { type: String },
+    timeSpent: { type: [timeSpent], default: [] }
   },
   { timestamps: true, usePushEach: true }
 );

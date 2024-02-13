@@ -19,6 +19,20 @@ const ROOT_URL = getConfig('API_URL');
 const S3_BUCKET_URL_BASE = getConfig('S3_BUCKET_URL_BASE');
 const S3_BUCKET = getConfig('S3_BUCKET');
 
+export function captureStartProjectTimestamp(startTimestamp) {
+  return {
+    type: ActionTypes.START_PROJECT_TIMESTAMP,
+    payload: startTimestamp
+  };
+}
+
+export function captureStopProjectTimestamp(stopTimestamp) {
+  return {
+    type: ActionTypes.STOP_PROJECT_TIMESTAMP,
+    payload: stopTimestamp
+  };
+}
+
 export function setProject(project) {
   return {
     type: ActionTypes.SET_PROJECT,

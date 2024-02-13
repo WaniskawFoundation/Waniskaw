@@ -11,11 +11,13 @@ import PreviewFrame from '../components/PreviewFrame';
 import Console from '../components/Console';
 import Toast from '../components/Toast';
 import { updateFileContent } from '../actions/files';
-
+import apiClient from '../../../utils/apiClient';
 import {
   autosaveProject,
   clearPersistedState,
-  getProject
+  getProject,
+  captureStartProjectTimestamp,
+  captureStopProjectTimestamp
 } from '../actions/project';
 import { getIsUserOwner } from '../selectors/users';
 import RootPage from '../../../components/RootPage';
@@ -74,6 +76,7 @@ const IDEView = () => {
   const preferences = useSelector((state) => state.preferences);
   const project = useSelector((state) => state.project);
   const isUserOwner = useSelector(getIsUserOwner);
+  const startTime = useSelector((state) => state.project.startTimestamp);
   const dispatch = useDispatch();
   // const { t } = useTranslation();
   useTranslation();
@@ -99,9 +102,34 @@ const IDEView = () => {
 
   useEffect(() => {
     const { project_id: id, username } = params;
+    // if you just open IDE and demo project opens which doesn't have id assigned so id here is undefined
+    // upon saving the project it gets assigned id
     if (id && project.id !== id) {
       dispatch(getProject(id, username));
     }
+    // time gets tracked only when user is in IDE view
+    // check if project id matches with url param
+    if (id && project.id === id) {
+      // if true -> capture start timestamp
+      const startTimestamp = new Date().toISOString();
+      // save start timestamp to global state
+      dispatch(captureStartProjectTimestamp(startTimestamp));
+    }
+
+    // capture when user exits IDE view -> when url changes
+    return () => {
+      if (id && project.id === id) {
+        // log timestamp when exits IDE view
+        // save timestamp to global state
+        const stopTimestamp = new Date().toISOString();
+        dispatch(captureStopProjectTimestamp(stopTimestamp));
+        // save timestamps to db
+        apiClient.patch(`/projects/${project.id}/timestamps`, {
+          startTimestamp: startTime,
+          stopTimestamp
+        });
+      }
+    };
   }, [dispatch, params, project.id]);
 
   const autosaveAllowed = isUserOwner && project.id && preferences.autosave;

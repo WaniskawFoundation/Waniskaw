@@ -12,6 +12,12 @@ router.put(
   ProjectController.updateProject
 );
 
+router.patch(
+  '/projects/:project_id/timestamps',
+  isAuthenticated,
+  ProjectController.setProjectTimestamps
+);
+
 router.get('/:username/projects/:project_id', ProjectController.getProject);
 
 router.delete(

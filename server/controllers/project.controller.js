@@ -19,6 +19,7 @@ export {
   default as getProjectsForUser,
   apiGetProjectsForUser
 } from './project.controller/getProjectsForUser';
+export { default as setProjectTimestamps } from './project.controller/setTimestamps';
 
 export function updateProject(req, res) {
   Project.findById(req.params.project_id, (findProjectErr, project) => {
@@ -85,7 +86,9 @@ export function updateProject(req, res) {
 
 export function getProject(req, res) {
   const { project_id: projectId, username } = req.params;
-  User.findByUsername(username, (err, user) => { // eslint-disable-line
+  // eslint-disable-next-line consistent-return
+  User.findByUsername(username, (user) => {
+    // eslint-disable-line
     if (!user) {
       return res
         .status(404)
@@ -96,7 +99,8 @@ export function getProject(req, res) {
       $or: [{ _id: projectId }, { slug: projectId }]
     })
       .populate('user', 'username')
-      .exec((err, project) => { // eslint-disable-line
+      .exec((err, project) => {
+        // eslint-disable-line
         if (err) {
           console.log(err);
           return res
@@ -126,7 +130,9 @@ export function getProjectAsset(req, res) {
   const projectId = req.params.project_id;
   Project.findOne({ $or: [{ _id: projectId }, { slug: projectId }] })
     .populate('user', 'username')
-    .exec(async (err, project) => { // eslint-disable-line
+    // eslint-disable-next-line consistent-return
+    .exec(async (err, project) => {
+      // eslint-disable-line
       if (err) {
         return res
           .status(404)
