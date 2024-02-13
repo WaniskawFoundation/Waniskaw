@@ -19,10 +19,7 @@ const PreviewNav = ({ owner, project }) => {
             className="svg__logo"
           />
         </div>
-        <Link
-          className="nav__item"
-          to={`/${owner.username}/sketches/${project.id}`}
-        >
+        <Link className="nav__item" to={`/r/${owner.username}/${project.id}`}>
           {project.name}
         </Link>
         <p className="toolbar__project-owner">{t('PreviewNav.ByUser')}</p>
@@ -32,7 +29,7 @@ const PreviewNav = ({ owner, project }) => {
       </div>
       <div className="nav__items-right">
         <Link
-          to={`/${owner.username}/sketches/${project.id}`}
+          to={`/r/${owner.username}/${project.id}`}
           aria-label={t('PreviewNav.EditSketchARIA')}
         >
           <CodeIcon

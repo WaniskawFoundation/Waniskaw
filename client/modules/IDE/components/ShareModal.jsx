@@ -29,7 +29,7 @@ const ShareModal = ({ projectId, ownerUsername, projectName }) => {
       <CopyableInput
         label={t('ShareModal.Edit')}
         hasPreviewLink
-        value={`${hostname}/${ownerUsername}/sketches/${projectId}`}
+        value={`${hostname}/r/${ownerUsername}/${projectId}`}
       />
     </div>
   );

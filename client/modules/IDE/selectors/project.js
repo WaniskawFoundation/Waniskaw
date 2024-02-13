@@ -7,5 +7,5 @@ export const selectProjectName = (state) => state.project.name;
 export const selectSketchPath = createSelector(
   selectProjectOwner,
   selectProjectId,
-  (owner, id) => (owner && id ? `/${owner.username}/sketches/${id}` : '/')
+  (owner, id) => (owner && id ? `/r/${owner.username}/${id}` : '/')
 );
