@@ -5,6 +5,15 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useTranslation } from 'react-i18next';
 import PlusIcon from '../../../../images/plus_waniskaw.svg';
 import MinusIcon from '../../../../images/minus_waniskaw.svg';
+import CloseIcon from '../../../../images/close-waniskaw.svg';
+
+import GameIcon from '../../../../images/game.svg';
+import GenerativeArtIcon from '../../../../images/generative_art.svg';
+import ImagesIcon from '../../../../images/images.svg';
+import AssetPackIcon from '../../../../images/asset_pack.svg';
+import TutorialIcon from '../../../../images/tutorial.svg';
+import ExampleCodeIcon from '../../../../images/example_code.svg';
+
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import {
   setTheme,
@@ -111,618 +120,670 @@ export default function Preferences() {
         <TabPanel>
           <div className="preference">
             <h3 className="modal-settings-maintitle">Basic Settings</h3>
-            <h4 className="preference__title">{t('Preferences.Theme')}</h4>
-            <div className="preference__options">
+            <h4 className="preference__title">Project Name</h4>
+            <div className="preference-textinput-wrapper">
               <input
-                type="radio"
-                onChange={() => dispatch(setTheme('light'))}
-                aria-label={t('Preferences.LightThemeARIA')}
-                name="light theme"
-                id="light-theme-on"
-                className="preference__radio-button"
-                value="light"
-                checked={theme === 'light'}
-              />
-              <label htmlFor="light-theme-on" className="preference__option">
-                {t('Preferences.LightTheme')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setTheme('dark'))}
-                aria-label={t('Preferences.DarkThemeARIA')}
-                name="dark theme"
-                id="dark-theme-on"
-                className="preference__radio-button"
-                value="dark"
-                checked={theme === 'dark'}
-              />
-              <label htmlFor="dark-theme-on" className="preference__option">
-                {t('Preferences.DarkTheme')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setTheme('contrast'))}
-                aria-label={t('Preferences.HighContrastThemeARIA')}
-                name="high contrast theme"
-                id="high-contrast-theme-on"
-                className="preference__radio-button"
-                value="contrast"
-                checked={theme === 'contrast'}
-              />
-              <label
-                htmlFor="high-contrast-theme-on"
-                className="preference__option"
-              >
-                {t('Preferences.HighContrastTheme')}
-              </label>
-            </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">{t('Preferences.TextSize')}</h4>
-            <button
-              className="preference__minus-button"
-              onClick={decreaseFontSize}
-              aria-label={t('Preferences.DecreaseFontARIA')}
-              title={t('Preferences.DecreaseFontARIA')}
-              disabled={fontSize <= 8}
-            >
-              <MinusIcon focusable="false" aria-hidden="true" />
-              <h6 className="preference__label">
-                {t('Preferences.DecreaseFont')}
-              </h6>
-            </button>
-            <form
-              onSubmit={onFontInputSubmit}
-              aria-label={t('Preferences.SetFontSize')}
-            >
-              <label htmlFor="font-size-value" className="preference--hidden">
-                {t('Preferences.FontSize')}
-              </label>
-              <input
-                className="preference__value"
-                aria-live="polite"
-                aria-atomic="true"
-                value={state.fontSize}
-                id="font-size-value"
-                onChange={onFontInputChange}
                 type="text"
-                ref={fontSizeInputRef}
-                onClick={() => {
-                  fontSizeInputRef.current?.select();
-                }}
+                placeholder="Type Project Name"
+                className="textinput-field-mini"
               />
-            </form>
-            <button
-              className="preference__plus-button"
-              onClick={increaseFontSize}
-              aria-label={t('Preferences.IncreaseFontARIA')}
-              title={t('Preferences.IncreaseFontARIA')}
-              disabled={fontSize >= 36}
-            >
-              <PlusIcon focusable="false" aria-hidden="true" />
-              <h6 className="preference__label">
-                {t('Preferences.IncreaseFont')}
-              </h6>
-            </button>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">{t('Preferences.Autosave')}</h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutosave(true))}
-                aria-label={t('Preferences.AutosaveOnARIA')}
-                name="autosave"
-                id="autosave-on"
-                className="preference__radio-button"
-                value="On"
-                checked={autosave}
-              />
-              <label htmlFor="autosave-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutosave(false))}
-                aria-label={t('Preferences.AutosaveOffARIA')}
-                name="autosave"
-                id="autosave-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!autosave}
-              />
-              <label htmlFor="autosave-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
             </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">
-              {t('Preferences.AutocloseBracketsQuotes')}
-            </h4>
+            <h4 className="preference__title">Project Type</h4>
             <div className="preference__options">
               <input
                 type="radio"
-                onChange={() => dispatch(setAutocloseBracketsQuotes(true))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOnARIA')}
-                name="autoclosebracketsquotes"
-                id="autoclosebracketsquotes-on"
                 className="preference__radio-button"
-                value="On"
-                checked={autocloseBracketsQuotes}
+                value="ProjectTypeGame"
+              />
+              <label htmlFor="ProjectTypeGame" className="preference__option">
+                <GameIcon className="preference-icon-before" />
+                Game
+              </label>
+              <input
+                type="radio"
+                className="preference__radio-button"
+                value="ProjectTypeGenerativeArt"
               />
               <label
-                htmlFor="autoclosebracketsquotes-on"
+                htmlFor="ProjectTypeGenerativeArt"
                 className="preference__option"
               >
-                {t('Preferences.On')}
+                <GenerativeArtIcon className="preference-icon-before" />
+                Generative Art
               </label>
               <input
                 type="radio"
-                onChange={() => dispatch(setAutocloseBracketsQuotes(false))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOffARIA')}
-                name="autoclosebracketsquotes"
-                id="autoclosebracketsquotes-off"
                 className="preference__radio-button"
-                value="Off"
-                checked={!autocloseBracketsQuotes}
+                value="ProjectTypeImages"
+              />
+              <label htmlFor="ProjectTypeImages" className="preference__option">
+                <ImagesIcon className="preference-icon-before" />
+                Images
+              </label>
+              <input
+                type="radio"
+                className="preference__radio-button"
+                value="ProjectTypeAssetPack"
               />
               <label
-                htmlFor="autoclosebracketsquotes-off"
+                htmlFor="ProjectTypeAssetPack"
                 className="preference__option"
               >
-                {t('Preferences.Off')}
+                <AssetPackIcon className="preference-icon-before" />
+                Asset Pack
               </label>
-            </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">
-              {t('Preferences.AutocompleteHinter')}
-            </h4>
-            <div className="preference__options">
               <input
                 type="radio"
-                onChange={() => dispatch(setAutocompleteHinter(true))}
-                aria-label={t('Preferences.AutocompleteHinterOnARIA')}
-                name="autocompletehinter"
-                id="autocompletehinter-on"
                 className="preference__radio-button"
-                value="On"
-                checked={autocompleteHinter}
+                value="ProjectTypeTutorial"
               />
               <label
-                htmlFor="autocompletehinter-on"
+                htmlFor="ProjectTypeTutorial"
                 className="preference__option"
               >
-                {t('Preferences.On')}
+                <TutorialIcon className="preference-icon-before" />
+                Tutorial
               </label>
               <input
                 type="radio"
-                onChange={() => dispatch(setAutocompleteHinter(false))}
-                aria-label={t('Preferences.AutocompleteHinterOffARIA')}
-                name="autocompletehinter"
-                id="autocompletehinter-off"
                 className="preference__radio-button"
-                value="Off"
-                checked={!autocompleteHinter}
+                value="ProjectTypeExampleCode"
               />
               <label
-                htmlFor="autocompletehinter-off"
+                htmlFor="ProjectTypeExampleCode"
                 className="preference__option"
               >
-                {t('Preferences.Off')}
+                <ExampleCodeIcon className="preference-icon-before" />
+                Example Code
               </label>
             </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">{t('Preferences.WordWrap')}</h4>
+            <h4 className="preference__title">Main Code File</h4>
             <div className="preference__options">
               <input
                 type="radio"
-                onChange={() => dispatch(setLinewrap(true))}
-                aria-label={t('Preferences.LineWrapOnARIA')}
-                name="linewrap"
-                id="linewrap-on"
                 className="preference__radio-button"
-                value="On"
-                checked={linewrap}
-              />
-              <label htmlFor="linewrap-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setLinewrap(false))}
-                aria-label={t('Preferences.LineWrapOffARIA')}
-                name="linewrap"
-                id="linewrap-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!linewrap}
-              />
-              <label htmlFor="linewrap-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
-            </div>
-          </div>
-        </TabPanel>
-        <TabPanel>
-          <p>Project SEO</p>
-        </TabPanel>
-        <TabPanel>
-          <div className="preference">
-            <h3 className="modal-settings-maintitle">Interface Settings</h3>
-            <h4 className="preference__title">{t('Preferences.Theme')}</h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setTheme('light'))}
-                aria-label={t('Preferences.LightThemeARIA')}
-                name="light theme"
-                id="light-theme-on"
-                className="preference__radio-button"
-                value="light"
-                checked={theme === 'light'}
-              />
-              <label htmlFor="light-theme-on" className="preference__option">
-                {t('Preferences.LightTheme')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setTheme('dark'))}
-                aria-label={t('Preferences.DarkThemeARIA')}
-                name="dark theme"
-                id="dark-theme-on"
-                className="preference__radio-button"
-                value="dark"
-                checked={theme === 'dark'}
-              />
-              <label htmlFor="dark-theme-on" className="preference__option">
-                {t('Preferences.DarkTheme')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setTheme('contrast'))}
-                aria-label={t('Preferences.HighContrastThemeARIA')}
-                name="high contrast theme"
-                id="high-contrast-theme-on"
-                className="preference__radio-button"
-                value="contrast"
-                checked={theme === 'contrast'}
+                value="MainCodeFileSketchjs"
               />
               <label
-                htmlFor="high-contrast-theme-on"
+                htmlFor="MainCodeFileSketchjs"
                 className="preference__option"
               >
-                {t('Preferences.HighContrastTheme')}
-              </label>
-            </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">{t('Preferences.TextSize')}</h4>
-            <button
-              className="preference__minus-button"
-              onClick={decreaseFontSize}
-              aria-label={t('Preferences.DecreaseFontARIA')}
-              title={t('Preferences.DecreaseFontARIA')}
-              disabled={fontSize <= 8}
-            >
-              <MinusIcon focusable="false" aria-hidden="true" />
-            </button>
-            <form
-              onSubmit={onFontInputSubmit}
-              aria-label={t('Preferences.SetFontSize')}
-            >
-              <label htmlFor="font-size-value" className="preference--hidden">
-                {t('Preferences.FontSize')}
-              </label>
-              <input
-                className="preference__value"
-                aria-live="polite"
-                aria-atomic="true"
-                value={state.fontSize}
-                id="font-size-value"
-                onChange={onFontInputChange}
-                type="text"
-                ref={fontSizeInputRef}
-                onClick={() => {
-                  fontSizeInputRef.current?.select();
-                }}
-              />
-            </form>
-            <button
-              className="preference__plus-button"
-              onClick={increaseFontSize}
-              aria-label={t('Preferences.IncreaseFontARIA')}
-              title={t('Preferences.IncreaseFontARIA')}
-              disabled={fontSize >= 36}
-            >
-              <PlusIcon focusable="false" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">{t('Preferences.Autosave')}</h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutosave(true))}
-                aria-label={t('Preferences.AutosaveOnARIA')}
-                name="autosave"
-                id="autosave-on"
-                className="preference__radio-button"
-                value="On"
-                checked={autosave}
-              />
-              <label htmlFor="autosave-on" className="preference__option">
-                {t('Preferences.On')}
+                sketch.js
               </label>
               <input
                 type="radio"
-                onChange={() => dispatch(setAutosave(false))}
-                aria-label={t('Preferences.AutosaveOffARIA')}
-                name="autosave"
-                id="autosave-off"
                 className="preference__radio-button"
-                value="Off"
-                checked={!autosave}
-              />
-              <label htmlFor="autosave-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
-            </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">
-              {t('Preferences.AutocloseBracketsQuotes')}
-            </h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocloseBracketsQuotes(true))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOnARIA')}
-                name="autoclosebracketsquotes"
-                id="autoclosebracketsquotes-on"
-                className="preference__radio-button"
-                value="On"
-                checked={autocloseBracketsQuotes}
+                value="MainCodeFileObjectjs"
               />
               <label
-                htmlFor="autoclosebracketsquotes-on"
+                htmlFor="MainCodeFileObjectjs"
                 className="preference__option"
               >
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocloseBracketsQuotes(false))}
-                aria-label={t('Preferences.AutocloseBracketsQuotesOffARIA')}
-                name="autoclosebracketsquotes"
-                id="autoclosebracketsquotes-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!autocloseBracketsQuotes}
-              />
-              <label
-                htmlFor="autoclosebracketsquotes-off"
-                className="preference__option"
-              >
-                {t('Preferences.Off')}
+                object.js
               </label>
             </div>
           </div>
-          <div className="preference">
-            <h4 className="preference__title">
-              {t('Preferences.AutocompleteHinter')}
-            </h4>
+          <div className="bottom_btns_wrapper">
             <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocompleteHinter(true))}
-                aria-label={t('Preferences.AutocompleteHinterOnARIA')}
-                name="autocompletehinter"
-                id="autocompletehinter-on"
-                className="preference__radio-button"
-                value="On"
-                checked={autocompleteHinter}
-              />
-              <label
-                htmlFor="autocompletehinter-on"
-                className="preference__option"
-              >
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setAutocompleteHinter(false))}
-                aria-label={t('Preferences.AutocompleteHinterOffARIA')}
-                name="autocompletehinter"
-                id="autocompletehinter-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!autocompleteHinter}
-              />
-              <label
-                htmlFor="autocompletehinter-off"
-                className="preference__option"
-              >
-                {t('Preferences.Off')}
-              </label>
-            </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">{t('Preferences.WordWrap')}</h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setLinewrap(true))}
-                aria-label={t('Preferences.LineWrapOnARIA')}
-                name="linewrap"
-                id="linewrap-on"
-                className="preference__radio-button"
-                value="On"
-                checked={linewrap}
-              />
-              <label htmlFor="linewrap-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setLinewrap(false))}
-                aria-label={t('Preferences.LineWrapOffARIA')}
-                name="linewrap"
-                id="linewrap-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!linewrap}
-              />
-              <label htmlFor="linewrap-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
-            </div>
-          </div>
-        </TabPanel>
-
-        <TabPanel>
-          <div className="preference">
-            <h3 className="modal-settings-maintitle">Accessibility</h3>
-            <h4 className="preference__title">
-              {t('Preferences.LineNumbers')}
-            </h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setLineNumbers(true))}
-                aria-label={t('Preferences.LineNumbersOnARIA')}
-                name="line numbers"
-                id="line-numbers-on"
-                className="preference__radio-button"
-                value="On"
-                checked={lineNumbers}
-              />
-              <label htmlFor="line-numbers-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setLineNumbers(false))}
-                aria-label={t('Preferences.LineNumbersOffARIA')}
-                name="line numbers"
-                id="line-numbers-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!lineNumbers}
-              />
-              <label htmlFor="line-numbers-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
-            </div>
-          </div>
-          <div className="preference">
-            <h4 className="preference__title">
-              {t('Preferences.LintWarningSound')}
-            </h4>
-            <div className="preference__options">
-              <input
-                type="radio"
-                onChange={() => dispatch(setLintWarning(true))}
-                aria-label={t('Preferences.LintWarningOnARIA')}
-                name="lint warning"
-                id="lint-warning-on"
-                className="preference__radio-button"
-                value="On"
-                checked={lintWarning}
-              />
-              <label htmlFor="lint-warning-on" className="preference__option">
-                {t('Preferences.On')}
-              </label>
-              <input
-                type="radio"
-                onChange={() => dispatch(setLintWarning(false))}
-                aria-label={t('Preferences.LintWarningOffARIA')}
-                name="lint warning"
-                id="lint-warning-off"
-                className="preference__radio-button"
-                value="Off"
-                checked={!lintWarning}
-              />
-              <label htmlFor="lint-warning-off" className="preference__option">
-                {t('Preferences.Off')}
-              </label>
               <button
-                className="preference__option custom-preview-button"
-                // className="preference__preview-button"
-                onClick={() => new Audio(beepUrl).play()}
-                aria-label={t('Preferences.PreviewSoundARIA')}
+                type="button"
+                className="bottom_btns_btn"
+                // onChange={() => dispatch(setTheme('contrast'))}
               >
-                {t('Preferences.PreviewSound')}
+                <h6>Cancel</h6>
+              </button>
+              <button
+                type="button"
+                className="bottom_btns_btn"
+                // onChange={() => dispatch(setTheme('contrast'))}
+              >
+                <h6>Save Changes</h6>
               </button>
             </div>
           </div>
-          <div className="preference">
-            <h4 className="preference__title">
-              {t('Preferences.AccessibleTextBasedCanvas')}
-            </h4>
-            <div className="pref-minitext-wrapper">
-              <h6 className="pref-minitext">
-                {t('Preferences.UsedScreenReader')}
-              </h6>
-
-              <div className="preference__options pref-btnswrapper">
-                <div className="pref-btnbox">
-                  <input
-                    type="checkbox"
-                    onChange={(event) => {
-                      dispatch(setTextOutput(event.target.checked));
-                    }}
-                    aria-label={t('Preferences.TextOutputARIA')}
-                    name="text output"
-                    id="text-output-on"
-                    className="custom-checkbox"
-                    value="On"
-                    checked={textOutput}
-                  />
-                  <label
-                    htmlFor="text-output-on"
-                    className="preference__canvas"
-                  >
-                    {t('Preferences.PlainText')}
-                  </label>
-                </div>
-                <div className="pref-btnbox">
-                  <input
-                    type="checkbox"
-                    onChange={(event) => {
-                      dispatch(setGridOutput(event.target.checked));
-                    }}
-                    aria-label={t('Preferences.TableOutputARIA')}
-                    name="table output"
-                    id="table-output-on"
-                    value="On"
-                    checked={gridOutput}
-                  />
-                  <label
-                    htmlFor="table-output-on"
-                    className="preference__canvas"
-                  >
-                    {t('Preferences.TableText')}
-                  </label>
-                </div>
+        </TabPanel>
+        <TabPanel>
+          <div>
+            <div className="preference">
+              <h3 className="modal-settings-maintitle">
+                Search Engine Optimization
+              </h3>
+              <div className="preference-seo-titlecount-wrapper">
+                <h4 className="preference__title">Project Tags</h4>
+                <h4 className="preference__title-count">3/4</h4>
+              </div>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="game"
+                />
+                <label htmlFor="prjtags-game" className="preference__option">
+                  game
+                </label>
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="multiplayer"
+                />
+                <label
+                  htmlFor="prjtags-multiplayer"
+                  className="preference__option"
+                >
+                  multiplayer
+                  <CloseIcon className="preference-icon-after" />
+                </label>
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="pvp"
+                />
+                <label htmlFor="prjtags-pvp" className="preference__option">
+                  pvp
+                  <CloseIcon className="preference-icon-after" />
+                </label>
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="mobilegame"
+                />
+                <label
+                  htmlFor="prjtags-mobilegame"
+                  className="preference__option"
+                >
+                  mobilegame
+                  <CloseIcon className="preference-icon-after" />
+                </label>
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="touchscreen"
+                />
+                <label
+                  htmlFor="prjtags-touchscreen"
+                  className="preference__option"
+                >
+                  touchscreen
+                  <CloseIcon className="preference-icon-after" />
+                </label>
+              </div>
+              <div className="preference-textinput-wrapper">
+                <input
+                  type="text"
+                  placeholder="Type New Tag Here"
+                  className="textinput-field-mini"
+                />
+              </div>
+              <div className="preference-seo-titlecount-wrapper">
+                <h4 className="preference__title">Project Description</h4>
+                <h4 className="preference__title-count">3/4</h4>
+              </div>
+              <div className="preference-textinput-wrapper">
+                <input
+                  type="text"
+                  placeholder="Long-form Text Field"
+                  className="textinput-field-long"
+                />
+              </div>
+              <h4 className="preference__title">Image File For Preview</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="coverImagepng"
+                />
+                <label htmlFor="coverImagepng" className="preference__option">
+                  coverImage.png
+                </label>
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="coverGeneratorjs"
+                />
+                <label
+                  htmlFor="coverGeneratorjs"
+                  className="preference__option"
+                >
+                  coverGenerator.js
+                </label>
+                <input
+                  type="radio"
+                  className="preference__radio-button"
+                  value="websiteSnapshothtml"
+                />
+                <label
+                  htmlFor="websiteSnapshothtml"
+                  className="preference__option"
+                >
+                  websiteSnapshot.html
+                </label>
               </div>
             </div>
           </div>
           <div className="bottom_btns_wrapper">
             <div className="preference__options">
               <button
-                type="radio"
+                type="button"
+                className="bottom_btns_btn"
                 // onChange={() => dispatch(setTheme('contrast'))}
               >
-                <h6 className="preference__label">Cancel</h6>
+                <h6>Cancel</h6>
               </button>
               <button
-                type="radio"
+                type="button"
+                className="bottom_btns_btn"
                 // onChange={() => dispatch(setTheme('contrast'))}
               >
-                <h6 className="preference__label">Save Changes</h6>
+                <h6>Save Changes</h6>
+              </button>
+            </div>
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div>
+            <div className="preference">
+              <h3 className="modal-settings-maintitle">Interface Settings</h3>
+              <h4 className="preference__title">{t('Preferences.Theme')}</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setTheme('light'))}
+                  aria-label={t('Preferences.LightThemeARIA')}
+                  name="light theme"
+                  id="light-theme-on"
+                  className="preference__radio-button"
+                  value="light"
+                  checked={theme === 'light'}
+                />
+                <label htmlFor="light-theme-on" className="preference__option">
+                  {t('Preferences.LightTheme')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setTheme('dark'))}
+                  aria-label={t('Preferences.DarkThemeARIA')}
+                  name="dark theme"
+                  id="dark-theme-on"
+                  className="preference__radio-button"
+                  value="dark"
+                  checked={theme === 'dark'}
+                />
+                <label htmlFor="dark-theme-on" className="preference__option">
+                  {t('Preferences.DarkTheme')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setTheme('contrast'))}
+                  aria-label={t('Preferences.HighContrastThemeARIA')}
+                  name="high contrast theme"
+                  id="high-contrast-theme-on"
+                  className="preference__radio-button"
+                  value="contrast"
+                  checked={theme === 'contrast'}
+                />
+                <label
+                  htmlFor="high-contrast-theme-on"
+                  className="preference__option"
+                >
+                  {t('Preferences.HighContrastTheme')}
+                </label>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">{t('Preferences.TextSize')}</h4>
+              <button
+                className="preference__minus-button"
+                onClick={decreaseFontSize}
+                aria-label={t('Preferences.DecreaseFontARIA')}
+                title={t('Preferences.DecreaseFontARIA')}
+                disabled={fontSize <= 8}
+              >
+                <MinusIcon focusable="false" aria-hidden="true" />
+              </button>
+              <form
+                onSubmit={onFontInputSubmit}
+                aria-label={t('Preferences.SetFontSize')}
+              >
+                <label htmlFor="font-size-value" className="preference--hidden">
+                  {t('Preferences.FontSize')}
+                </label>
+                <input
+                  className="preference__value"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  value={state.fontSize}
+                  id="font-size-value"
+                  onChange={onFontInputChange}
+                  type="text"
+                  ref={fontSizeInputRef}
+                  onClick={() => {
+                    fontSizeInputRef.current?.select();
+                  }}
+                />
+              </form>
+              <button
+                className="preference__plus-button"
+                onClick={increaseFontSize}
+                aria-label={t('Preferences.IncreaseFontARIA')}
+                title={t('Preferences.IncreaseFontARIA')}
+                disabled={fontSize >= 36}
+              >
+                <PlusIcon focusable="false" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">{t('Preferences.Autosave')}</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setAutosave(true))}
+                  aria-label={t('Preferences.AutosaveOnARIA')}
+                  name="autosave"
+                  id="autosave-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={autosave}
+                />
+                <label htmlFor="autosave-on" className="preference__option">
+                  {t('Preferences.On')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setAutosave(false))}
+                  aria-label={t('Preferences.AutosaveOffARIA')}
+                  name="autosave"
+                  id="autosave-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!autosave}
+                />
+                <label htmlFor="autosave-off" className="preference__option">
+                  {t('Preferences.Off')}
+                </label>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">
+                {t('Preferences.AutocloseBracketsQuotes')}
+              </h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setAutocloseBracketsQuotes(true))}
+                  aria-label={t('Preferences.AutocloseBracketsQuotesOnARIA')}
+                  name="autoclosebracketsquotes"
+                  id="autoclosebracketsquotes-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={autocloseBracketsQuotes}
+                />
+                <label
+                  htmlFor="autoclosebracketsquotes-on"
+                  className="preference__option"
+                >
+                  {t('Preferences.On')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setAutocloseBracketsQuotes(false))}
+                  aria-label={t('Preferences.AutocloseBracketsQuotesOffARIA')}
+                  name="autoclosebracketsquotes"
+                  id="autoclosebracketsquotes-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!autocloseBracketsQuotes}
+                />
+                <label
+                  htmlFor="autoclosebracketsquotes-off"
+                  className="preference__option"
+                >
+                  {t('Preferences.Off')}
+                </label>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">
+                {t('Preferences.AutocompleteHinter')}
+              </h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setAutocompleteHinter(true))}
+                  aria-label={t('Preferences.AutocompleteHinterOnARIA')}
+                  name="autocompletehinter"
+                  id="autocompletehinter-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={autocompleteHinter}
+                />
+                <label
+                  htmlFor="autocompletehinter-on"
+                  className="preference__option"
+                >
+                  {t('Preferences.On')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setAutocompleteHinter(false))}
+                  aria-label={t('Preferences.AutocompleteHinterOffARIA')}
+                  name="autocompletehinter"
+                  id="autocompletehinter-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!autocompleteHinter}
+                />
+                <label
+                  htmlFor="autocompletehinter-off"
+                  className="preference__option"
+                >
+                  {t('Preferences.Off')}
+                </label>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">{t('Preferences.WordWrap')}</h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setLinewrap(true))}
+                  aria-label={t('Preferences.LineWrapOnARIA')}
+                  name="linewrap"
+                  id="linewrap-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={linewrap}
+                />
+                <label htmlFor="linewrap-on" className="preference__option">
+                  {t('Preferences.On')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setLinewrap(false))}
+                  aria-label={t('Preferences.LineWrapOffARIA')}
+                  name="linewrap"
+                  id="linewrap-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!linewrap}
+                />
+                <label htmlFor="linewrap-off" className="preference__option">
+                  {t('Preferences.Off')}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="bottom_btns_wrapper">
+            <div className="preference__options">
+              <button
+                type="button"
+                className="bottom_btns_btn"
+                // onChange={() => dispatch(setTheme('contrast'))}
+              >
+                <h6>Cancel</h6>
+              </button>
+              <button
+                type="button"
+                className="bottom_btns_btn"
+                // onChange={() => dispatch(setTheme('contrast'))}
+              >
+                <h6>Save Changes</h6>
+              </button>
+            </div>
+          </div>
+        </TabPanel>
+
+        <TabPanel>
+          <div>
+            <div className="preference">
+              <h3 className="modal-settings-maintitle">Accessibility</h3>
+              <h4 className="preference__title">
+                {t('Preferences.LineNumbers')}
+              </h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setLineNumbers(true))}
+                  aria-label={t('Preferences.LineNumbersOnARIA')}
+                  name="line numbers"
+                  id="line-numbers-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={lineNumbers}
+                />
+                <label htmlFor="line-numbers-on" className="preference__option">
+                  {t('Preferences.On')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setLineNumbers(false))}
+                  aria-label={t('Preferences.LineNumbersOffARIA')}
+                  name="line numbers"
+                  id="line-numbers-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!lineNumbers}
+                />
+                <label
+                  htmlFor="line-numbers-off"
+                  className="preference__option"
+                >
+                  {t('Preferences.Off')}
+                </label>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">
+                {t('Preferences.LintWarningSound')}
+              </h4>
+              <div className="preference__options">
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setLintWarning(true))}
+                  aria-label={t('Preferences.LintWarningOnARIA')}
+                  name="lint warning"
+                  id="lint-warning-on"
+                  className="preference__radio-button"
+                  value="On"
+                  checked={lintWarning}
+                />
+                <label htmlFor="lint-warning-on" className="preference__option">
+                  {t('Preferences.On')}
+                </label>
+                <input
+                  type="radio"
+                  onChange={() => dispatch(setLintWarning(false))}
+                  aria-label={t('Preferences.LintWarningOffARIA')}
+                  name="lint warning"
+                  id="lint-warning-off"
+                  className="preference__radio-button"
+                  value="Off"
+                  checked={!lintWarning}
+                />
+                <label
+                  htmlFor="lint-warning-off"
+                  className="preference__option"
+                >
+                  {t('Preferences.Off')}
+                </label>
+                <button
+                  className="preference__option custom-preview-button"
+                  // className="preference__preview-button"
+                  onClick={() => new Audio(beepUrl).play()}
+                  aria-label={t('Preferences.PreviewSoundARIA')}
+                >
+                  {t('Preferences.PreviewSound')}
+                </button>
+              </div>
+            </div>
+            <div className="preference">
+              <h4 className="preference__title">
+                {t('Preferences.AccessibleTextBasedCanvas')}
+              </h4>
+              <div className="pref-minitext-wrapper">
+                <h6 className="pref-minitext">
+                  {t('Preferences.UsedScreenReader')}
+                </h6>
+
+                <div className="preference__options pref-btnswrapper">
+                  <div className="pref-btnbox">
+                    <input
+                      type="checkbox"
+                      onChange={(event) => {
+                        dispatch(setTextOutput(event.target.checked));
+                      }}
+                      aria-label={t('Preferences.TextOutputARIA')}
+                      name="text output"
+                      id="text-output-on"
+                      className="custom-checkbox"
+                      value="On"
+                      checked={textOutput}
+                    />
+                    <label
+                      htmlFor="text-output-on"
+                      className="preference__canvas"
+                    >
+                      {t('Preferences.PlainText')}
+                    </label>
+                  </div>
+                  <div className="pref-btnbox">
+                    <input
+                      type="checkbox"
+                      onChange={(event) => {
+                        dispatch(setGridOutput(event.target.checked));
+                      }}
+                      aria-label={t('Preferences.TableOutputARIA')}
+                      name="table output"
+                      id="table-output-on"
+                      value="On"
+                      checked={gridOutput}
+                    />
+                    <label
+                      htmlFor="table-output-on"
+                      className="preference__canvas"
+                    >
+                      {t('Preferences.TableText')}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bottom_btns_wrapper">
+            <div className="preference__options">
+              <button
+                type="button"
+                className="bottom_btns_btn"
+                // onChange={() => dispatch(setTheme('contrast'))}
+              >
+                <h6>Cancel</h6>
+              </button>
+              <button
+                type="button"
+                className="bottom_btns_btn"
+                // onChange={() => dispatch(setTheme('contrast'))}
+              >
+                <h6>Save Changes</h6>
               </button>
             </div>
           </div>
