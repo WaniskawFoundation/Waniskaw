@@ -21,7 +21,7 @@ describe('<EditorAccessibility />', () => {
         lintMessages={[
           {
             severity: 'info',
-            line: '1',
+            line: parseInt('1', 10),
             message: 'foo',
             id: '1a2b3c'
           }

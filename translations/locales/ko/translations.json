@@ -114,7 +114,9 @@
   },
   "Preferences": {
     "Settings": "설정",
-    "GeneralSettings": "일반",
+    "BasicSettings": "기본 설정",
+    "ProjectSEO": "프로젝트 SEO",
+    "InterfaceSettings": "인터페이스 설정",
     "Accessibility": "접근성",
     "Theme": "테마",
     "LightTheme": "밝은 테마",
@@ -548,9 +550,11 @@
     "ByUser": "by"
   },
   "MobilePreferences": {
-    "Settings": "Settings",
-    "GeneralSettings": "General settings",
-    "Accessibility": "Accessibility",
+    "Settings": "설정",
+    "BasicSettings": "기본 설정",
+    "ProjectSEO": "프로젝트 SEO",
+    "InterfaceSettings": "인터페이스 설정",
+    "Accessibility": "접근성",
     "AccessibleOutput": "Accessible Output",
     "Theme": "Theme",
     "LightTheme": "Light",

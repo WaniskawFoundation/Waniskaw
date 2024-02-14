@@ -128,7 +128,9 @@
   },
   "Preferences": {
     "Settings": "Einstellungen",
-    "GeneralSettings": "Allgemeine Einstellungen",
+    "BasicSettings": "Grundeinstellungen",
+    "ProjectSEO": "Projekt-SEO",
+    "InterfaceSettings": "Schnittstelleneinstellungen",
     "Accessibility": "Bedienungshilfen",
     "Theme": "Erscheinungsbild",
     "LightTheme": "Hell",
@@ -562,7 +564,9 @@
   },
   "MobilePreferences": {
     "Settings": "Einstellungen",
-    "GeneralSettings": "Allgemeine Einstellungen",
+    "BasicSettings": "Grundeinstellungen",
+    "ProjectSEO": "Projekt-SEO",
+    "InterfaceSettings": "Schnittstelleneinstellungen",
     "Accessibility": "Bedienungshilfen",
     "AccessibleOutput": "Bedienungshilfen Ausgabe",
     "Theme": "Erscheinungsbild",

@@ -128,7 +128,9 @@
     },
     "Preferences": {
       "Settings": "設定",
-      "GeneralSettings": "一般設定",
+      "BasicSettings": "基本設定",
+      "ProjectSEO": "プロジェクトSEO",
+      "InterfaceSettings": "インターフェース設定",
       "Accessibility": "アクセシビリティ",
       "Theme": "テーマ",
       "LightTheme": "ライト",
@@ -561,7 +563,9 @@
     },
     "MobilePreferences": {
       "Settings": "設定",
-      "GeneralSettings": "一般設定",
+      "BasicSettings": "基本設定",
+      "ProjectSEO": "プロジェクトSEO",
+      "InterfaceSettings": "インターフェース設定",
       "Accessibility": "アクセシビリティ",
       "AccessibleOutput": "アクセシビリティ出力",
       "Theme": "テーマ",

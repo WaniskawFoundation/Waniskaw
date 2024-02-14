@@ -128,7 +128,9 @@
     },
     "Preferences": {
       "Settings": "सेटिंग्स",
-      "GeneralSettings": "सामान्य सेटिंग्स",
+      "BasicSettings": "बेसिक सेटिंग्स",
+      "ProjectSEO": "प्रोजेक्ट SEO",
+      "InterfaceSettings": "इंटरफेस सेटिंग्स",
       "Accessibility": "ऐक्सेसबिलिटी",
       "Theme": "थीम",
       "LightTheme": "लाइट",
@@ -564,8 +566,9 @@
     },
     "MobilePreferences": {
       "Settings": "सेटिंग्स",
-      "GeneralSettings": "सामान्य सेटिंग्स",
-      "Accessibility": "ऐक्सेसबिलिटी",
+      "BasicSettings": "बेसिक सेटिंग्स",
+      "ProjectSEO": "प्रोजेक्ट SEO",
+      "InterfaceSettings": "इंटरफेस सेटिंग्स",
       "AccessibleOutput": "ऐक्सेसबल आउटपुट",
       "Theme": "थीम",
       "LightTheme": "लाइट",

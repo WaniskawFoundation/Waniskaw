@@ -128,8 +128,10 @@
   },
   "Preferences": {
     "Settings": "設定",
-    "GeneralSettings": "一般設定",
-    "Accessibility": "協助工具",
+    "BasicSettings": "基本設定",
+    "ProjectSEO": "專案SEO",
+    "InterfaceSettings": "介面設定",
+    "Accessibility": "輔助工具",
     "Theme": "主題",
     "LightTheme": "亮色",
     "LightThemeARIA": "啟用亮色主題",
@@ -564,7 +566,9 @@
   },
   "MobilePreferences": {
     "Settings": "設定",
-    "GeneralSettings": "一般設定",
+    "BasicSettings": "基本設定",
+    "ProjectSEO": "專案SEO",
+    "InterfaceSettings": "介面設定",
     "Accessibility": "輔助工具",
     "AccessibleOutput": "輔助輸出",
     "Theme": "主題",

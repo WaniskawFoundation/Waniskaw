@@ -1,40 +1,53 @@
 .tabs__titles {
   display: flex;
-  flex-wrap: wrap;
-  padding-bottom: #{0.1 / $base-font-size}rem;
+  // flex-wrap: wrap;
+  // padding-bottom: #{0.1 / $base-font-size}rem;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  width: 270px;
+  background-color: #ffffff;
+  margin-right: 1.5rem;
   @include themify() {
-    border-bottom: 1px solid getThemifyVariable('button-border-color');
+    // border-bottom: 1px solid getThemifyVariable("button-border-color");
   }
 }
 
 .tabs__title {
   @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-    &:hover, &:focus{
-      color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+    color: getThemifyVariable("inactive-text-color");
+    &:hover,
+    &:focus {
+      // color: getThemifyVariable("primary-text-color");
+      // border: none;
+      cursor: pointer;
     }
-    &:focus  {
-      color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+    &:focus {
+      // color: getThemifyVariable("primary-text-color");
+      cursor: pointer;
     }
   }
   font-size: #{12 / $base-font-size}rem;
   height: #{20 / $base-font-size}rem;
   width: 100%;
   margin: 0;
-  padding: 0 #{5 /$base-font-size}rem;
+  padding: 0 #{5 / $base-font-size}rem;
 }
 
 .react-tabs__tab--selected {
   @include themify() {
-    border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable('button-background-hover-color');
+    // border-bottom: #{4 / $base-font-size}rem solid getThemifyVariable("button-background-hover-color");
   }
 }
 
 .react-tabs__tab--selected .tabs__title {
   @include themify() {
-    color: getThemifyVariable('primary-text-color');
+    // color: getThemifyVariable("primary-text-color");
+    color: #ffffff;
+    background-color: $waniskaw-red;
+    border-bottom: 2px solid $waniskaw-red;
+    z-index: 1;
   }
 }
 
@@ -43,27 +56,40 @@
   color: black;
   display: flex;
   align-items: center;
-  border-bottom: #{4 / $base-font-size}rem solid transparent;
-  & + & {
-    margin-left: #{45 / $base-font-size}rem;
-  }
+  position: relative;
+  width: 100%;
+  height: 60px;
+  margin: 0 0 -2px 0;
+  // border-bottom: #{4 / $base-font-size}rem solid transparent;
+  // & + & {
+  // margin-left: #{45 / $base-font-size}rem;
+  // }
 }
 
 .tabs__title {
   @include themify() {
-    color: getThemifyVariable('inactive-text-color');
-    &:hover, &:focus{
-      color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+    // color: getThemifyVariable("inactive-text-color");
+    color: $waniskaw-dark;
+    height: 100%;
+    width: 100%;
+    padding: 1.5rem;
+    text-align: left;
+    &:hover,
+    &:focus {
+      // color: getThemifyVariable("primary-text-color");
+      // border: none;
+      cursor: pointer;
     }
-    &:focus  {
-      color: getThemifyVariable('primary-text-color');
-      cursor: pointer; 
+    &:focus {
+      // color: getThemifyVariable("primary-text-color");
+      cursor: pointer;
     }
   }
-  font-size: #{12 / $base-font-size}rem;
+  // font-size: #{12 / $base-font-size}rem;
+  font-size: 20px;
+  // font-weight: bold;
   height: #{20 / $base-font-size}rem;
   width: 100%;
   margin: 0;
-  padding: 0 #{5 /$base-font-size}rem;
+  padding: 0 #{5 / $base-font-size}rem;
 }

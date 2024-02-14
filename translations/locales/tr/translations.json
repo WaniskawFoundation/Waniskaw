@@ -131,7 +131,9 @@
   },
   "Preferences": {
     "Settings": "Ayarlar",
-    "GeneralSettings": "Genel Ayarlar",
+    "BasicSettings": "Temel Ayarlar",
+    "ProjectSEO": "Proje SEO",
+    "InterfaceSettings": "Arayüz Ayarları",
     "Accessibility": "Erişilebilirlik",
     "Theme": "Tema",
     "LightTheme": "Aydınlık",
@@ -567,7 +569,9 @@
   },
   "MobilePreferences": {
     "Settings": "Ayarlar",
-    "GeneralSettings": "Genel ayarlar",
+    "BasicSettings": "Temel Ayarlar",
+    "ProjectSEO": "Proje SEO",
+    "InterfaceSettings": "Arayüz Ayarları",
     "Accessibility": "Erişilebilirlik",
     "AccessibleOutput": "Erişilebilir Çıktı",
     "Theme": "Tema",

@@ -128,7 +128,9 @@
   },
   "Preferences": {
     "Settings": "Configurações",
-    "GeneralSettings": "Configurações gerais",
+    "BasicSettings": "Configurações Básicas",
+    "ProjectSEO": "SEO do Projeto",
+    "InterfaceSettings": "Configurações de Interface",
     "Accessibility": "Acessibilidade",
     "Theme": "Tema",
     "LightTheme": "Claro",
@@ -561,7 +563,9 @@
   },
   "MobilePreferences": {
     "Settings": "Configurações",
-    "GeneralSettings": "Configurações gerais",
+    "BasicSettings": "Configurações Básicas",
+    "ProjectSEO": "SEO do Projeto",
+    "InterfaceSettings": "Configurações de Interface",
     "Accessibility": "Acessibilidade",
     "AccessibleOutput": "Saída Acessível",
     "Theme": "Tema",
