@@ -21,13 +21,14 @@ import { useSketchActions } from '../../hooks';
 import { getAuthenticated, getIsUserOwner } from '../../selectors/users';
 import { cloneProject } from '../../actions/project';
 import {
+  openPreferences,
   newFile,
   newFolder,
   showKeyboardShortcutModal,
   startSketch,
-  stopSketch
+  stopSketch,
+  openAccountSettings
 } from '../../actions/ide';
-import { openPreferences } from '../../actions/ide';
 import { logoutUser } from '../../../User/actions';
 import { CmControllerContext } from '../../pages/IDEView';
 import MobileNav from './MobileNav';
@@ -316,31 +317,19 @@ const AuthenticatedUserMenu = () => {
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
-      <NavDropdownMenu
+      <button
         id="account"
-        title={
-          <span>
-            {t('Nav.Auth.Hello')}, {username}!
-          </span>
-        }
+        className="nav__item"
+        onClick={() => {
+          console.log('on cliick fired');
+          // change this openPreferences to custom one
+          dispatch(openAccountSettings());
+        }}
       >
-        <NavMenuItem href={`/${username}/sketches`}>
-          {t('Nav.Auth.MySketches')}
-        </NavMenuItem>
-        <NavMenuItem
-          href={`/${username}/collections`}
-          hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
-        >
-          {t('Nav.Auth.MyCollections')}
-        </NavMenuItem>
-        <NavMenuItem href={`/${username}/assets`}>
-          {t('Nav.Auth.MyAssets')}
-        </NavMenuItem>
-        <NavMenuItem href="/account">{t('Preferences.Settings')}</NavMenuItem>
-        <NavMenuItem onClick={() => dispatch(logoutUser())}>
-          {t('Nav.Auth.LogOut')}
-        </NavMenuItem>
-      </NavDropdownMenu>
+        <span className="nav__item nav__item-header">
+          {t('Nav.Auth.Hello')}, {username}!
+        </span>
+      </button>
     </ul>
   );
 };

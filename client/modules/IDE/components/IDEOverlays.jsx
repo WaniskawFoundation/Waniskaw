@@ -8,7 +8,8 @@ import {
   closeFundraiserModal,
   closePreferences,
   closeShareModal,
-  hideErrorModal
+  hideErrorModal,
+  closeAccountSettings
 } from '../actions/ide';
 import About from './About';
 import AddToCollectionList from './AddToCollectionList';
@@ -22,6 +23,7 @@ import Preferences from './Preferences';
 import { CollectionSearchbar } from './Searchbar';
 import ShareModal from './ShareModal';
 import UploadFileModal from './UploadFileModal';
+import AccountSettings from './AccountSettings';
 
 export default function IDEOverlays() {
   const { t } = useTranslation();
@@ -41,11 +43,21 @@ export default function IDEOverlays() {
     shareModalProjectName,
     shareModalProjectUsername,
     errorType,
-    previousPath
+    previousPath,
+    accountSettingsIsVisible
   } = useSelector((state) => state.ide);
 
   return (
     <>
+      {accountSettingsIsVisible && (
+        <Overlay
+          title="Account Settings"
+          ariaLabel="Account Settings"
+          closeOverlay={() => dispatch(closeAccountSettings())}
+        >
+          <AccountSettings />
+        </Overlay>
+      )}
       {preferencesIsVisible && (
         <Overlay
           title={t('Preferences.Settings')}

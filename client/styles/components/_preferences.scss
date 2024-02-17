@@ -63,6 +63,7 @@
   flex-wrap: wrap;
   // padding-bottom: #{12 / $base-font-size}rem;
   width: 440px;
+  height: 100%;
   padding: 0 1.5rem 0.75rem 1.5rem;
   .modal-settings-maintitle {
     font-size: 20px;
@@ -329,7 +330,7 @@ input[type="checkbox"]:checked:before {
     width: unset;
     margin-top: #{13 / $base-font-size}rem;
     margin-bottom: 0;
-    color: $waniskaw-dark;
+    color: $waniskaw-console-grey;
     font-size: 14px;
   }
 }
@@ -347,7 +348,7 @@ input[type="checkbox"]:checked:before {
     flex-wrap: wrap;
     flex-direction: row;
     color: #ffffff;
-    background-color: $waniskaw-dark;
+    background-color: $waniskaw-console-grey;
     font-size: 18px;
     padding: 0.3rem 0.8rem;
     cursor: pointer;
@@ -380,6 +381,9 @@ input[type="checkbox"]:checked:before {
     &::placeholder {
       color: $waniskaw-light-border;
     }
+    &:focus {
+      border: 1px solid $waniskaw-red;
+    }
   }
   .textinput-field-long {
     border: 2px solid $waniskaw-dark;
@@ -389,6 +393,9 @@ input[type="checkbox"]:checked:before {
     width: 100%;
     &::placeholder {
       color: $waniskaw-light-border;
+    }
+    &:focus {
+      border: 1px solid $waniskaw-red;
     }
   }
 }

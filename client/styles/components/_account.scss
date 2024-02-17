@@ -12,6 +12,15 @@
   }
 }
 
+.popup-light-text {
+  font-family: "Helvetica", sans-serif;
+  color: $waniskaw-console-grey;
+}
+
+.popup-red {
+  color: $waniskaw-red;
+}
+
 .account-settings {
   max-width: #{700 / $base-font-size}rem;
   align-self: center;
