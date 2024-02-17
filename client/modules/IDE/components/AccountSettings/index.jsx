@@ -46,6 +46,12 @@ export default function AccountSettings() {
 
   const [state, setState] = useState({ fontSize });
 
+  const [nickname, setNickname] = useState(username);
+
+  const handleInputChange = (event) => {
+    setNickname(event.target.value);
+  };
+
   function onFontInputChange(event) {
     const INTEGER_REGEX = /^[0-9\b]+$/;
     if (event.target.value === '' || INTEGER_REGEX.test(event.target.value)) {
@@ -126,14 +132,16 @@ export default function AccountSettings() {
             </h3>
             <div className="preference-seo-titlecount-wrapper">
               <h4 className="preference__title">Nickname</h4>
-              <h4 className="preference__title-count">13/20</h4>
+              <h4 className="preference__title-count">{nickname.length}/20</h4>
             </div>
             <div className="preference-textinput-wrapper">
               <input
                 type="text"
                 placeholder="Long-form Text Field"
                 className="textinput-field-long"
-                value={username}
+                value={nickname}
+                onChange={handleInputChange}
+                maxLength={20}
               />
             </div>
             <div className="preference-seo-titlecount-wrapper">
@@ -164,11 +172,7 @@ export default function AccountSettings() {
             </div>
             <div className="bottom_btns_wrapper">
               <div className="preference__options">
-                <button
-                  type="button"
-                  className="bottom_btns_btn"
-                  onClick={dispatch(closeAccountSettings())}
-                >
+                <button type="button" className="bottom_btns_btn">
                   <h6>Cancel</h6>
                 </button>
                 <button type="button" className="bottom_btns_btn">
