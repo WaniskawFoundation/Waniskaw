@@ -21,6 +21,14 @@
   color: $waniskaw-red;
 }
 
+.lock-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: $waniskaw-console-grey;
+}
+
 .account-settings {
   max-width: #{700 / $base-font-size}rem;
   align-self: center;

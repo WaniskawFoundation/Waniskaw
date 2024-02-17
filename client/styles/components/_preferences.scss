@@ -348,7 +348,7 @@ input[type="checkbox"]:checked:before {
     flex-wrap: wrap;
     flex-direction: row;
     color: #ffffff;
-    background-color: $waniskaw-console-grey;
+    background-color: $waniskaw-dark;
     font-size: 18px;
     padding: 0.3rem 0.8rem;
     cursor: pointer;
@@ -372,6 +372,8 @@ input[type="checkbox"]:checked:before {
 .preference-textinput-wrapper {
   width: 100%;
   padding: 0.75rem 0;
+  display: flex;
+  position: relative;
   .textinput-field-mini {
     border: 2px solid $waniskaw-dark;
     font-family: "Helvetica", sans-serif;
@@ -396,6 +398,10 @@ input[type="checkbox"]:checked:before {
     }
     &:focus {
       border: 1px solid $waniskaw-red;
+    }
+    &:disabled {
+      color: $waniskaw-console-grey;
+      border: 1px solid $waniskaw-console-grey;
     }
   }
 }

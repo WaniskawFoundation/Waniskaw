@@ -20,8 +20,6 @@ import {
   setAutocompleteHinter,
   setLinewrap
 } from '../../actions/preferences';
-import { closeAccountSettings } from '../../actions/ide';
-import useModalClose from '../../../../common/useModalClose';
 
 export default function AccountSettings() {
   const { t } = useTranslation();
@@ -41,15 +39,43 @@ export default function AccountSettings() {
     autocompleteHinter
   } = useSelector((state) => state.preferences);
 
-  // FIXME username doesnt get loaded
   const username = useSelector((state) => state.user.username);
 
   const [state, setState] = useState({ fontSize });
-
   const [nickname, setNickname] = useState(username);
+  const [url, setUrl] = useState(window.location.origin);
+  const [email, setEmail] = useState('');
+  const [pronouns, setPronouns] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [retypeNewPassword, setRetypeNewPassword] = useState('');
+  const [CurrentPassword, setCurrentPassword] = useState('');
 
-  const handleInputChange = (event) => {
+  const handleNicknameChange = (event) => {
     setNickname(event.target.value);
+  };
+
+  const handleURLChange = (event) => {
+    setUrl(event.target.value);
+  };
+
+  const handlePronounsChange = (event) => {
+    setPronouns(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+
+  const handleRetypeNewPasswordChange = (event) => {
+    setRetypeNewPassword(event.target.value);
+  };
+
+  const handleCurrentPasswordChange = (event) => {
+    setCurrentPassword(event.target.value);
   };
 
   function onFontInputChange(event) {
@@ -132,7 +158,7 @@ export default function AccountSettings() {
             </h3>
             <div className="preference-seo-titlecount-wrapper">
               <h4 className="preference__title">Nickname</h4>
-              <h4 className="preference__title-count">{nickname.length}/20</h4>
+              <h4 className="preference__title-count">{`${nickname.length}/20`}</h4>
             </div>
             <div className="preference-textinput-wrapper">
               <input
@@ -140,19 +166,32 @@ export default function AccountSettings() {
                 placeholder="Long-form Text Field"
                 className="textinput-field-long"
                 value={nickname}
-                onChange={handleInputChange}
+                onChange={handleNicknameChange}
                 maxLength={20}
               />
             </div>
             <div className="preference-seo-titlecount-wrapper">
               <h4 className="preference__title">Profile URL</h4>
             </div>
-            <div className="preference-textinput-wrapper input-wrapper">
+            <div className="preference-textinput-wrapper input-wrapper d-flex">
               <input
                 type="text"
                 placeholder="Long-form Text Field"
                 className="textinput-field-long"
+                onChange={handleURLChange}
+                value={url}
+                disabled
               />
+              <i className="lock-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" />
+                </svg>
+              </i>
             </div>
             <div>
               <p className="popup-light-text">
@@ -166,8 +205,9 @@ export default function AccountSettings() {
             <div className="preference-textinput-wrapper">
               <input
                 type="text"
-                placeholder="Long-form Text Field"
+                placeholder="Type here..."
                 className="textinput-field-long"
+                onChange={handlePronounsChange}
               />
             </div>
             <div className="bottom_btns_wrapper">
@@ -194,30 +234,37 @@ export default function AccountSettings() {
               <div className="preference-textinput-wrapper">
                 <input
                   type="text"
-                  placeholder="Long-form Text Field"
+                  placeholder="Type here..."
                   className="textinput-field-long"
+                  onChange={handleEmailChange}
                 />
               </div>
               <div className="preference-seo-titlecount-wrapper">
                 <h4 className="preference__title">New Password</h4>
-                <h4 className="preference__title-count">0/8</h4>
+                <h4 className="preference__title-count">
+                  {`${newPassword.length}/8`}
+                </h4>
               </div>
               <div className="preference-textinput-wrapper">
                 <input
                   type="text"
-                  placeholder="Long-form Text Field"
+                  placeholder="New password..."
                   className="textinput-field-long"
+                  onChange={handleNewPasswordChange}
                 />
               </div>
               <div className="preference-seo-titlecount-wrapper">
                 <h4 className="preference__title">Retype New Password</h4>
-                <h4 className="preference__title-count">0/8</h4>
+                <h4 className="preference__title-count">
+                  {`${retypeNewPassword.length}/8`}
+                </h4>
               </div>
               <div className="preference-textinput-wrapper">
                 <input
                   type="text"
-                  placeholder="Long-form Text Field"
+                  placeholder="New password..."
                   className="textinput-field-long"
+                  onChange={handleRetypeNewPasswordChange}
                 />
               </div>
               <div>
@@ -235,8 +282,9 @@ export default function AccountSettings() {
               <div className="preference-textinput-wrapper">
                 <input
                   type="text"
-                  placeholder="Long-form Text Field"
+                  placeholder="Current password..."
                   className="textinput-field-long"
+                  onChange={handleCurrentPasswordChange}
                 />
               </div>
               <div className="bottom_btns_wrapper">
