@@ -1,9 +1,11 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useTranslation } from 'react-i18next';
+import { validateSettings } from '../../../../utils/reduxFormUtils';
+import { updateSettings } from '../../../User/actions';
+import apiClient from '../../../../utils/apiClient';
 import PlusIcon from '../../../../images/plus_waniskaw.svg';
 import MinusIcon from '../../../../images/minus_waniskaw.svg';
 
@@ -40,6 +42,8 @@ export default function AccountSettings() {
   } = useSelector((state) => state.preferences);
 
   const username = useSelector((state) => state.user.username);
+
+  const user = useSelector((state) => state.user);
 
   const [state, setState] = useState({ fontSize });
   const [nickname, setNickname] = useState(username);
@@ -119,7 +123,36 @@ export default function AccountSettings() {
 
   const fontSizeInputRef = useRef(null);
 
-  const ref = useRef(null);
+  function asyncValidate(fieldToValidate, value) {
+    if (!value || value.trim().length === 0) {
+      return '';
+    }
+    const queryParams = {};
+    queryParams[fieldToValidate] = value;
+    queryParams.check_type = fieldToValidate;
+    return apiClient
+      .get('/signup/duplicate_check', { params: queryParams })
+      .then((response) => {
+        if (response.data.exists) {
+          return response.data.message;
+        }
+        return '';
+      });
+  }
+
+  function validateUsername(input) {
+    if (input === user.username) return '';
+    return asyncValidate('username', input);
+  }
+
+  function validateEmail(input) {
+    if (input === user.email) return '';
+    return asyncValidate('email', input);
+  }
+
+  function onSubmit(formProps) {
+    return dispatch(updateSettings(formProps));
+  }
 
   return (
     <section className="preferences">
@@ -152,75 +185,79 @@ export default function AccountSettings() {
           </div>
         </TabList>
         <TabPanel>
-          <div className="preference">
-            <h3 className="modal-settings-maintitle">
-              {t('AccountView.Settings')}
-            </h3>
-            <div className="preference-seo-titlecount-wrapper">
-              <h4 className="preference__title">Nickname</h4>
-              <h4 className="preference__title-count">{`${nickname.length}/20`}</h4>
-            </div>
-            <div className="preference-textinput-wrapper">
-              <input
-                type="text"
-                placeholder="Long-form Text Field"
-                className="textinput-field-long"
-                value={nickname}
-                onChange={handleNicknameChange}
-                maxLength={20}
-              />
-            </div>
-            <div className="preference-seo-titlecount-wrapper">
-              <h4 className="preference__title">Profile URL</h4>
-            </div>
-            <div className="preference-textinput-wrapper input-wrapper d-flex">
-              <input
-                type="text"
-                placeholder="Long-form Text Field"
-                className="textinput-field-long"
-                onChange={handleURLChange}
-                value={url}
-                disabled
-              />
-              <i className="lock-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" />
-                </svg>
-              </i>
-            </div>
-            <div>
-              <p className="popup-light-text">
-                Your link can be changed once you have spent enough time
-                creating projects on Waniskâw.
-              </p>
-            </div>
-            <div className="preference-seo-titlecount-wrapper">
-              <h4 className="preference__title">Preferred Pronouns</h4>
-            </div>
-            <div className="preference-textinput-wrapper">
-              <input
-                type="text"
-                placeholder="Type here..."
-                className="textinput-field-long"
-                onChange={handlePronounsChange}
-              />
-            </div>
-            <div className="bottom_btns_wrapper">
-              <div className="preference__options">
-                <button type="button" className="bottom_btns_btn">
-                  <h6>Cancel</h6>
-                </button>
-                <button type="button" className="bottom_btns_btn">
-                  <h6>Save Changes</h6>
-                </button>
+          <form validate={validateSettings} onSubmit={onSubmit}>
+            <div className="preference">
+              <h3 className="modal-settings-maintitle">
+                {t('AccountView.Settings')}
+              </h3>
+
+              <div className="preference-seo-titlecount-wrapper">
+                <h4 className="preference__title">Nickname</h4>
+                <h4 className="preference__title-count">{`${nickname.length}/20`}</h4>
+              </div>
+              <div className="preference-textinput-wrapper">
+                <input
+                  type="text"
+                  placeholder="Long-form Text Field"
+                  className="textinput-field-long"
+                  value={nickname}
+                  onChange={handleNicknameChange}
+                  maxLength={20}
+                  validate={validateUsername}
+                />
+              </div>
+              <div className="preference-seo-titlecount-wrapper">
+                <h4 className="preference__title">Profile URL</h4>
+              </div>
+              <div className="preference-textinput-wrapper input-wrapper d-flex">
+                <input
+                  type="text"
+                  placeholder="Long-form Text Field"
+                  className="textinput-field-long"
+                  onChange={handleURLChange}
+                  value={url}
+                  disabled
+                />
+                <i className="lock-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z" />
+                  </svg>
+                </i>
+              </div>
+              <div>
+                <p className="popup-light-text">
+                  Your link can be changed once you have spent enough time
+                  creating projects on Waniskâw.
+                </p>
+              </div>
+              <div className="preference-seo-titlecount-wrapper">
+                <h4 className="preference__title">Preferred Pronouns</h4>
+              </div>
+              <div className="preference-textinput-wrapper">
+                <input
+                  type="text"
+                  placeholder="Type here..."
+                  className="textinput-field-long"
+                  onChange={handlePronounsChange}
+                />
+              </div>
+              <div className="bottom_btns_wrapper">
+                <div className="preference__options">
+                  <button type="button" className="bottom_btns_btn">
+                    <h6>Cancel</h6>
+                  </button>
+                  <button type="button" className="bottom_btns_btn">
+                    <h6>Save Changes</h6>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </TabPanel>
         <TabPanel>
           <div>
@@ -237,6 +274,7 @@ export default function AccountSettings() {
                   placeholder="Type here..."
                   className="textinput-field-long"
                   onChange={handleEmailChange}
+                  validate={validateEmail}
                 />
               </div>
               <div className="preference-seo-titlecount-wrapper">
