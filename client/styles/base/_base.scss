@@ -84,13 +84,6 @@ textarea::selection {
 	}
 }
 
-button[type="submit"],
-input[type="submit"] {
-	@include themify() {
-		@extend %button;
-	}
-}
-
 button[type="submit"]:disabled,
 input[type="submit"]:disabled {
 	cursor: not-allowed;
@@ -135,7 +128,7 @@ button:focus,
 input:focus,
 textarea:focus {
 	outline: none;
-	box-shadow: 0 0 0 1px $outline-color;
+	box-shadow: 0 0 0 1px $waniskaw-red;
 }
 
 // screen reader only class

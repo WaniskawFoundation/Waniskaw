@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
 import React, { useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useModalClose from '../../../common/useModalClose';
-
-import ExitIcon from '../../../images/exit.svg';
 
 const Overlay = ({
   actions,
@@ -40,7 +39,7 @@ const Overlay = ({
 
   useModalClose(close, ref);
 
-  return (
+  return ReactDOM.createPortal(
     <div
       className={`overlay ${isFixedHeight ? 'overlay--is-fixed-height' : ''}`}
     >
@@ -67,7 +66,8 @@ const Overlay = ({
           {children}
         </section>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

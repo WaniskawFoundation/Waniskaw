@@ -55,6 +55,11 @@ const ide = (state = initialState, action) => {
       return Object.assign({}, state, { consoleIsExpanded: false });
     case ActionTypes.EXPAND_CONSOLE:
       return Object.assign({}, state, { consoleIsExpanded: true });
+    // copy this
+    case ActionTypes.OPEN_ACCOUNT_SETTINGS:
+      return Object.assign({}, state, { accountSettingsIsVisible: true });
+    case ActionTypes.CLOSE_ACCOUNT_SETTINGS:
+      return Object.assign({}, state, { accountSettingsIsVisible: false });
     case ActionTypes.OPEN_PREFERENCES:
       return Object.assign({}, state, { preferencesIsVisible: true });
     case ActionTypes.CLOSE_PREFERENCES:

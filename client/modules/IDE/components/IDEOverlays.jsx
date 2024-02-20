@@ -2,13 +2,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import Overlay from '../../App/components/Overlay';
 import {
   closeKeyboardShortcutModal,
   closeFundraiserModal,
   closePreferences,
   closeShareModal,
-  hideErrorModal
+  hideErrorModal,
+  closeAccountSettings
 } from '../actions/ide';
 import About from './About';
 import AddToCollectionList from './AddToCollectionList';
@@ -22,6 +24,7 @@ import Preferences from './Preferences';
 import { CollectionSearchbar } from './Searchbar';
 import ShareModal from './ShareModal';
 import UploadFileModal from './UploadFileModal';
+import AccountSettings from './AccountSettings';
 
 export default function IDEOverlays() {
   const { t } = useTranslation();
@@ -41,11 +44,21 @@ export default function IDEOverlays() {
     shareModalProjectName,
     shareModalProjectUsername,
     errorType,
-    previousPath
+    previousPath,
+    accountSettingsIsVisible
   } = useSelector((state) => state.ide);
 
-  return (
+  return ReactDOM.createPortal(
     <>
+      {accountSettingsIsVisible && (
+        <Overlay
+          title="Account Settings"
+          ariaLabel="Account Settings"
+          closeOverlay={() => dispatch(closeAccountSettings())}
+        >
+          <AccountSettings />
+        </Overlay>
+      )}
       {preferencesIsVisible && (
         <Overlay
           title={t('Preferences.Settings')}
@@ -133,6 +146,7 @@ export default function IDEOverlays() {
       {modalIsVisible && <NewFileModal />}
       {newFolderModalVisible && <NewFolderModal />}
       {uploadFileModalVisible && <UploadFileModal />}
-    </>
+    </>,
+    document.body
   );
 }

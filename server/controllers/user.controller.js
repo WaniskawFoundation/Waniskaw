@@ -332,6 +332,7 @@ export function saveUser(res, user) {
 }
 
 export function updateSettings(req, res) {
+  console.log('update settings called in backend');
   User.findById(req.user.id, (err, user) => {
     if (err) {
       res.status(500).json({ error: err });
@@ -343,6 +344,8 @@ export function updateSettings(req, res) {
     }
 
     user.username = req.body.username;
+
+    console.log('update settings data', req.body);
 
     if (req.body.currentPassword) {
       user.comparePassword(req.body.currentPassword, (passwordErr, isMatch) => {

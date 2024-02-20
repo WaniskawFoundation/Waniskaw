@@ -127,6 +127,18 @@ export function closePreferences() {
   };
 }
 
+export function openAccountSettings() {
+  return {
+    type: ActionTypes.OPEN_ACCOUNT_SETTINGS
+  };
+}
+
+export function closeAccountSettings() {
+  return {
+    type: ActionTypes.CLOSE_ACCOUNT_SETTINGS
+  };
+}
+
 export function openProjectOptions() {
   return {
     type: ActionTypes.OPEN_PROJECT_OPTIONS
