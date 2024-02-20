@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import Overlay from '../../App/components/Overlay';
 import {
   closeKeyboardShortcutModal,
@@ -47,7 +48,7 @@ export default function IDEOverlays() {
     accountSettingsIsVisible
   } = useSelector((state) => state.ide);
 
-  return (
+  return ReactDOM.createPortal(
     <>
       {accountSettingsIsVisible && (
         <Overlay
@@ -145,6 +146,7 @@ export default function IDEOverlays() {
       {modalIsVisible && <NewFileModal />}
       {newFolderModalVisible && <NewFolderModal />}
       {uploadFileModalVisible && <UploadFileModal />}
-    </>
+    </>,
+    document.body
   );
 }

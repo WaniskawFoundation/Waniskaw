@@ -5,7 +5,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useTranslation } from 'react-i18next';
 import { validateSettings } from '../../../../utils/reduxFormUtils';
 import { updateSettings } from '../../../User/actions';
-import apiClient from '../../../../utils/apiClient';
 import PlusIcon from '../../../../images/plus_waniskaw.svg';
 import MinusIcon from '../../../../images/minus_waniskaw.svg';
 
@@ -22,6 +21,7 @@ import {
   setAutocompleteHinter,
   setLinewrap
 } from '../../actions/preferences';
+import { closeAccountSettings } from '../../actions/ide';
 
 export default function AccountSettings() {
   const { t } = useTranslation();
@@ -41,18 +41,16 @@ export default function AccountSettings() {
     autocompleteHinter
   } = useSelector((state) => state.preferences);
 
-  const username = useSelector((state) => state.user.username);
-
   const user = useSelector((state) => state.user);
 
   const [state, setState] = useState({ fontSize });
-  const [nickname, setNickname] = useState(username);
+  const [nickname, setNickname] = useState(user.username);
   const [url, setUrl] = useState(window.location.origin);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(user.email);
   const [pronouns, setPronouns] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [retypeNewPassword, setRetypeNewPassword] = useState('');
-  const [CurrentPassword, setCurrentPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
 
   const handleNicknameChange = (event) => {
     setNickname(event.target.value);
@@ -123,35 +121,38 @@ export default function AccountSettings() {
 
   const fontSizeInputRef = useRef(null);
 
-  function asyncValidate(fieldToValidate, value) {
-    if (!value || value.trim().length === 0) {
-      return '';
-    }
-    const queryParams = {};
-    queryParams[fieldToValidate] = value;
-    queryParams.check_type = fieldToValidate;
-    return apiClient
-      .get('/signup/duplicate_check', { params: queryParams })
-      .then((response) => {
-        if (response.data.exists) {
-          return response.data.message;
-        }
-        return '';
-      });
+  // form fields: 'username', 'email', 'currentPassword', 'newPassword'
+
+  function onSubmitTab1(event) {
+    console.log('onSubmit1 clicked');
+    event.preventDefault();
+    console.log('before sending form');
+    return dispatch(
+      updateSettings({
+        username: nickname,
+        pronouns,
+        email,
+        newPassword,
+        retypeNewPassword,
+        currentPassword
+      })
+    );
+
+    // IN THE FORM YOU NEED TO SEND DATA DIRECTLY IN BODY NOT AS A VARIABLE AS NOW FORMvALUES
   }
 
-  function validateUsername(input) {
-    if (input === user.username) return '';
-    return asyncValidate('username', input);
-  }
-
-  function validateEmail(input) {
-    if (input === user.email) return '';
-    return asyncValidate('email', input);
-  }
-
-  function onSubmit(formProps) {
-    return dispatch(updateSettings(formProps));
+  function onSubmitTab2(event) {
+    event.preventDefault();
+    console.log('before sending form');
+    return dispatch(
+      updateSettings({
+        username: user.username,
+        email,
+        newPassword,
+        retypeNewPassword,
+        currentPassword
+      })
+    );
   }
 
   return (
@@ -185,7 +186,7 @@ export default function AccountSettings() {
           </div>
         </TabList>
         <TabPanel>
-          <form validate={validateSettings} onSubmit={onSubmit}>
+          <form validate={validateSettings} onSubmit={onSubmitTab1}>
             <div className="preference">
               <h3 className="modal-settings-maintitle">
                 {t('AccountView.Settings')}
@@ -203,7 +204,6 @@ export default function AccountSettings() {
                   value={nickname}
                   onChange={handleNicknameChange}
                   maxLength={20}
-                  validate={validateUsername}
                 />
               </div>
               <div className="preference-seo-titlecount-wrapper">
@@ -248,10 +248,14 @@ export default function AccountSettings() {
               </div>
               <div className="bottom_btns_wrapper">
                 <div className="preference__options">
-                  <button type="button" className="bottom_btns_btn">
+                  <button
+                    type="button"
+                    className="bottom_btns_btn"
+                    onClick={() => dispatch(closeAccountSettings())}
+                  >
                     <h6>Cancel</h6>
                   </button>
-                  <button type="button" className="bottom_btns_btn">
+                  <button type="submit" className="bottom_btns_btn">
                     <h6>Save Changes</h6>
                   </button>
                 </div>
@@ -260,83 +264,89 @@ export default function AccountSettings() {
           </form>
         </TabPanel>
         <TabPanel>
-          <div>
-            <div className="preference">
-              <h3 className="modal-settings-maintitle">
-                {`${t('SignupForm.Email')} & ${t('SignupForm.Password')}`}
-              </h3>
-              <div className="preference-seo-titlecount-wrapper">
-                <h4 className="preference__title">Email</h4>
-              </div>
-              <div className="preference-textinput-wrapper">
-                <input
-                  type="text"
-                  placeholder="Type here..."
-                  className="textinput-field-long"
-                  onChange={handleEmailChange}
-                  validate={validateEmail}
-                />
-              </div>
-              <div className="preference-seo-titlecount-wrapper">
-                <h4 className="preference__title">New Password</h4>
-                <h4 className="preference__title-count">
-                  {`${newPassword.length}/8`}
-                </h4>
-              </div>
-              <div className="preference-textinput-wrapper">
-                <input
-                  type="text"
-                  placeholder="New password..."
-                  className="textinput-field-long"
-                  onChange={handleNewPasswordChange}
-                />
-              </div>
-              <div className="preference-seo-titlecount-wrapper">
-                <h4 className="preference__title">Retype New Password</h4>
-                <h4 className="preference__title-count">
-                  {`${retypeNewPassword.length}/8`}
-                </h4>
-              </div>
-              <div className="preference-textinput-wrapper">
-                <input
-                  type="text"
-                  placeholder="New password..."
-                  className="textinput-field-long"
-                  onChange={handleRetypeNewPasswordChange}
-                />
-              </div>
-              <div>
-                <p className="popup-light-text">
-                  Your password must contain upper case letters, lower case
-                  letters, a number, and a special character.
-                </p>
-              </div>
-              <div className="preference-seo-titlecount-wrapper">
-                <h4 className="preference__title">
-                  Enter Current Password To Save Changes
-                  <span className="popup-red">*</span>
-                </h4>
-              </div>
-              <div className="preference-textinput-wrapper">
-                <input
-                  type="text"
-                  placeholder="Current password..."
-                  className="textinput-field-long"
-                  onChange={handleCurrentPasswordChange}
-                />
-              </div>
-              <div className="bottom_btns_wrapper">
-                <div className="preference__options">
-                  <button type="button" className="bottom_btns_btn">
-                    <h6>Cancel</h6>
-                  </button>
-                  <button type="button" className="bottom_btns_btn">
-                    <h6>Save Changes</h6>
-                  </button>
+          <form onSubmit={onSubmitTab2}>
+            <div>
+              <div className="preference">
+                <h3 className="modal-settings-maintitle">
+                  {`${t('SignupForm.Email')} & ${t('SignupForm.Password')}`}
+                </h3>
+                <div className="preference-seo-titlecount-wrapper">
+                  <h4 className="preference__title">Email</h4>
+                </div>
+                <div className="preference-textinput-wrapper">
+                  <input
+                    type="text"
+                    placeholder="Type here..."
+                    className="textinput-field-long"
+                    onChange={handleEmailChange}
+                    value={email}
+                  />
+                </div>
+                <div className="preference-seo-titlecount-wrapper">
+                  <h4 className="preference__title">New Password</h4>
+                  <h4 className="preference__title-count">
+                    {`${newPassword.length}/8`}
+                  </h4>
+                </div>
+                <div className="preference-textinput-wrapper">
+                  <input
+                    type="text"
+                    placeholder="New password..."
+                    className="textinput-field-long"
+                    onChange={handleNewPasswordChange}
+                  />
+                </div>
+                <div className="preference-seo-titlecount-wrapper">
+                  <h4 className="preference__title">Retype New Password</h4>
+                  <h4 className="preference__title-count">
+                    {`${retypeNewPassword.length}/8`}
+                  </h4>
+                </div>
+                <div className="preference-textinput-wrapper">
+                  <input
+                    type="text"
+                    placeholder="New password..."
+                    className="textinput-field-long"
+                    onChange={handleRetypeNewPasswordChange}
+                  />
+                </div>
+                <div>
+                  <p className="popup-light-text">
+                    Your password must contain upper case letters, lower case
+                    letters, a number, and a special character.
+                  </p>
+                </div>
+                <div className="preference-seo-titlecount-wrapper">
+                  <h4 className="preference__title">
+                    Enter Current Password To Save Changes
+                    <span className="popup-red">*</span>
+                  </h4>
+                </div>
+                <div className="preference-textinput-wrapper">
+                  <input
+                    type="text"
+                    placeholder="Current password..."
+                    className="textinput-field-long"
+                    onChange={handleCurrentPasswordChange}
+                  />
+                </div>
+                <div className="bottom_btns_wrapper">
+                  <div className="preference__options">
+                    <button
+                      type="button"
+                      className="bottom_btns_btn"
+                      onClick={() => dispatch(closeAccountSettings())}
+                    >
+                      <h6>Cancel</h6>
+                    </button>
+                    <button type="submit" className="bottom_btns_btn">
+                      <h6>Save Changes</h6>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </TabPanel>
         <TabPanel>
           <div className="preference">
@@ -574,15 +584,11 @@ export default function AccountSettings() {
               <button
                 type="button"
                 className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
+                onClick={() => dispatch(closeAccountSettings())}
               >
                 <h6>Cancel</h6>
               </button>
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
+              <button type="button" className="bottom_btns_btn">
                 <h6>Save Changes</h6>
               </button>
             </div>
@@ -722,7 +728,7 @@ export default function AccountSettings() {
               <button
                 type="button"
                 className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
+                onClick={() => dispatch(closeAccountSettings())}
               >
                 <h6>Cancel</h6>
               </button>

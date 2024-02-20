@@ -317,21 +317,61 @@ const AuthenticatedUserMenu = () => {
   return (
     <ul className="nav__items-right" title="user-menu">
       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
-      <button
+      <NavDropdownMenu
         id="account"
-        className="nav__item"
-        onClick={() => {
-          console.log('on cliick fired');
-          // change this openPreferences to custom one
-          dispatch(openAccountSettings());
-        }}
+        title={
+          <span>
+            {t('Nav.Auth.Hello')}, {username}!
+          </span>
+        }
       >
-        <span className="nav__item nav__item-header">
-          {t('Nav.Auth.Hello')}, {username}!
-        </span>
-      </button>
+        <NavMenuItem href={`/${username}/sketches`}>
+          {t('Nav.Auth.MySketches')}
+        </NavMenuItem>
+        <NavMenuItem
+          href={`/${username}/collections`}
+          hideIf={!getConfig('UI_COLLECTIONS_ENABLED')}
+        >
+          {t('Nav.Auth.MyCollections')}
+        </NavMenuItem>
+        <NavMenuItem href={`/${username}/assets`}>
+          {t('Nav.Auth.MyAssets')}
+        </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(openAccountSettings())}>
+          {t('Preferences.Settings')}
+        </NavMenuItem>
+        <NavMenuItem onClick={() => dispatch(logoutUser())}>
+          {t('Nav.Auth.LogOut')}
+        </NavMenuItem>
+      </NavDropdownMenu>
     </ul>
   );
 };
+
+// const AuthenticatedUserMenu = () => {
+//   const username = useSelector((state) => state.user.username);
+
+//   const { t } = useTranslation();
+//   const dispatch = useDispatch();
+
+//   return (
+//     <ul className="nav__items-right" title="user-menu">
+//       {getConfig('TRANSLATIONS_ENABLED') && <LanguageMenu />}
+//       <button
+//         id="account"
+//         className="nav__item"
+//         onClick={() => {
+//           console.log('on cliick fired');
+//           // change this openPreferences to custom one
+//           dispatch(openAccountSettings());
+//         }}
+//       >
+//         <span className="nav__item nav__item-header">
+//           {t('Nav.Auth.Hello')}, {username}!
+//         </span>
+//       </button>
+//     </ul>
+//   );
+// };
 
 export default Nav;

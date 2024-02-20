@@ -84,13 +84,6 @@ textarea::selection {
 	}
 }
 
-button[type="submit"],
-input[type="submit"] {
-	@include themify() {
-		@extend %button;
-	}
-}
-
 button[type="submit"]:disabled,
 input[type="submit"]:disabled {
 	cursor: not-allowed;
