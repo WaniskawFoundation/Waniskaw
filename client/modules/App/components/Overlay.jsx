@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import useModalClose from '../../../common/useModalClose';
 
-import ExitIcon from '../../../images/exit.svg';
+// import ExitIcon from '../../../images/exit.svg';
 
 const Overlay = ({
   actions,
@@ -15,7 +15,7 @@ const Overlay = ({
   isFixedHeight,
   title
 }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const previousPath = useSelector((state) => state.ide.previousPath);
 
