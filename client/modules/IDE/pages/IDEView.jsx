@@ -102,6 +102,8 @@ const IDEView = () => {
 
   useEffect(() => {
     const { project_id: id, username } = params;
+
+    console.log(id, username, project);
     // if you just open IDE and demo project opens which doesn't have id assigned so id here is undefined
     // upon saving the project it gets assigned id
     if (id && project.id !== id) {

@@ -71,10 +71,12 @@ export function getProject(id, username) {
     return apiClient
       .get(`/${username}/projects/${id}`)
       .then((response) => {
+        console.log(response, response.data);
         dispatch(setProject(response.data));
         dispatch(setUnsavedChanges(false));
       })
       .catch((error) => {
+        console.log('Error fetching project!!');
         dispatch({
           type: ActionTypes.ERROR,
           error: error?.response?.data
