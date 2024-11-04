@@ -9,10 +9,10 @@ import Project from '../models/project';
 
 const clientId = process.env.GITHUB_ID;
 const clientSecret = process.env.GITHUB_SECRET;
-
 const headers = { 'User-Agent': 'p5js-web-editor/0.0.1' };
-
 const mongoConnectionString = process.env.MONGO_URL;
+const sketchURL =
+  'https://api.github.com/repositories/760925693/contents/src/content/examples/en';
 
 mongoose.connect(mongoConnectionString, {
   useNewUrlParser: true,
@@ -26,11 +26,124 @@ mongoose.connection.on('error', () => {
   process.exit(1);
 });
 
-async function getCategories() {
-  const categories = [];
+async function createProjectsInP5user(projects) {
+  const user = await User.findOne({ username: 'p5' }).exec();
+  await Q.all(
+    projects.map(async (project) => {
+      let newProject;
+      const a = objectID().toHexString();
+      const b = objectID().toHexString();
+      const c = objectID().toHexString();
+      const r = objectID().toHexString();
+      const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
+      if (noNumberprojectName === 'Instance Mode: Instance Container ') {
+        newProject = new Project({
+          name: project.projectName,
+          user: user._id.toString(),
+          files: [
+            {
+              name: 'root',
+              id: r,
+              _id: r,
+              children: [a, b, c],
+              fileType: 'folder'
+            },
+            {
+              name: 'sketch.js',
+              content:
+                '// Instance Mode: Instance Container, please check its index.html file',
+              id: a,
+              _id: a,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'index.html',
+              content: project.sketchContent,
+              isSelectedFile: true,
+              id: b,
+              _id: b,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'style.css',
+              content: defaultCSS,
+              id: c,
+              _id: c,
+              fileType: 'file',
+              children: []
+            }
+          ],
+          _id: shortid.generate()
+        });
+      } else {
+        newProject = new Project({
+          name: project.projectName,
+          user: user._id,
+          files: [
+            {
+              name: 'root',
+              id: r,
+              _id: r,
+              children: [a, b, c],
+              fileType: 'folder'
+            },
+            {
+              name: 'sketch.js',
+              content: project.sketchContent,
+              id: a,
+              _id: a,
+              isSelectedFile: true,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'index.html',
+              content: defaultHTML,
+              id: b,
+              _id: b,
+              fileType: 'file',
+              children: []
+            },
+            {
+              name: 'style.css',
+              content: defaultCSS,
+              id: c,
+              _id: c,
+              fileType: 'file',
+              children: []
+            }
+          ],
+          _id: shortid.generate()
+        });
+      }
+
+      await newProject.save();
+    })
+  );
+
+  process.exit();
+}
+
+function formatName(name) {
+  let newName = name.replace(/^\d+_*/, '');
+  newName = newName.replace(/_/g, ' ');
+
+  return newName.endsWith('.js') ? newName.slice(0, -3).trim() : newName.trim();
+}
+
+function newCategoryFromName(category, name) {
+  if (name !== 'More' && name !== 'code') {
+    return category === '' ? name : category.concat(': ').concat(name);
+  }
+  return category;
+}
+
+async function getAllSketches(sketches, url, category = '') {
+  // Define options to get data from the URL
   const options = {
-    url:
-      'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/en',
+    url,
     method: 'GET',
     headers: {
       ...headers,
@@ -39,140 +152,22 @@ async function getCategories() {
       ).toString('base64')}`
     }
   };
-  const { data } = await axios.request(options);
-  data.forEach((metadata) => {
-    let category = '';
-    for (let j = 1; j < metadata.name.split('_').length; j += 1) {
-      category += `${metadata.name.split('_')[j]} `;
-    }
-    categories.push({ url: metadata.url, name: category.trim() });
-  });
-  return categories;
-}
+  const response = await axios.request(options);
 
-function getSketchesInCategories(categories) {
-  return Q.all(
-    categories.map(async (category) => {
-      const options = {
-        url: `${category.url.replace('?ref=main', '')}`,
-        method: 'GET',
-        headers: {
-          ...headers,
-          Authorization: `Basic ${Buffer.from(
-            `${clientId}:${clientSecret}`
-          ).toString('base64')}`
-        },
-        json: true
-      };
-      const { data } = await axios.request(options);
-      const projectsInOneCategory = [];
-      data.forEach((example) => {
-        let projectName;
-        if (example.name === '02_Instance_Container.js') {
-          for (let i = 1; i < 5; i += 1) {
-            const instanceProjectName = `${category.name}: Instance Container ${i}`;
-            projectsInOneCategory.push({
-              sketchUrl: example.download_url,
-              projectName: instanceProjectName
-            });
-          }
-        } else {
-          if (example.name.split('_')[1]) {
-            projectName = `${category.name}: ${example.name
-              .split('_')
-              .slice(1)
-              .join(' ')
-              .replace('.js', '')}`;
-          } else {
-            projectName = `${category.name}: ${example.name.replace(
-              '.js',
-              ''
-            )}`;
-          }
-          projectsInOneCategory.push({
-            sketchUrl: example.download_url,
-            projectName
-          });
-        }
-      });
-      return projectsInOneCategory;
-    })
-  );
-}
-
-function getSketchContent(projectsInAllCategories) {
-  return Q.all(
-    projectsInAllCategories.map((projectsInOneCategory) =>
-      Q.all(
-        projectsInOneCategory.map(async (project) => {
-          const options = {
-            url: `${project.sketchUrl.replace('?ref=main', '')}`,
-            method: 'GET',
-            headers: {
-              ...headers,
-              Authorization: `Basic ${Buffer.from(
-                `${clientId}:${clientSecret}`
-              ).toString('base64')}`
-            }
-          };
-          const { data } = await axios.request(options);
-          const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-          if (noNumberprojectName === 'Instance Mode: Instance Container ') {
-            for (let i = 0; i < 4; i += 1) {
-              const splitedRes = `${
-                data.split('*/')[1].split('</html>')[i]
-              }</html>\n`;
-              project.sketchContent = splitedRes.replace(
-                'p5.js',
-                'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js'
-              );
-            }
-          } else {
-            project.sketchContent = data;
-          }
-          return project;
-        })
-      )
-    )
-  );
-}
-
-async function addAssetsToProject(assets, response, project) {
-  /* eslint-disable no-await-in-loop */
-  for (let i = 0; i < assets.length; i += 1) {
-    // iterate through each asset in the project in series (async/await functionality would not work with forEach() )
-    const assetNamePath = assets[i];
-    let assetName = assetNamePath.split('assets/')[1];
-    let assetUrl = '';
-    let assetContent = '';
-
-    response.forEach((asset) => {
-      if (asset.name === assetName || asset.name.split('.')[0] === assetName) {
-        assetName = asset.name;
-        assetUrl = asset.download_url;
-      }
-    });
-
-    if (assetName !== '') {
-      if (i === 0) {
-        const id = objectID().toHexString();
-        project.files.push({
-          name: 'assets',
-          id,
-          _id: id,
-          children: [],
-          fileType: 'folder'
-        });
-        // add assets folder inside root
-        project.files[0].children.push(id);
-      }
-
-      const fileID = objectID().toHexString();
-
-      if (assetName.slice(-5) === '.vert' || assetName.slice(-5) === '.frag') {
-        // check if the file has .vert or .frag extension
-        const assetOptions = {
-          url: assetUrl,
+  // Use Promise.all with map for async iteration
+  await Promise.all(
+    response.data.map(async (item) => {
+      if (!item.download_url) {
+        // Recursively call getAllSketches for directories
+        await getAllSketches(
+          sketches,
+          item.url.replace('?ref=main', ''),
+          newCategoryFromName(category, formatName(item.name))
+        );
+      } else if (item.name.includes('.js')) {
+        // Fetch the sketch data if it's a .js file
+        const sketchOptions = {
+          url: item.download_url.replace('?ref=main', ''),
           method: 'GET',
           headers: {
             ...headers,
@@ -181,169 +176,22 @@ async function addAssetsToProject(assets, response, project) {
             ).toString('base64')}`
           }
         };
-
-        // a function to await for the response that contains the content of asset file
-        const doRequest = async (optionsAsset) => {
-          const { data } = await axios.request(optionsAsset);
-          return data;
-        };
-
-        assetContent = await doRequest(assetOptions);
-        // push to the files array of the project only when response is received
-        project.files.push({
-          name: assetName,
-          content: assetContent,
-          id: fileID,
-          _id: fileID,
-          children: [],
-          fileType: 'file'
+        const sketch = await axios.request(sketchOptions);
+        sketches.push({
+          projectName: newCategoryFromName(category, formatName(item.name)),
+          sketchContent: sketch.data
         });
-        console.log(`create assets: ${assetName}`);
-        // add asset file inside the newly created assets folder at index 4
-        project.files[4].children.push(fileID);
-      } else {
-        // for assets files that are not .vert or .frag extension
-        project.files.push({
-          name: assetName,
-          url: `https://cdn.jsdelivr.net/gh/processing/p5.js-website@main/src/data/examples/assets/${assetName}`,
-          id: fileID,
-          _id: fileID,
-          children: [],
-          fileType: 'file'
-        });
-        console.log(`create assets: ${assetName}`);
-        // add asset file inside the newly created assets folder at index 4
-        project.files[4].children.push(fileID);
       }
-    }
-  }
-  /* eslint-disable no-await-in-loop */
+    })
+  );
 }
 
-async function createProjectsInP5user(projectsInAllCategories) {
-  const options = {
-    url:
-      'https://api.github.com/repos/processing/p5.js-website/contents/src/data/examples/assets',
-    method: 'GET',
-    headers: {
-      ...headers,
-      Authorization: `Basic ${Buffer.from(
-        `${clientId}:${clientSecret}`
-      ).toString('base64')}`
-    }
-  };
-
-  const { data } = await axios.request(options);
-  const user = await User.findOne({ username: 'p5' }).exec();
-  await Q.all(
-    projectsInAllCategories.map((projectsInOneCategory) =>
-      Q.all(
-        projectsInOneCategory.map(async (project) => {
-          let newProject;
-          const a = objectID().toHexString();
-          const b = objectID().toHexString();
-          const c = objectID().toHexString();
-          const r = objectID().toHexString();
-          const noNumberprojectName = project.projectName.replace(/(\d+)/g, '');
-          if (noNumberprojectName === 'Instance Mode: Instance Container ') {
-            newProject = new Project({
-              name: project.projectName,
-              user: user._id,
-              files: [
-                {
-                  name: 'root',
-                  id: r,
-                  _id: r,
-                  children: [a, b, c],
-                  fileType: 'folder'
-                },
-                {
-                  name: 'sketch.js',
-                  content:
-                    '// Instance Mode: Instance Container, please check its index.html file',
-                  id: a,
-                  _id: a,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'index.html',
-                  content: project.sketchContent,
-                  isSelectedFile: true,
-                  id: b,
-                  _id: b,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'style.css',
-                  content: defaultCSS,
-                  id: c,
-                  _id: c,
-                  fileType: 'file',
-                  children: []
-                }
-              ],
-              _id: shortid.generate()
-            });
-          } else {
-            newProject = new Project({
-              name: project.projectName,
-              user: user._id,
-              files: [
-                {
-                  name: 'root',
-                  id: r,
-                  _id: r,
-                  children: [a, b, c],
-                  fileType: 'folder'
-                },
-                {
-                  name: 'sketch.js',
-                  content: project.sketchContent,
-                  id: a,
-                  _id: a,
-                  isSelectedFile: true,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'index.html',
-                  content: defaultHTML,
-                  id: b,
-                  _id: b,
-                  fileType: 'file',
-                  children: []
-                },
-                {
-                  name: 'style.css',
-                  content: defaultCSS,
-                  id: c,
-                  _id: c,
-                  fileType: 'file',
-                  children: []
-                }
-              ],
-              _id: shortid.generate()
-            });
-          }
-
-          const assetsInProject =
-            project.sketchContent.match(/assets\/[\w-]+\.[\w]*/g) ||
-            project.sketchContent.match(/asset\/[\w-]*/g) ||
-            [];
-
-          await addAssetsToProject(assetsInProject, data, newProject);
-          const savedProject = await newProject.save();
-          console.log(`Created a new project in p5 user: ${savedProject.name}`);
-        })
-      )
-    )
-  );
-  process.exit();
+function sortProjectsByName(projects) {
+  return projects.sort((a, b) => a.projectName.localeCompare(b.projectName));
 }
 
 async function getp5User() {
+  // Get or create generic p5 user
   console.log('Getting p5 user');
   const user = await User.findOne({ username: 'p5' }).exec();
   let p5User = user;
@@ -356,15 +204,18 @@ async function getp5User() {
     await p5User.save();
     console.log(`Created a user p5 ${p5User}`);
   }
+
+  // Clear old projects
   const projects = await Project.find({ user: p5User._id }).exec();
   console.log('Deleting old projects...');
   projects.forEach(async (project) => {
     await Project.deleteOne({ _id: project._id });
   });
-  const categories = await getCategories();
-  const sketchesInCategories = await getSketchesInCategories(categories);
-  const sketchContent = await getSketchContent(sketchesInCategories);
-  const projectsInUser = createProjectsInP5user(sketchContent);
+
+  const sketches = [];
+  await getAllSketches(sketches, sketchURL);
+  sortProjectsByName(sketches);
+  const projectsInUser = createProjectsInP5user(sketches);
   return projectsInUser;
 }
 
