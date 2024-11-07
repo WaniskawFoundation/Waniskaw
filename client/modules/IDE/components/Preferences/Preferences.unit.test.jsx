@@ -1,7 +1,7 @@
-import React from 'react';
-import { act, fireEvent, reduxRender, screen } from '../../../../test-utils';
-import Preferences from './index';
-import * as PreferencesActions from '../../actions/preferences';
+// import React from 'react';
+// import { act, fireEvent, reduxRender, screen } from '../../../../test-utils';
+// import Preferences from './index';
+// import * as PreferencesActions from '../../actions/preferences';
 
 describe('<Preferences />', () => {
   // For backwards compatibility, spy on each action creator to see when it was dispatched.
