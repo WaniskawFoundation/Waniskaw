@@ -170,17 +170,23 @@ async function getAllSketches(sketches, url, category = '') {
           url: item.download_url.replace('?ref=main', ''),
           method: 'GET',
           headers: {
-            ...headers,
-            Authorization: `Basic ${Buffer.from(
-              `${clientId}:${clientSecret}`
-            ).toString('base64')}`
+            ...headers
           }
         };
-        const sketch = await axios.request(sketchOptions);
-        sketches.push({
-          projectName: newCategoryFromName(category, formatName(item.name)),
-          sketchContent: sketch.data
-        });
+        let sketch = false;
+        try {
+          sketch = await axios.request(sketchOptions);
+        } catch (e) {
+          console.log('could not get sketch @: ', sketchOptions.url);
+          console.log(e.message);
+        }
+
+        if (sketch) {
+          sketches.push({
+            projectName: newCategoryFromName(category, formatName(item.name)),
+            sketchContent: sketch.data
+          });
+        }
       }
     })
   );
