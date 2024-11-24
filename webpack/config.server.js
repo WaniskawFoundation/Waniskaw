@@ -6,9 +6,7 @@ module.exports = {
 
   entry: {
     server:
-      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/server.js')],
-    previewServer:
-      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/previewServer.js')],
+      ['regenerator-runtime/runtime', path.resolve(__dirname, '../server/server.js')]
   },
   output: {
     path: path.resolve(__dirname, '../dist/'),

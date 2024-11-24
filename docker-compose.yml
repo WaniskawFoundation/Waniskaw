@@ -11,10 +11,9 @@ services:
       target: production
     # uncomment the following line to pull the image from docker hub
     # image: index.docker.io/catarak/p5.js-web-editor:latest
-    # uncomment the following lines if you don't want export all of the variables
-    # defined in your .env file for testing
     env_file:
       - "$PWD/.env"
+    # Uncomment following lines to run prod. app locally using docker.
     # environment:
     #  - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
     volumes:

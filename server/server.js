@@ -29,10 +29,26 @@ import passportRoutes from './routes/passport.routes';
 import { requestsOfTypeJSON } from './utils/requestsOfType';
 
 import { renderIndex } from './views/index';
+import previewRoutes from './routes/preview.routes';
 import { get404Sketch } from './views/404Page';
 
 const app = new Express();
 const MongoStore = connectMongo(session);
+const mongoConnectionString = process.env.MONGO_URL;
+
+// Connect to MongoDB
+mongoose.Promise = global.Promise;
+mongoose.connect(mongoConnectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+mongoose.set('useCreateIndex', true);
+mongoose.connection.on('error', () => {
+  console.error(
+    'MongoDB Connection Error. Please make sure that MongoDB is running.'
+  );
+  process.exit(1);
+});
 
 app.get('/health', (req, res) => res.json({ success: true }));
 
@@ -58,7 +74,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(webpackHotMiddleware(compiler, { log: false }));
 }
 
-const mongoConnectionString = process.env.MONGO_URL;
 app.set('trust proxy', true);
 
 // Enable Cross-Origin Resource Sharing (CORS) for all origins
@@ -144,26 +159,14 @@ app.use('/editor', requestsOfTypeJSON(), collections);
 // this is supposed to be TEMPORARY -- until i figure out
 // isomorphic rendering
 app.use('/', serverRoutes);
-
 app.use('/', redirectEmbedRoutes);
 app.use('/', passportRoutes);
 
+// Use the preview routes
+app.use('/preview', previewRoutes);
+
 // configure passport
 require('./config/passport');
-
-// Connect to MongoDB
-mongoose.Promise = global.Promise;
-mongoose.connect(mongoConnectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-mongoose.set('useCreateIndex', true);
-mongoose.connection.on('error', () => {
-  console.error(
-    'MongoDB Connection Error. Please make sure that MongoDB is running.'
-  );
-  process.exit(1);
-});
 
 app.get('/', (req, res) => {
   res.sendFile(renderIndex());
