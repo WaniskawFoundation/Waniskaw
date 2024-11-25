@@ -9,14 +9,19 @@
   width: 270px;
   background-color: #ffffff;
   margin-right: 1.5rem;
-  @include themify() {
-    // border-bottom: 1px solid getThemifyVariable("button-border-color");
+  box-shadow: 0 12px 12px rgba(0, 0, 0, .16);
+  @include themify(){
+    background-color: getThemifyVariable("background-color");
   }
 }
 
 .tabs__title {
   @include themify() {
-    color: getThemifyVariable("inactive-text-color");
+    height: 100%;
+    width: 100%;
+    padding: 1.5rem;
+    text-align: left;
+    color: getThemifyVariable("primary-text-color");
     &:hover,
     &:focus {
       // color: getThemifyVariable("primary-text-color");
@@ -28,7 +33,7 @@
       cursor: pointer;
     }
   }
-  font-size: #{12 / $base-font-size}rem;
+  font-size: #{20 / $base-font-size}rem;
   height: #{20 / $base-font-size}rem;
   width: 100%;
   margin: 0;
@@ -44,9 +49,9 @@
 .react-tabs__tab--selected .tabs__title {
   @include themify() {
     // color: getThemifyVariable("primary-text-color");
-    color: #ffffff;
-    background-color: $waniskaw-red;
-    border-bottom: 2px solid $waniskaw-red;
+    color: getThemifyVariable("active-modal-button-color");
+    background-color: getThemifyVariable("active-modal-button-background-color");
+    border-bottom: 2px solid getThemifyVariable("active-modal-button-background-color");
     z-index: 1;
   }
 }
@@ -64,32 +69,4 @@
   // & + & {
   // margin-left: #{45 / $base-font-size}rem;
   // }
-}
-
-.tabs__title {
-  @include themify() {
-    // color: getThemifyVariable("inactive-text-color");
-    color: $waniskaw-dark;
-    height: 100%;
-    width: 100%;
-    padding: 1.5rem;
-    text-align: left;
-    &:hover,
-    &:focus {
-      // color: getThemifyVariable("primary-text-color");
-      // border: none;
-      cursor: pointer;
-    }
-    &:focus {
-      // color: getThemifyVariable("primary-text-color");
-      cursor: pointer;
-    }
-  }
-  // font-size: #{12 / $base-font-size}rem;
-  font-size: 20px;
-  // font-weight: bold;
-  height: #{20 / $base-font-size}rem;
-  width: 100%;
-  margin: 0;
-  padding: 0 #{5 / $base-font-size}rem;
 }

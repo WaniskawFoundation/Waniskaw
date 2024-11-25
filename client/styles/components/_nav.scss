@@ -207,7 +207,7 @@
 
   @include themify() {
     // Set internal color of the logo;
-    fill: getThemifyVariable('modal-button-color');
+    fill: getThemifyVariable('logo-color');
   }
 }
 

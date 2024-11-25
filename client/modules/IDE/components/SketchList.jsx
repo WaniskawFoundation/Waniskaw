@@ -144,12 +144,7 @@ class SketchListRowBase extends React.Component {
           >
             {this.props.t('SketchList.DropdownAddToCollection')}
           </MenuItem>
-
-          {/*
-          <MenuItem onClick={this.handleSketchShare}>
-            Share
-          </MenuItem>
-            */}
+          <MenuItem onClick={this.handleSketchShare}>Share</MenuItem>
           <MenuItem hideIf={!userIsOwner} onClick={this.handleSketchDelete}>
             {this.props.t('SketchList.DropdownDelete')}
           </MenuItem>

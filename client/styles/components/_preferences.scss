@@ -17,11 +17,15 @@
   }
   & .react-tabs__tab-panel {
     overflow-y: auto;
-    background-color: #ffffff;
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: 0 12px 12px rgba(0, 0, 0, .16);
+    @include themify(){
+      background-color: getThemifyVariable("background-color");
+    }
   }
 
   @media (min-width: 770px) {
@@ -238,8 +242,8 @@ input[type="number"]::-webkit-outer-spin-button {
   @include themify() {
     //for some reason this won't work for getThemifyVariable
     // color: map-get($theme-map, "heavy-text-color");
-    color: #ffffff;
-    background-color: $waniskaw-red;
+    color: getThemifyVariable("active-modal-button-color");
+    background-color: getThemifyVariable("active-modal-button-background-color");
     // font-weight: bold;
   }
 }

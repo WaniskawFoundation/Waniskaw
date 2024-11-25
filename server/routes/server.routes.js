@@ -57,6 +57,14 @@ router.get('/:username/full/:project_id', (req, res) => {
   );
 });
 
+// Added because refreshing page while on a user sketch would give a 404 error route.
+// React router routes to this path in the front end when a sketch is clicked
+router.get('/r/:username/:project_id', (req, res) => {
+  projectForUserExists(req.params.username, req.params.project_id, (exists) =>
+    exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html))
+  );
+});
+
 router.get('/full/:project_id', (req, res) => {
   projectExists(req.params.project_id, (exists) =>
     exists ? res.send(renderIndex()) : get404Sketch((html) => res.send(html))
