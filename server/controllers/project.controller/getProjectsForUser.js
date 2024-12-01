@@ -20,7 +20,7 @@ function getProjectsForUserName(username) {
 
       Project.find({ user: user._id })
         .sort('-createdAt')
-        .select('name files id createdAt updatedAt')
+        .select('name files id createdAt updatedAt projectType')
         .exec((innerErr, projects) => {
           if (innerErr) {
             reject(innerErr);

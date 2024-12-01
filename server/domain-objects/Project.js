@@ -19,7 +19,8 @@ export const ProjectValidationError = createApplicationErrorClass(
 export function toApi(model) {
   return {
     id: model.id,
-    name: model.name
+    name: model.name,
+    projectType: model.projectType
   };
 }
 

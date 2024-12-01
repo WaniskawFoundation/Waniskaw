@@ -44,6 +44,12 @@ const iconMap = {
   example_code: ExampleCodeIcon
 };
 
+function formatKeyToDisplayName(key) {
+  return key
+    ? key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())
+    : false;
+}
+
 // Function to get the icon based on type
 const getIconByType = (type) => {
   const IconComponent = iconMap[type];
@@ -225,12 +231,14 @@ class SketchGridItemBase extends React.Component {
           <div className="sketch-info-container">
             <div className="sketch-info-left">
               <div className="sketch-type">
-                {getIconByType(sketch.project_type)}
+                {getIconByType(sketch.projectType)}
               </div>
               <div className="sketch-name-container">
                 <div className="sketch-name">{name}</div>
                 <div className="sketch-description">
-                  A description of this sketch!
+                  {`${
+                    formatKeyToDisplayName(sketch.projectType) || 'Project'
+                  } by ${username}`}
                 </div>
               </div>
             </div>
@@ -248,7 +256,7 @@ SketchGridItemBase.propTypes = {
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     updatedAt: PropTypes.string.isRequired,
-    project_type: PropTypes.string.isRequired
+    projectType: PropTypes.string.isRequired
   }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -403,6 +411,7 @@ class SketchList extends React.Component {
         ? this.props.username
         : this.props.user.username;
     const { mobile } = this.props;
+
     return (
       <article className="sketches-table-container">
         <Helmet>
