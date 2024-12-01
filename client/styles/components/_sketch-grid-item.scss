@@ -1,0 +1,87 @@
+.sketch-item-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ensures it adapts to the grid's width */
+    aspect-ratio: 4 / 3; /* Maintains 3:4 aspect ratio */
+    padding: 2px;
+  
+    @include themify() {
+      background-color: getThemifyVariable('sketch-border-color');
+      color: getThemifyVariable('sketch-color');
+      box-shadow: 4px 4px 0 0 getThemifyVariable('sketch-shadow-color'); /* Box shadow */
+    }
+  }
+
+  .sketch-item-container:hover{
+    cursor: pointer;
+
+    @include themify() {
+        background-color: getThemifyVariable('active-modal-button-background-color');
+        color: getThemifyVariable('active-modal-button-color');
+      }
+  }
+  
+  .sketch-item-image {
+    width: 100%;
+    height: 83%; /* Adjust to reserve space for the info container */
+    object-fit: cover; /* Ensures the image fills the area proportionally */
+  }
+  
+  .sketch-info-container {
+    width: 100%;
+    height: 16%;
+    padding-top: 1%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    color: inherit;
+    justify-content: space-between;
+  }
+
+  .sketch-name-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 3px;
+    justify-self: left;
+    min-width: 0; /* Allows shrinking */
+    max-width: 100%; /* Prevents expanding beyond the parent container */
+  }
+
+  .sketch-info-left{
+    display: flex;
+    height: 100%;
+    width: inherit;
+    min-width: 0;
+  }
+
+  .sketch-type{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+
+    svg {
+        height: 100%;
+        path {
+          fill: $waniskaw-light-border;
+        }
+    }
+  }
+
+  .sketch-name{
+    color: white !important;
+    width: 100%; /* Set the desired container width */
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Add "..." for overflowing text */
+    font-size: #{11 / $base-font-size}rem;
+    margin-bottom: 1px;
+  }
+
+  .sketch-description{
+    font-size: #{8 / $base-font-size}rem;
+    
+  }
+  

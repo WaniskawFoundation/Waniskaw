@@ -1,3 +1,11 @@
+.sketches-grid{
+  display: grid; /* Enables grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adaptive columns */
+  gap: 16px; /* Spacing between grid items */
+  padding: 16px; /* Optional padding around the container */
+  width: 100%; /* Ensures the container spans the full width */
+}
+
 .sketches-table-container {
   overflow-y: auto;
   max-width: 100%;
