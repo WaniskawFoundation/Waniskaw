@@ -11,19 +11,24 @@ const DropdownMenu = forwardRef(
     { children, anchor, 'aria-label': ariaLabel, align, className, classes },
     ref
   ) => {
-    // Note: need to use a ref instead of a state to avoid stale closures.
+    // Ref to track focus state
     const focusedRef = useRef(false);
 
+    // Dropdown open state
     const [isOpen, setIsOpen] = useState(false);
 
+    // Callback to close the dropdown
     const close = useCallback(() => setIsOpen(false), [setIsOpen]);
 
+    // Anchor ref for positioning
     const anchorRef = useModalClose(close, ref);
 
+    // Toggle dropdown visibility
     const toggle = useCallback(() => {
       setIsOpen((prevState) => !prevState);
     }, [setIsOpen]);
 
+    // Handle focus events
     const handleFocus = () => {
       focusedRef.current = true;
     };
@@ -47,12 +52,14 @@ const DropdownMenu = forwardRef(
           onBlur={handleBlur}
           onFocus={handleFocus}
         >
+          {/* Use the provided anchor or a default icon */}
           {anchor ?? <DownArrowIcon focusable="false" aria-hidden="true" />}
         </button>
         {isOpen && (
           <DropdownWrapper
             className={classes.list}
             align={align}
+            anchorRef={anchorRef} // Pass anchorRef for positioning
             onMouseUp={() => {
               setTimeout(close, 0);
             }}
