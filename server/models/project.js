@@ -39,6 +39,7 @@ const projectSchema = new Schema(
       default: "Hello p5.js, it's the server",
       maxlength: 128
     },
+    projectType: String,
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     serveSecure: { type: Boolean, default: false },
     files: { type: [fileSchema] },

@@ -9,7 +9,6 @@ import classNames from 'classnames';
 import slugify from 'slugify';
 import MenuItem from '../../../components/Dropdown/MenuItem';
 import TableDropdown from '../../../components/Dropdown/TableDropdown';
-import dates from '../../../utils/formatDate';
 import * as ProjectActions from '../actions/project';
 import * as ProjectsActions from '../actions/projects';
 import * as CollectionsActions from '../actions/collections';
@@ -24,13 +23,40 @@ import getConfig from '../../../utils/getConfig';
 
 import ArrowUpIcon from '../../../images/sort-arrow-up.svg';
 import ArrowDownIcon from '../../../images/sort-arrow-down.svg';
+import sketchPlaceholder from '../../../images/sketch_placeholder.png';
+
+import GameIcon from '../../../images/game.svg';
+import GenerativeArtIcon from '../../../images/generative_art.svg';
+import ImagesIcon from '../../../images/images.svg';
+import AssetPackIcon from '../../../images/asset_pack.svg';
+import TutorialIcon from '../../../images/tutorial.svg';
+import ExampleCodeIcon from '../../../images/example_code.svg';
 
 const ROOT_URL = getConfig('API_URL');
 
-const formatDateCell = (date, mobile = false) =>
-  dates.format(date, { showTime: !mobile });
+// Mapping types to icons
+const iconMap = {
+  game: GameIcon,
+  generative_art: GenerativeArtIcon,
+  images: ImagesIcon,
+  asset_pack: AssetPackIcon,
+  tutorial: TutorialIcon,
+  example_code: ExampleCodeIcon
+};
 
-class SketchListRowBase extends React.Component {
+function formatKeyToDisplayName(key) {
+  return key
+    ? key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())
+    : false;
+}
+
+// Function to get the icon based on type
+const getIconByType = (type) => {
+  const IconComponent = iconMap[type];
+  return IconComponent ? <IconComponent /> : <ExampleCodeIcon />;
+};
+
+class SketchGridItemBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -144,7 +170,12 @@ class SketchListRowBase extends React.Component {
           >
             {this.props.t('SketchList.DropdownAddToCollection')}
           </MenuItem>
-          <MenuItem onClick={this.handleSketchShare}>Share</MenuItem>
+
+          {/*
+          <MenuItem onClick={this.handleSketchShare}>
+            Share
+          </MenuItem>
+            */}
           <MenuItem hideIf={!userIsOwner} onClick={this.handleSketchDelete}>
             {this.props.t('SketchList.DropdownDelete')}
           </MenuItem>
@@ -161,9 +192,14 @@ class SketchListRowBase extends React.Component {
       url = `/r/${username}/${slugify(sketch.name, '_')}`;
     }
 
+    // Keep mobile props handy in case I want to use this..
+    if (mobile) console.log('mobile');
+
     const name = (
       <React.Fragment>
-        <Link to={url}>{renameOpen ? '' : sketch.name}</Link>
+        <Link className="sketch-name" to={url}>
+          {renameOpen ? '' : sketch.name}
+        </Link>
         {renameOpen && (
           <input
             value={renameValue}
@@ -177,29 +213,50 @@ class SketchListRowBase extends React.Component {
       </React.Fragment>
     );
 
+    const handleClick = () => {
+      window.location.href = url;
+    };
+
     return (
       <React.Fragment>
-        <tr
-          className="sketches-table__row"
-          key={sketch.id}
-          onClick={this.handleRowClick}
-        >
-          <th scope="row">{name}</th>
-          <td>{formatDateCell(sketch.createdAt, mobile)}</td>
-          <td>{formatDateCell(sketch.updatedAt, mobile)}</td>
-          {this.renderDropdown()}
-        </tr>
+        <div className="sketch-item-container" key={sketch.id}>
+          <img
+            className="sketch-item-image"
+            src={sketchPlaceholder}
+            alt="no-img"
+            onClick={handleClick}
+            onKeyDown={handleClick}
+            role="presentation"
+          />
+          <div className="sketch-info-container">
+            <div className="sketch-info-left">
+              <div className="sketch-type">
+                {getIconByType(sketch.projectType)}
+              </div>
+              <div className="sketch-name-container">
+                <div className="sketch-name">{name}</div>
+                <div className="sketch-description">
+                  {`${
+                    formatKeyToDisplayName(sketch.projectType) || 'Project'
+                  } by ${username}`}
+                </div>
+              </div>
+            </div>
+            {this.renderDropdown()}
+          </div>
+        </div>
       </React.Fragment>
     );
   }
 }
 
-SketchListRowBase.propTypes = {
+SketchGridItemBase.propTypes = {
   sketch: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired
+    updatedAt: PropTypes.string.isRequired,
+    projectType: PropTypes.string.isRequired
   }).isRequired,
   username: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -215,7 +272,7 @@ SketchListRowBase.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-SketchListRowBase.defaultProps = {
+SketchGridItemBase.defaultProps = {
   mobile: false
 };
 
@@ -226,10 +283,10 @@ function mapDispatchToPropsSketchListRow(dispatch) {
   );
 }
 
-const SketchListRow = connect(
+const SketchGridItem = connect(
   null,
   mapDispatchToPropsSketchListRow
-)(SketchListRowBase);
+)(SketchGridItemBase);
 
 class SketchList extends React.Component {
   constructor(props) {
@@ -354,6 +411,7 @@ class SketchList extends React.Component {
         ? this.props.username
         : this.props.user.username;
     const { mobile } = this.props;
+
     return (
       <article className="sketches-table-container">
         <Helmet>
@@ -362,47 +420,21 @@ class SketchList extends React.Component {
         {this._renderLoader()}
         {this._renderEmptyTable()}
         {this.hasSketches() && (
-          <table
-            className="sketches-table"
-            summary={this.props.t('SketchList.TableSummary')}
-          >
-            <thead>
-              <tr>
-                {this._renderFieldHeader(
-                  'name',
-                  this.props.t('SketchList.HeaderName')
-                )}
-                {this._renderFieldHeader(
-                  'createdAt',
-                  this.props.t('SketchList.HeaderCreatedAt', {
-                    context: mobile ? 'mobile' : ''
-                  })
-                )}
-                {this._renderFieldHeader(
-                  'updatedAt',
-                  this.props.t('SketchList.HeaderUpdatedAt', {
-                    context: mobile ? 'mobile' : ''
-                  })
-                )}
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.sketches.map((sketch) => (
-                <SketchListRow
-                  mobile={mobile}
-                  key={sketch.id}
-                  sketch={sketch}
-                  user={this.props.user}
-                  username={username}
-                  onAddToCollection={() => {
-                    this.setState({ sketchToAddToCollection: sketch });
-                  }}
-                  t={this.props.t}
-                />
-              ))}
-            </tbody>
-          </table>
+          <div className="sketches-grid">
+            {this.props.sketches.map((sketch) => (
+              <SketchGridItem
+                mobile={mobile}
+                key={sketch.id}
+                sketch={sketch}
+                user={this.props.user}
+                username={username}
+                onAddToCollection={() => {
+                  this.setState({ sketchToAddToCollection: sketch });
+                }}
+                t={this.props.t}
+              />
+            ))}
+          </div>
         )}
         {this.state.sketchToAddToCollection && (
           <Overlay

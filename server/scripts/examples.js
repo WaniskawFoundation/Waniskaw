@@ -40,6 +40,7 @@ async function createProjectsInP5user(projects) {
         newProject = new Project({
           name: project.projectName,
           user: user._id.toString(),
+          projectType: 'example_code',
           files: [
             {
               name: 'root',
@@ -81,6 +82,7 @@ async function createProjectsInP5user(projects) {
         newProject = new Project({
           name: project.projectName,
           user: user._id,
+          projectType: 'example_code',
           files: [
             {
               name: 'root',

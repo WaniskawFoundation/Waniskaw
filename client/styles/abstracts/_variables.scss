@@ -29,6 +29,7 @@ $waniskaw-console-grey: #757575;
 $middle-gray: rgb(64, 64, 64); // primary
 $middle-dark: #666;
 $medium-dark: #4D4D4D;
+$shadow-dark: #2d2d2d;
 
 $dark: #535353; // primary
 $darker: #1C1C1C;
@@ -64,6 +65,9 @@ $themes: (
     modal-background-color: $light,
     preferences-button-background-color: $medium-light,
     modal-border-color: $middle-light,
+    sketch-color: $light,
+    sketch-border-color: $medium-dark,
+    sketch-shadow-color: $medium-light,
     icon-color: $middle-gray,
     icon-hover-color: $darker,
     icon-toast-hover-color: $lightest,
@@ -162,6 +166,9 @@ $themes: (
     modal-background-color: $dark,
     preferences-button-background-color: $middle-dark,
     modal-border-color: $middle-dark,
+    sketch-color: $light,
+    sketch-border-color: $medium-dark,
+    sketch-shadow-color: $shadow-dark,
     icon-color: $middle-light,
     icon-hover-color: $lightest,
     icon-toast-hover-color: $lightest,
@@ -261,6 +268,9 @@ $themes: (
     modal-background-color: $dark,
     preferences-button-background-color: $medium-light,
     modal-border-color: $middle-dark,
+    sketch-color: $lightest,
+    sketch-border-color: $medium-dark,
+    sketch-shadow-color: $shadow-dark,
     icon-color: $medium-light,
     icon-hover-color: $yellow,
     icon-toast-hover-color: $yellow,
