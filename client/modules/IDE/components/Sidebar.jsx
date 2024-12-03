@@ -27,6 +27,7 @@ export default function SideBar() {
   const dispatch = useDispatch();
 
   const rootFile = useSelector(selectRootFile);
+  const files = useSelector((state) => state.files);
   const ide = useSelector((state) => state.ide);
   const projectOptionsVisible = useSelector(
     (state) => state.ide.projectOptionsVisible
@@ -39,6 +40,33 @@ export default function SideBar() {
   const [isFocused, setIsFocused] = useState(false);
 
   const isAuthenticated = useSelector(getAuthenticated);
+
+  // get sizes for all files
+  const byteSize = (str) => new Blob([str]).size;
+
+  const getTotalFileSize = (file) =>
+    file.fileType === 'file'
+      ? byteSize(file.content)
+      : file.children
+          .map((child) => getTotalFileSize(files.find((f) => f.id === child)))
+          .reduce((prev, curr) => prev + curr);
+
+  const genFileSizeString = (size) => {
+    let suffix = 'Bytes';
+    let divisor = 1;
+    if (size > 1000) {
+      suffix = 'KB';
+      divisor = 1000;
+    } else if (size > 1000000) {
+      suffix = 'MB';
+      divisor = 1000000;
+    } else if (size > 1000000000) {
+      suffix = 'KB';
+      divisor = 1000000000;
+    }
+
+    return `${(size / divisor).toFixed(1)} ${suffix}`;
+  };
 
   const onBlurComponent = () => {
     setIsFocused(false);
@@ -94,7 +122,9 @@ export default function SideBar() {
         <ConnectedFileNode id={rootFile.id} canEdit={canEditProject} />
       </section>
       <div className="sidebar__footer" style={footerStyle}>
-        <div className="sidebar__footer-project-size">17.3 MB</div>
+        <div className="sidebar__footer-project-size">
+          {genFileSizeString(getTotalFileSize(rootFile))}
+        </div>
         <div className="sidebar__footer-buttons">
           {isAuthenticated && (
             <UploadIcon
