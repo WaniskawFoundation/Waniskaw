@@ -46,12 +46,7 @@ AssetMenu.propTypes = {
 const AssetListRowBase = ({ asset, username }) => (
   <tr className="asset-table__row" key={asset.key}>
     <th scope="row">
-      <a
-        href={asset.url}
-        title="This is a preview of the link"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={asset.url} target="_blank" rel="noopener noreferrer">
         {asset.name}
       </a>
     </th>
