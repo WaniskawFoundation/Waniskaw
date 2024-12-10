@@ -3,6 +3,8 @@
   "version": "2.10.2",
   "description": "The web editor for p5.js.",
   "scripts": {
+    "docker-build": "docker-compose -f docker-compose.yml build",
+    "docker-start": "docker-compose -f docker-compose-development.yml up",
     "clean": "rimraf dist",
     "start": "cross-env NODE_ENV=development nodemon index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",

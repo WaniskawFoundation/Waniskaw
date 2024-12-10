@@ -14,14 +14,13 @@ services:
     env_file:
       - "$PWD/.env"
     # Uncomment following lines to run prod. app locally using docker.
-    #environment:
-    #  - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/p5js-web-editor
     volumes:
       - .:/opt/node/app
       - /opt/node/app/node_modules
     ports:
       - '8000:8000'
-      - '8002:8002'
     depends_on:
       - mongo
 volumes:
