@@ -44,12 +44,22 @@ export default function SideBar() {
   // get sizes for all files
   const byteSize = (str) => new Blob([str]).size;
 
-  const getTotalFileSize = (file) =>
-    file.fileType === 'file'
-      ? byteSize(file.content)
-      : file.children
-          .map((child) => getTotalFileSize(files.find((f) => f.id === child)))
-          .reduce((prev, curr) => prev + curr);
+  function getTotalFileSize(file) {
+    if (file.fileType === 'file') {
+      return byteSize(file.content);
+    }
+
+    if (file.children) {
+      const childSizes = file.children.map((childId) => {
+        const childFile = files.find((f) => f.id === childId);
+        return getTotalFileSize(childFile);
+      });
+
+      return childSizes.reduce((total, size) => total + size, 0);
+    }
+
+    return 0;
+  }
 
   const genFileSizeString = (size) => {
     let suffix = 'Bytes';

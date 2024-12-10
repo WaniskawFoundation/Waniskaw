@@ -123,7 +123,7 @@ export function projectSaveSuccess() {
 }
 
 // want a function that will check for changes on the front end
-function getSynchedProject(currentState, responseProject) {
+export function getSynchedProject(currentState, responseProject) {
   let hasChanges = false;
   const synchedProject = Object.assign({}, responseProject);
   const currentFiles = currentState.files.map(

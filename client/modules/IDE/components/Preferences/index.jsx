@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
 import PlusIcon from '../../../../images/plus_waniskaw.svg';
 import MinusIcon from '../../../../images/minus_waniskaw.svg';
 import CloseIcon from '../../../../images/close-waniskaw.svg';
@@ -13,6 +15,8 @@ import ImagesIcon from '../../../../images/images.svg';
 import AssetPackIcon from '../../../../images/asset_pack.svg';
 import TutorialIcon from '../../../../images/tutorial.svg';
 import ExampleCodeIcon from '../../../../images/example_code.svg';
+
+import { getAuthenticated } from '../../selectors/users';
 
 import beepUrl from '../../../../sounds/audioAlert.mp3';
 import {
@@ -27,6 +31,7 @@ import {
   setAutocompleteHinter,
   setLinewrap
 } from '../../actions/preferences';
+import { getLinkedFiles } from '../../reducers/files';
 
 export default function Preferences() {
   const { t } = useTranslation();
@@ -46,7 +51,7 @@ export default function Preferences() {
     autocompleteHinter
   } = useSelector((state) => state.preferences);
 
-  const [state, setState] = useState({ fontSize });
+  const [fontState, setState] = useState({ fontSize });
 
   function onFontInputChange(event) {
     const INTEGER_REGEX = /^[0-9\b]+$/;
@@ -64,7 +69,7 @@ export default function Preferences() {
 
   function onFontInputSubmit(event) {
     event.preventDefault();
-    let value = parseInt(state.fontSize, 10);
+    let value = parseInt(fontState.fontSize, 10);
     if (Number.isNaN(value)) {
       value = 16;
     }
@@ -78,16 +83,42 @@ export default function Preferences() {
   }
 
   function decreaseFontSize() {
-    const newValue = Number(state.fontSize) - 2;
+    const newValue = Number(fontState.fontSize) - 2;
     handleFontSize(newValue);
   }
 
   function increaseFontSize() {
-    const newValue = Number(state.fontSize) + 2;
+    const newValue = Number(fontState.fontSize) + 2;
     handleFontSize(newValue);
   }
 
   const fontSizeInputRef = useRef(null);
+  const files = useSelector((state) => state.files);
+  const linkedFiles = getLinkedFiles(files);
+
+  const filePreviewOptions = linkedFiles.map((file) => ({
+    content: file.name
+  }));
+  const isAuthenticated = useSelector(getAuthenticated);
+
+  const SeoTag = (props) => (
+    <div style={{ display: 'flex' }}>
+      <div style={{ marginRight: '0.5rem' }}>{props.name}</div>
+      <CloseIcon />
+    </div>
+  );
+
+  SeoTag.propTypes = {
+    name: PropTypes.string.isRequired // The `name` prop is required and must be a string
+  };
+
+  const projectTagOptions = [
+    'game',
+    'multiplayer',
+    'pvp',
+    'mobilegame',
+    'touchscreen'
+  ].map((option) => ({ content: <SeoTag name={option} /> }));
 
   return (
     <section className="preferences">
@@ -223,24 +254,6 @@ export default function Preferences() {
               </label>
             </div>
           </div>
-          <div className="bottom_btns_wrapper">
-            <div className="preference__options">
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Cancel</h6>
-              </button>
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Save Changes</h6>
-              </button>
-            </div>
-          </div>
         </TabPanel>
         <TabPanel>
           <div>
@@ -248,65 +261,10 @@ export default function Preferences() {
               <h3 className="modal-settings-maintitle">
                 Search Engine Optimization
               </h3>
-              <div className="preference-seo-titlecount-wrapper">
-                <h4 className="preference__title">Project Tags</h4>
-                <h4 className="preference__title-count">3/4</h4>
-              </div>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="game"
-                />
-                <label htmlFor="prjtags-game" className="preference__option">
-                  game
-                </label>
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="multiplayer"
-                />
-                <label
-                  htmlFor="prjtags-multiplayer"
-                  className="preference__option"
-                >
-                  multiplayer
-                  <CloseIcon className="preference-icon-after" />
-                </label>
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="pvp"
-                />
-                <label htmlFor="prjtags-pvp" className="preference__option">
-                  pvp
-                  <CloseIcon className="preference-icon-after" />
-                </label>
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="mobilegame"
-                />
-                <label
-                  htmlFor="prjtags-mobilegame"
-                  className="preference__option"
-                >
-                  mobilegame
-                  <CloseIcon className="preference-icon-after" />
-                </label>
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="touchscreen"
-                />
-                <label
-                  htmlFor="prjtags-touchscreen"
-                  className="preference__option"
-                >
-                  touchscreen
-                  <CloseIcon className="preference-icon-after" />
-                </label>
-              </div>
+              <PreferencesSelector
+                header="Project Tags"
+                options={projectTagOptions}
+              />
               <div className="preference-textinput-wrapper">
                 <input
                   type="text"
@@ -325,57 +283,12 @@ export default function Preferences() {
                   className="textinput-field-long"
                 />
               </div>
-              <h4 className="preference__title">Image File For Preview</h4>
-              <div className="preference__options">
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="coverImagepng"
+              {isAuthenticated && (
+                <PreferencesSelector
+                  header="Image File For Preview"
+                  options={filePreviewOptions}
                 />
-                <label htmlFor="coverImagepng" className="preference__option">
-                  coverImage.png
-                </label>
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="coverGeneratorjs"
-                />
-                <label
-                  htmlFor="coverGeneratorjs"
-                  className="preference__option"
-                >
-                  coverGenerator.js
-                </label>
-                <input
-                  type="radio"
-                  className="preference__radio-button"
-                  value="websiteSnapshothtml"
-                />
-                <label
-                  htmlFor="websiteSnapshothtml"
-                  className="preference__option"
-                >
-                  websiteSnapshot.html
-                </label>
-              </div>
-            </div>
-          </div>
-          <div className="bottom_btns_wrapper">
-            <div className="preference__options">
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Cancel</h6>
-              </button>
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Save Changes</h6>
-              </button>
+              )}
             </div>
           </div>
         </TabPanel>
@@ -450,7 +363,7 @@ export default function Preferences() {
                 className="preference__value"
                 aria-live="polite"
                 aria-atomic="true"
-                value={state.fontSize}
+                value={fontState.fontSize}
                 id="font-size-value"
                 onChange={onFontInputChange}
                 type="text"
@@ -610,24 +523,6 @@ export default function Preferences() {
               </label>
             </div>
           </div>
-          <div className="bottom_btns_wrapper">
-            <div className="preference__options">
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Cancel</h6>
-              </button>
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Save Changes</h6>
-              </button>
-            </div>
-          </div>
         </TabPanel>
 
         <TabPanel>
@@ -758,26 +653,35 @@ export default function Preferences() {
               </div>
             </div>
           </div>
-          <div className="bottom_btns_wrapper">
-            <div className="preference__options">
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Cancel</h6>
-              </button>
-              <button
-                type="button"
-                className="bottom_btns_btn"
-                // onChange={() => dispatch(setTheme('contrast'))}
-              >
-                <h6>Save Changes</h6>
-              </button>
-            </div>
-          </div>
         </TabPanel>
       </Tabs>
     </section>
   );
 }
+
+const PreferencesSelector = (props) => (
+  <div className="preferences-selector-container">
+    <div className="preferences-selector-header">{props.header}</div>
+    <div className="preferences-selector-options-container">
+      {props.options.map((option) => (
+        <button
+          className={`preferences-selector-option${
+            option.selected ? ' selected' : ''
+          }`}
+        >
+          {option.content}
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
+PreferencesSelector.propTypes = {
+  header: PropTypes.string.isRequired, // The header is a required string
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired, // Each option must have a name (string)
+      selected: PropTypes.bool
+    })
+  ).isRequired // options is a required array
+};

@@ -1,0 +1,48 @@
+.preferences-selector-option {
+    border: none !important;
+    font-family: "DM Mono", sans-serif;
+    outline: none !important;
+    font-size: 18px;
+    padding: 0.3rem 0.8rem;
+    @include themify() {
+        color: getThemifyVariable("toolbar-button-color");
+        background-color: getThemifyVariable("toolbar-button-background-color");
+
+        &:hover {
+            background-color: getThemifyVariable("active-modal-button-background-color");
+            color: getThemifyVariable("toolbar-button-color");
+        }
+    }
+
+    margin: #{8 / $base-font-size}rem #{8 / $base-font-size}rem 0 0;
+    font-size: #{18 / $base-font-size}rem;
+}
+
+.preferences-selector-option.selected {
+    @include themify() {
+        color: getThemifyVariable("light");
+        background-color: getThemifyVariable("waniskaw-red");
+    }
+}
+
+.preferences-selector-header {
+    width: 100%;
+    // font-size: #{16 / $base-font-size}rem;
+    font-size: 14px;
+    margin-top: #{13 / $base-font-size}rem;
+    // margin-bottom: #{7 / $base-font-size}rem;
+    margin-bottom: 0;
+    font-weight: bold;
+    font-family: "Helvetica", sans-serif;
+}
+
+.preferences-selector-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.preferences-selector-options-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
